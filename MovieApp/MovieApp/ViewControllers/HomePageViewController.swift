@@ -33,8 +33,14 @@ extension HomePageViewController: UICollectionViewDataSource {
         return presenter.movies.count
     }
         
-    func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
-        let cell = collectionView.dequeueReusableCell(withReuseIdentifier: MovieCell.cellIdentifier, for: indexPath) as! MovieCell
+    func collectionView(
+        _ collectionView: UICollectionView,
+        cellForItemAt indexPath: IndexPath
+    ) -> UICollectionViewCell {
+        let cell = collectionView.dequeueReusableCell(
+            withReuseIdentifier: MovieCell.cellIdentifier,
+            for: indexPath
+        ) as! MovieCell
         cell.populate(withMovie: presenter.movies[indexPath.item])
         return cell
     }
@@ -51,7 +57,11 @@ extension HomePageViewController: UICollectionViewDelegate {
 
 extension HomePageViewController: UICollectionViewDelegateFlowLayout {
     
-    func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
+    func collectionView(
+        _ collectionView: UICollectionView,
+        layout collectionViewLayout: UICollectionViewLayout,
+        sizeForItemAt indexPath: IndexPath
+    ) -> CGSize {
         return CGSize(width: view.frame.width - 6 * offset, height: cellHeight)
     }
     
