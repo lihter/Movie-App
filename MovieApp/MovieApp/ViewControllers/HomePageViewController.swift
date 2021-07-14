@@ -12,6 +12,15 @@ class HomePageViewController: UIViewController {
     var flowLayout: UICollectionViewFlowLayout!
     var presenter: HomePagePresenter!
     
+    init() {
+        self.presenter = HomePagePresenter()
+        super.init(nibName: nil, bundle: nil)
+    }
+    
+    required init?(coder: NSCoder) {
+        fatalError("init(coder:) has not been implemented")
+    }
+    
     override func viewDidLoad() {
         super.viewDidLoad()
 
@@ -20,7 +29,7 @@ class HomePageViewController: UIViewController {
     }
     
     private func setupCollectionView() {
-        filmsCollectionView.register(MovieCell.self, forCellWithReuseIdentifier: MovieCell.cellIdentifier)
+        filmsCollectionView.register(MovieCell.self, forCellWithReuseIdentifier: MovieCell.reuseIdentifier)
         filmsCollectionView.dataSource = self
         filmsCollectionView.delegate = self
     }
@@ -38,9 +47,8 @@ extension HomePageViewController: UICollectionViewDataSource {
         cellForItemAt indexPath: IndexPath
     ) -> UICollectionViewCell {
         let cell = collectionView.dequeueReusableCell(
-            withReuseIdentifier: MovieCell.cellIdentifier,
-            for: indexPath
-        ) as! MovieCell
+            withReuseIdentifier: MovieCell.reuseIdentifier,
+            for: indexPath) as! MovieCell
         cell.populate(withMovie: presenter.movies[indexPath.item])
         return cell
     }

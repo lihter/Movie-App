@@ -11,12 +11,11 @@ extension HomePageViewController: DesignProtocol {
     }
     
     func createViews() {
-        headerImageView = UIImageView()
+        let image = UIImage(named: "AppIcon.pdf")
+        headerImageView = UIImageView(image: image)
         
         flowLayout = UICollectionViewFlowLayout()
         
-        presenter = HomePagePresenter()
-
         filmsCollectionView = UICollectionView(
             frame: .zero,
             collectionViewLayout: flowLayout)
@@ -28,8 +27,6 @@ extension HomePageViewController: DesignProtocol {
         
         navigationController?.navigationBar.barTintColor = .headerColor
         navigationController?.navigationBar.isTranslucent = false
-
-        headerImageView.image = UIImage(named: "AppIcon.pdf")
         navigationItem.titleView = headerImageView
         
         let inset = 3 * offset
@@ -42,10 +39,8 @@ extension HomePageViewController: DesignProtocol {
     
     func defineLayoutForViews() {
         filmsCollectionView.snp.makeConstraints {
-            $0.top.equalToSuperview()
-            $0.bottom.equalToSuperview()
+            $0.top.bottom.width.equalToSuperview()
             $0.centerX.equalTo(view.snp.centerX)
-            $0.width.equalToSuperview()
         }
     }
 

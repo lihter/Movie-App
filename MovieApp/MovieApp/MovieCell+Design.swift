@@ -11,16 +11,17 @@ extension MovieCell: DesignProtocol {
     }
     
     func createViews() {
-        addSubview(cellView)
+        contentContainer = UIView()
+        addSubview(contentContainer)
 
         movieTitle = UILabel()
-        cellView.addSubview(movieTitle)
+        contentContainer.addSubview(movieTitle)
     
         movieDescription = UILabel()
-        cellView.addSubview(movieDescription)
+        contentContainer.addSubview(movieDescription)
         
         movieImageView = UIImageView()
-        cellView.addSubview(movieImageView)
+        contentContainer.addSubview(movieImageView)
     }
     
     func styleViews() {
@@ -31,10 +32,10 @@ extension MovieCell: DesignProtocol {
         layer.shadowOpacity = 0.1
         layer.shadowRadius = 20
 
-        cellView.frame = bounds
-        cellView.backgroundColor = .white
-        cellView.layer.cornerRadius = 10
-        cellView.layer.masksToBounds = true
+        contentContainer.frame = bounds
+        contentContainer.backgroundColor = .white
+        contentContainer.layer.cornerRadius = 10
+        contentContainer.layer.masksToBounds = true
         
         movieTitle.textColor = .black
         movieTitle.adjustsFontSizeToFitWidth = true
@@ -61,14 +62,14 @@ extension MovieCell: DesignProtocol {
         
         movieTitle.snp.makeConstraints {
             $0.leading.equalTo(movieImageView.snp.trailing).offset(2 * offset)
-            $0.trailing.equalToSuperview().offset(-1.5 * offset)
+            $0.trailing.equalToSuperview().inset(1.5 * offset)
             $0.top.equalToSuperview().offset(2 * offset)
             $0.height.equalTo(movieTitleViewHeight)
         }
         
         movieDescription.snp.makeConstraints {
             $0.leading.equalTo(movieImageView.snp.trailing).offset(2 * offset)
-            $0.trailing.equalToSuperview().offset(-1.5 * offset)
+            $0.trailing.equalToSuperview().inset(1.5 * offset)
             $0.top.equalTo(movieTitle.snp.bottom).offset(offset)
         }
     }

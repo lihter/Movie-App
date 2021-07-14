@@ -2,7 +2,7 @@ import UIKit
 
 class MovieCell: UICollectionViewCell {
     
-    static let cellIdentifier = "cellid"
+    static let reuseIdentifier = String(describing: MovieCell.self)
     
     let titleFontSize: CGFloat = 16
     let descriptionFontSize: CGFloat = 14
@@ -13,7 +13,7 @@ class MovieCell: UICollectionViewCell {
     var movieTitle: UILabel!
     var movieDescription: UILabel!
     var movieImageView: UIImageView!
-    var cellView = UIView()
+    var contentContainer: UIView!
     
     override init(frame: CGRect) {
         super.init(frame: frame)
@@ -27,8 +27,8 @@ class MovieCell: UICollectionViewCell {
     
     func populate(withMovie movie: Movie) {
         movieTitle.text = movie.title
-        movieDescription.text = movie.desription
-        movieImageView.image = UIImage(named: movie.imageString)
+        movieDescription.text = movie.description
+        movieImageView.image = UIImage(named: movie.imagePath)
     }
 
 }
