@@ -31,6 +31,7 @@ extension MovieCell: DesignProtocol {
         layer.shadowOffset = CGSize(width: 0, height: 4)
         layer.shadowOpacity = 0.1
         layer.shadowRadius = 20
+        layer.shadowPath = UIBezierPath(rect: bounds).cgPath
 
         contentContainer.frame = bounds
         contentContainer.backgroundColor = .white
