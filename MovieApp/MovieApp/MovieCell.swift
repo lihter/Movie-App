@@ -27,8 +27,8 @@ class MovieCell: UICollectionViewCell {
     
     func populate(withMovie movie: Movie) {
         movieTitle.text = movie.title
-        movieDescription.text = movie.description
-        movieImageView.image = UIImage(named: movie.imagePath)
+        movieDescription.text = movie.overview
+        movieImageView.image = UIImage(named: movie.posterPath)
     }
 
 }
