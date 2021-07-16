@@ -39,7 +39,7 @@ class HomePageViewController: UIViewController {
 extension HomePageViewController: UICollectionViewDataSource {
     
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
-        return presenter.movies.count
+        return presenter.movies?.count ?? 0
     }
         
     func collectionView(
@@ -49,7 +49,7 @@ extension HomePageViewController: UICollectionViewDataSource {
         let cell = collectionView.dequeueReusableCell(
             withReuseIdentifier: MovieCell.reuseIdentifier,
             for: indexPath) as! MovieCell
-        cell.populate(withMovie: presenter.movies[indexPath.item])
+        cell.populate(withMovie: presenter.movies![indexPath.item])
         return cell
     }
     

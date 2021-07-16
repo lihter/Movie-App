@@ -8,6 +8,10 @@
 
 /* Begin PBXBuildFile section */
 		63312C3326A05CDB004DB7B4 /* Alamofire in Frameworks */ = {isa = PBXBuildFile; productRef = 63312C3226A05CDB004DB7B4 /* Alamofire */; };
+		63312C3626A168E3004DB7B4 /* Genre.swift in Sources */ = {isa = PBXBuildFile; fileRef = 63312C3526A168E3004DB7B4 /* Genre.swift */; };
+		63312C3826A1711D004DB7B4 /* RequestError.swift in Sources */ = {isa = PBXBuildFile; fileRef = 63312C3726A1711D004DB7B4 /* RequestError.swift */; };
+		63312C3A26A1740A004DB7B4 /* NetworkClient.swift in Sources */ = {isa = PBXBuildFile; fileRef = 63312C3926A17409004DB7B4 /* NetworkClient.swift */; };
+		63312C3C26A1748A004DB7B4 /* NetworkClientProtocol.swift in Sources */ = {isa = PBXBuildFile; fileRef = 63312C3B26A1748A004DB7B4 /* NetworkClientProtocol.swift */; };
 		638BAF27269ED21B00E8E75F /* ProximaNova-Bold.otf in Resources */ = {isa = PBXBuildFile; fileRef = 638BAF24269ED21A00E8E75F /* ProximaNova-Bold.otf */; };
 		638BAF28269ED21B00E8E75F /* ProximaNova-Medium.otf in Resources */ = {isa = PBXBuildFile; fileRef = 638BAF25269ED21B00E8E75F /* ProximaNova-Medium.otf */; };
 		638BAF29269ED21B00E8E75F /* ProximaNova-Semibold.otf in Resources */ = {isa = PBXBuildFile; fileRef = 638BAF26269ED21B00E8E75F /* ProximaNova-Semibold.otf */; };
@@ -29,6 +33,10 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		63312C3526A168E3004DB7B4 /* Genre.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Genre.swift; sourceTree = "<group>"; };
+		63312C3726A1711D004DB7B4 /* RequestError.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RequestError.swift; sourceTree = "<group>"; };
+		63312C3926A17409004DB7B4 /* NetworkClient.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NetworkClient.swift; sourceTree = "<group>"; };
+		63312C3B26A1748A004DB7B4 /* NetworkClientProtocol.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NetworkClientProtocol.swift; sourceTree = "<group>"; };
 		638BAF24269ED21A00E8E75F /* ProximaNova-Bold.otf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "ProximaNova-Bold.otf"; sourceTree = "<group>"; };
 		638BAF25269ED21B00E8E75F /* ProximaNova-Medium.otf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "ProximaNova-Medium.otf"; sourceTree = "<group>"; };
 		638BAF26269ED21B00E8E75F /* ProximaNova-Semibold.otf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "ProximaNova-Semibold.otf"; sourceTree = "<group>"; };
@@ -66,6 +74,8 @@
 		63312C3426A15758004DB7B4 /* NetworkClient */ = {
 			isa = PBXGroup;
 			children = (
+				63312C3926A17409004DB7B4 /* NetworkClient.swift */,
+				63312C3B26A1748A004DB7B4 /* NetworkClientProtocol.swift */,
 			);
 			path = NetworkClient;
 			sourceTree = "<group>";
@@ -93,6 +103,8 @@
 			isa = PBXGroup;
 			children = (
 				638BAF32269EE12F00E8E75F /* Movie.swift */,
+				63312C3526A168E3004DB7B4 /* Genre.swift */,
+				63312C3726A1711D004DB7B4 /* RequestError.swift */,
 			);
 			path = Models;
 			sourceTree = "<group>";
@@ -225,7 +237,9 @@
 			buildActionMask = 2147483647;
 			files = (
 				638BAF33269EE12F00E8E75F /* Movie.swift in Sources */,
+				63312C3C26A1748A004DB7B4 /* NetworkClientProtocol.swift in Sources */,
 				63CC487A269E448200AE3DDB /* MovieCell+Design.swift in Sources */,
+				63312C3A26A1740A004DB7B4 /* NetworkClient.swift in Sources */,
 				638BAF2B269ED40800E8E75F /* FontsConstants.swift in Sources */,
 				63DAA5D6269C7E210004F235 /* AppDelegate.swift in Sources */,
 				63CC4878269E397D00AE3DDB /* MovieCell.swift in Sources */,
@@ -233,9 +247,11 @@
 				63CC486C269DA96A00AE3DDB /* HomePageViewController+Design.swift in Sources */,
 				63DAA5E0269C7E210004F235 /* MovieApp.xcdatamodeld in Sources */,
 				63CC4868269DA89400AE3DDB /* DesignProtocol.swift in Sources */,
+				63312C3626A168E3004DB7B4 /* Genre.swift in Sources */,
 				63DAA5D8269C7E210004F235 /* SceneDelegate.swift in Sources */,
 				638BAF2D269EDC9F00E8E75F /* HomePagePresenter.swift in Sources */,
 				63CC4876269DB82100AE3DDB /* UIColor+CustomColors.swift in Sources */,
+				63312C3826A1711D004DB7B4 /* RequestError.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

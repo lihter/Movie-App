@@ -1,10 +1,10 @@
-struct MovieResponse: Decodable {
+struct PopularMoviesResponse: Decodable {
     
-    private enum CodingKeys: String, CodingKey {
+    enum CodingKeys: String, CodingKey {
         case movies = "results"
     }
     
-    let movies: [Movie]
+    let movies: [Movie]?
     
 }
 
@@ -19,10 +19,11 @@ struct Movie: Decodable {
     let voteCount: Double
     let releaseDate: String?
     let genreIds: [Int]?
+    let budget: Int?
     
     private enum CodingKeys: String, CodingKey {
+        case title, overview, budget
         case identifier = "id"
-        case title, overview
         case backdropPath = "backdrop_path"
         case posterPath = "poster_path"
         case voteAverage = "vote_average"
