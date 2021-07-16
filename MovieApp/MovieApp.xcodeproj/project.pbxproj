@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		63312C3326A05CDB004DB7B4 /* Alamofire in Frameworks */ = {isa = PBXBuildFile; productRef = 63312C3226A05CDB004DB7B4 /* Alamofire */; };
 		638BAF27269ED21B00E8E75F /* ProximaNova-Bold.otf in Resources */ = {isa = PBXBuildFile; fileRef = 638BAF24269ED21A00E8E75F /* ProximaNova-Bold.otf */; };
 		638BAF28269ED21B00E8E75F /* ProximaNova-Medium.otf in Resources */ = {isa = PBXBuildFile; fileRef = 638BAF25269ED21B00E8E75F /* ProximaNova-Medium.otf */; };
 		638BAF29269ED21B00E8E75F /* ProximaNova-Semibold.otf in Resources */ = {isa = PBXBuildFile; fileRef = 638BAF26269ED21B00E8E75F /* ProximaNova-Semibold.otf */; };
@@ -55,12 +56,20 @@
 			buildActionMask = 2147483647;
 			files = (
 				63CC486F269DAB3400AE3DDB /* SnapKit in Frameworks */,
+				63312C3326A05CDB004DB7B4 /* Alamofire in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		63312C3426A15758004DB7B4 /* NetworkClient */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			path = NetworkClient;
+			sourceTree = "<group>";
+		};
 		638BAF23269ED1EB00E8E75F /* Fonts */ = {
 			isa = PBXGroup;
 			children = (
@@ -115,6 +124,7 @@
 		63DAA5D4269C7E210004F235 /* MovieApp */ = {
 			isa = PBXGroup;
 			children = (
+				63312C3426A15758004DB7B4 /* NetworkClient */,
 				638BAF36269EEFFB00E8E75F /* Presenters */,
 				638BAF35269EEFE400E8E75F /* Models */,
 				638BAF34269EE84000E8E75F /* ViewControllers */,
@@ -152,6 +162,7 @@
 			name = MovieApp;
 			packageProductDependencies = (
 				63CC486E269DAB3400AE3DDB /* SnapKit */,
+				63312C3226A05CDB004DB7B4 /* Alamofire */,
 			);
 			productName = MovieApp;
 			productReference = 63DAA5D2269C7E210004F235 /* MovieApp.app */;
@@ -182,6 +193,7 @@
 			mainGroup = 63DAA5C9269C7E210004F235;
 			packageReferences = (
 				63CC486D269DAB3400AE3DDB /* XCRemoteSwiftPackageReference "SnapKit" */,
+				63312C3126A05CDB004DB7B4 /* XCRemoteSwiftPackageReference "Alamofire" */,
 			);
 			productRefGroup = 63DAA5D3269C7E210004F235 /* Products */;
 			projectDirPath = "";
@@ -419,6 +431,14 @@
 /* End XCConfigurationList section */
 
 /* Begin XCRemoteSwiftPackageReference section */
+		63312C3126A05CDB004DB7B4 /* XCRemoteSwiftPackageReference "Alamofire" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/Alamofire/Alamofire.git";
+			requirement = {
+				kind = upToNextMinorVersion;
+				minimumVersion = 5.4.3;
+			};
+		};
 		63CC486D269DAB3400AE3DDB /* XCRemoteSwiftPackageReference "SnapKit" */ = {
 			isa = XCRemoteSwiftPackageReference;
 			repositoryURL = "https://github.com/SnapKit/SnapKit.git";
@@ -430,6 +450,11 @@
 /* End XCRemoteSwiftPackageReference section */
 
 /* Begin XCSwiftPackageProductDependency section */
+		63312C3226A05CDB004DB7B4 /* Alamofire */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 63312C3126A05CDB004DB7B4 /* XCRemoteSwiftPackageReference "Alamofire" */;
+			productName = Alamofire;
+		};
 		63CC486E269DAB3400AE3DDB /* SnapKit */ = {
 			isa = XCSwiftPackageProductDependency;
 			package = 63CC486D269DAB3400AE3DDB /* XCRemoteSwiftPackageReference "SnapKit" */;
