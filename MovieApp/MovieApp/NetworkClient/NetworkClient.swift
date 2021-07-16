@@ -21,7 +21,6 @@ class NetworkClient {
             
             do {
                 let popular = try JSONDecoder().decode(PopularMoviesResponse.self, from: data)
-                print(popular)
                 completionHandler(.success(popular.movies))
             } catch {
                 completionHandler(.failure(RequestError.decodingError))
