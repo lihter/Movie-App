@@ -6,6 +6,8 @@ class HomePageViewController: UIViewController {
     let offset: CGFloat = 4
     let cellHeight: CGFloat = 142
     
+    var movies: [Movie]?
+    
     var headerView: UIView!
     var headerImageView: UIImageView!
     var filmsCollectionView: UICollectionView!
@@ -39,7 +41,7 @@ class HomePageViewController: UIViewController {
 extension HomePageViewController: UICollectionViewDataSource {
     
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
-        return presenter.movies?.count ?? 0
+        return movies?.count ?? 0
     }
     
     func collectionView(
@@ -50,7 +52,7 @@ extension HomePageViewController: UICollectionViewDataSource {
             let cell = collectionView.dequeueReusableCell(
                 withReuseIdentifier: MovieCell.reuseIdentifier,
                 for: indexPath) as? MovieCell,
-            let movie = presenter.movies?[indexPath.item]
+            let movie = movies?[indexPath.item]
         else {
             return UICollectionViewCell()
         }
