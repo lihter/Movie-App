@@ -1,31 +1,25 @@
 import Foundation
 import Alamofire
 
-class NetworkClient {
+class NetworkClient: NetworkClientProtocol {
     
-    static let movieNetworkClient = NetworkClient()
-    
-    func fetchPopularMovies(completionHandler: @escaping(Result<[Movie]?, RequestError>) -> Void) {
-        let url = "https://api.themoviedb.org/3/movie/popular"
-        
-        guard let apiKey = Bundle.main.infoDictionary?["API_KEY"] else { return }
-        
-        let parameters: Parameters = [
-            "api_key": apiKey,
-            "language": "en-US",
-            "page": 1
-        ]
-        
-        AF.request(url, method: .get, parameters: parameters).responseJSON { (data) in
+    static let shared: NetworkClientProtocol = NetworkClient()
+
+    func executeUrlRequest<T>(
+        _ urlPath: String,
+        method: HTTPMethod = .get,
+        parameters: Parameters,
+        completionHandler: @escaping (Result<T, RequestError>) -> Void) where T : Decodable {
+        AF.request("https://api.themoviedb.org/3/\(urlPath)", method: method, parameters: parameters).responseJSON { (data) in
             guard let data = data.data else { return }
             
             do {
-                let popular = try JSONDecoder().decode(PopularMoviesResponse.self, from: data)
-                completionHandler(.success(popular.movies))
+                let decodedData = try JSONDecoder().decode(T.self, from: data)
+                completionHandler(.success(decodedData))
             } catch {
                 completionHandler(.failure(RequestError.decodingError))
             }
         }
     }
-
+    
 }

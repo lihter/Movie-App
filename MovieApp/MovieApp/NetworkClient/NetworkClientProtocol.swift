@@ -1,5 +1,11 @@
+import Alamofire
+
 protocol NetworkClientProtocol {
     
-    func fetchPopularMovies(completionHandler: @escaping(Result<[Movie]?, RequestError>) -> Void)
-
+    func executeUrlRequest<T>(
+        _ urlPath: String,
+        method: HTTPMethod,
+        parameters: Parameters,
+        completionHandler: @escaping (Result<T, RequestError>) -> Void) where T : Decodable
+    
 }

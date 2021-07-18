@@ -1,22 +1,16 @@
 import Foundation
 
 final class HomePagePresenter {
-    
-    var movies: [Movie]? = nil
-    
-    func presentMovies() -> [Movie]? {
-        let movieNetworkClient = NetworkClient()
         
-        movieNetworkClient.fetchPopularMovies { result in
+    func presentPopularMovies(completionHandler: @escaping (Result<[Movie]?, RequestError>) -> Void) {
+        MovieClient.shared.fetchPopularMovies { result in
             switch result {
             case .success(let fetchedMovies):
-                self.movies = fetchedMovies
+                completionHandler(.success(fetchedMovies))
             case .failure(let error):
-                print(error)
+                completionHandler(.failure(error))
             }
         }
-        
-        return movies
     }
     
 }
