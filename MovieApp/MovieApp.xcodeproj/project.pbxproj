@@ -20,6 +20,7 @@
 		638BAF33269EE12F00E8E75F /* Movie.swift in Sources */ = {isa = PBXBuildFile; fileRef = 638BAF32269EE12F00E8E75F /* Movie.swift */; };
 		63BD081026A1C30900AF366A /* NetworkClient.swift in Sources */ = {isa = PBXBuildFile; fileRef = 63BD080F26A1C30900AF366A /* NetworkClient.swift */; };
 		63BD081226A1C31700AF366A /* NetworkClientProtocol.swift in Sources */ = {isa = PBXBuildFile; fileRef = 63BD081126A1C31700AF366A /* NetworkClientProtocol.swift */; };
+		63BD081526A4A52B00AF366A /* Kingfisher in Frameworks */ = {isa = PBXBuildFile; productRef = 63BD081426A4A52B00AF366A /* Kingfisher */; };
 		63CC4868269DA89400AE3DDB /* DesignProtocol.swift in Sources */ = {isa = PBXBuildFile; fileRef = 63CC4867269DA89400AE3DDB /* DesignProtocol.swift */; };
 		63CC486A269DA94D00AE3DDB /* HomePageViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 63CC4869269DA94D00AE3DDB /* HomePageViewController.swift */; };
 		63CC486C269DA96A00AE3DDB /* HomePageViewController+Design.swift in Sources */ = {isa = PBXBuildFile; fileRef = 63CC486B269DA96A00AE3DDB /* HomePageViewController+Design.swift */; };
@@ -67,6 +68,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				63BD081526A4A52B00AF366A /* Kingfisher in Frameworks */,
 				63CC486F269DAB3400AE3DDB /* SnapKit in Frameworks */,
 				63312C3326A05CDB004DB7B4 /* Alamofire in Frameworks */,
 			);
@@ -181,6 +183,7 @@
 			packageProductDependencies = (
 				63CC486E269DAB3400AE3DDB /* SnapKit */,
 				63312C3226A05CDB004DB7B4 /* Alamofire */,
+				63BD081426A4A52B00AF366A /* Kingfisher */,
 			);
 			productName = MovieApp;
 			productReference = 63DAA5D2269C7E210004F235 /* MovieApp.app */;
@@ -212,6 +215,7 @@
 			packageReferences = (
 				63CC486D269DAB3400AE3DDB /* XCRemoteSwiftPackageReference "SnapKit" */,
 				63312C3126A05CDB004DB7B4 /* XCRemoteSwiftPackageReference "Alamofire" */,
+				63BD081326A4A52B00AF366A /* XCRemoteSwiftPackageReference "Kingfisher" */,
 			);
 			productRefGroup = 63DAA5D3269C7E210004F235 /* Products */;
 			projectDirPath = "";
@@ -463,6 +467,14 @@
 				minimumVersion = 5.4.3;
 			};
 		};
+		63BD081326A4A52B00AF366A /* XCRemoteSwiftPackageReference "Kingfisher" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/onevcat/Kingfisher.git";
+			requirement = {
+				kind = upToNextMinorVersion;
+				minimumVersion = 6.3.0;
+			};
+		};
 		63CC486D269DAB3400AE3DDB /* XCRemoteSwiftPackageReference "SnapKit" */ = {
 			isa = XCRemoteSwiftPackageReference;
 			repositoryURL = "https://github.com/SnapKit/SnapKit.git";
@@ -478,6 +490,11 @@
 			isa = XCSwiftPackageProductDependency;
 			package = 63312C3126A05CDB004DB7B4 /* XCRemoteSwiftPackageReference "Alamofire" */;
 			productName = Alamofire;
+		};
+		63BD081426A4A52B00AF366A /* Kingfisher */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 63BD081326A4A52B00AF366A /* XCRemoteSwiftPackageReference "Kingfisher" */;
+			productName = Kingfisher;
 		};
 		63CC486E269DAB3400AE3DDB /* SnapKit */ = {
 			isa = XCSwiftPackageProductDependency;
