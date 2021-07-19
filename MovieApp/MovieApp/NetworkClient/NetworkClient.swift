@@ -9,7 +9,8 @@ class NetworkClient: NetworkClientProtocol {
         _ urlPath: String,
         method: HTTPMethod = .get,
         parameters: Parameters,
-        completion: @escaping (Result<T, RequestError>) -> Void) where T : Decodable {
+        completion: @escaping (Result<T, RequestError>) -> Void
+    ) where T : Decodable {
         AF.request("https://api.themoviedb.org/3/\(urlPath)", method: method, parameters: parameters).responseJSON { (data) in
             guard let data = data.data else { return }
             
