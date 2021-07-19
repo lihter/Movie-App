@@ -2,9 +2,11 @@ import Foundation
 import UIKit
 
 class HomePageViewController: UIViewController {
-
+    
     let offset: CGFloat = 4
     let cellHeight: CGFloat = 142
+    
+    var movies: [Movie]?
     
     var headerView: UIView!
     var headerImageView: UIImageView!
@@ -23,7 +25,7 @@ class HomePageViewController: UIViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-
+        
         buildViews()
         setupCollectionView()
     }
@@ -33,23 +35,29 @@ class HomePageViewController: UIViewController {
         filmsCollectionView.dataSource = self
         filmsCollectionView.delegate = self
     }
-
+    
 }
 
 extension HomePageViewController: UICollectionViewDataSource {
     
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
-        return presenter.movies.count
+        return movies?.count ?? 0
     }
-        
+    
     func collectionView(
         _ collectionView: UICollectionView,
         cellForItemAt indexPath: IndexPath
     ) -> UICollectionViewCell {
-        let cell = collectionView.dequeueReusableCell(
-            withReuseIdentifier: MovieCell.reuseIdentifier,
-            for: indexPath) as! MovieCell
-        cell.populate(withMovie: presenter.movies[indexPath.item])
+        guard
+            let cell = collectionView.dequeueReusableCell(
+                withReuseIdentifier: MovieCell.reuseIdentifier,
+                for: indexPath) as? MovieCell,
+            let movie = movies?[indexPath.item]
+        else {
+            return UICollectionViewCell()
+        }
+        
+        cell.populate(withMovie: movie)
         return cell
     }
     
