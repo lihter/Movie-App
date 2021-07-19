@@ -1,4 +1,5 @@
 import UIKit
+import Kingfisher
 
 class MovieCell: UICollectionViewCell {
     
@@ -25,10 +26,10 @@ class MovieCell: UICollectionViewCell {
         fatalError("init(coder:) has not been implemented")
     }
     
-    func populate(withMovie movie: Movie) {
+    func populate(withMovie movie: MovieViewModel) {
         movieTitle.text = movie.title
         movieDescription.text = movie.overview
-        movieImageView.image = UIImage(named: movie.posterPath)
+        movieImageView.kf.setImage(with: URL(string: "https://image.tmdb.org/t/p/w185\(movie.posterPath)"))
     }
 
 }

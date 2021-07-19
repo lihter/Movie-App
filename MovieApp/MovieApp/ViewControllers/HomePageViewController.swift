@@ -6,7 +6,7 @@ class HomePageViewController: UIViewController {
     let offset: CGFloat = 4
     let cellHeight: CGFloat = 142
     
-    var movies: [Movie]?
+    var movies: [MovieViewModel]?
     
     var headerView: UIView!
     var headerImageView: UIImageView!
