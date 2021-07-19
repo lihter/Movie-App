@@ -1,4 +1,4 @@
-struct MovieViewModel: Decodable {
+struct MovieViewModel {
     
     let title: String
     let overview: String
