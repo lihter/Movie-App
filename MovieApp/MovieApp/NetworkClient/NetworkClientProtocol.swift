@@ -6,6 +6,7 @@ protocol NetworkClientProtocol {
         _ urlPath: String,
         method: HTTPMethod,
         parameters: Parameters,
-        completion: @escaping (Result<T, RequestError>) -> Void) where T : Decodable
+        completion: @escaping (Result<T, RequestError>) -> Void
+    ) where T : Decodable
     
 }
