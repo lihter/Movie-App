@@ -50,7 +50,7 @@ class HomePageViewController: UIViewController {
                     self.filmsCollectionView.reloadData()
                 }
             case .failure(let error):
-                print("Error loading data: \(error)")
+                print("Error loading data: \(error.localizedDescription)")
             }
         }
     }
