@@ -9,22 +9,10 @@ class NetworkClient: NetworkClientProtocol {
         _ urlPath: String,
         method: HTTPMethod = .get,
         parameters: Parameters,
-        completion: @escaping (Result<T, RequestError>) -> Void) where T : Decodable {
-        AF.request("https://api.themoviedb.org/3/\(urlPath)", method: method, parameters: parameters).responseJSON { [weak self] (data) in
-            guard let self = self else {
-                completion(.failure(.apiError))
-                return
-            }
-            
-            if let error = data.error {
-                completion(.failure(self.mapError(error)))
-                return
-            }
-            
-            guard let data = data.data else {
-                completion(.failure(.noData))
-                return
-            }
+        completion: @escaping (Result<T, RequestError>) -> Void
+    ) where T : Decodable {
+        AF.request("https://api.themoviedb.org/3/\(urlPath)", method: method, parameters: parameters).responseJSON { (data) in
+            guard let data = data.data else { return }
             
             do {
                 let decodedData = try JSONDecoder().decode(T.self, from: data)
