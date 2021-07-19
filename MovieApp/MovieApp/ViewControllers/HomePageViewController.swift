@@ -13,10 +13,13 @@ class HomePageViewController: UIViewController {
     var filmsCollectionView: UICollectionView!
     var flowLayout: UICollectionViewFlowLayout!
     var presenter: HomePagePresenter!
+    var router: HomePageRouterProtocol!
     
     init() {
-        self.presenter = HomePagePresenter()
         super.init(nibName: nil, bundle: nil)
+        
+        self.presenter = HomePagePresenter()
+        self.router = HomePageRouter(forVC: self)
     }
     
     required init?(coder: NSCoder) {
@@ -82,7 +85,9 @@ extension HomePageViewController: UICollectionViewDataSource {
 extension HomePageViewController: UICollectionViewDelegate {
     
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
-        collectionView.deselectItem(at: indexPath, animated: true)
+        guard let movieId = movies?[indexPath.item].identifier else { return }
+                
+        router.showDetailScreen(for: movieId)
     }
     
 }

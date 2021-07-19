@@ -22,6 +22,8 @@
 		63BD081226A1C31700AF366A /* NetworkClientProtocol.swift in Sources */ = {isa = PBXBuildFile; fileRef = 63BD081126A1C31700AF366A /* NetworkClientProtocol.swift */; };
 		63BD081526A4A52B00AF366A /* Kingfisher in Frameworks */ = {isa = PBXBuildFile; productRef = 63BD081426A4A52B00AF366A /* Kingfisher */; };
 		63BD081726A4AFA500AF366A /* MovieViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 63BD081626A4AFA500AF366A /* MovieViewModel.swift */; };
+		63BD081926A54B3D00AF366A /* HomePageRouter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 63BD081826A54B3D00AF366A /* HomePageRouter.swift */; };
+		63BD081B26A54CE900AF366A /* MovieDetailViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 63BD081A26A54CE900AF366A /* MovieDetailViewController.swift */; };
 		63CC4868269DA89400AE3DDB /* DesignProtocol.swift in Sources */ = {isa = PBXBuildFile; fileRef = 63CC4867269DA89400AE3DDB /* DesignProtocol.swift */; };
 		63CC486A269DA94D00AE3DDB /* HomePageViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 63CC4869269DA94D00AE3DDB /* HomePageViewController.swift */; };
 		63CC486C269DA96A00AE3DDB /* HomePageViewController+Design.swift in Sources */ = {isa = PBXBuildFile; fileRef = 63CC486B269DA96A00AE3DDB /* HomePageViewController+Design.swift */; };
@@ -50,6 +52,8 @@
 		63BD080F26A1C30900AF366A /* NetworkClient.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NetworkClient.swift; sourceTree = "<group>"; };
 		63BD081126A1C31700AF366A /* NetworkClientProtocol.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NetworkClientProtocol.swift; sourceTree = "<group>"; };
 		63BD081626A4AFA500AF366A /* MovieViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MovieViewModel.swift; sourceTree = "<group>"; };
+		63BD081826A54B3D00AF366A /* HomePageRouter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomePageRouter.swift; sourceTree = "<group>"; };
+		63BD081A26A54CE900AF366A /* MovieDetailViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MovieDetailViewController.swift; sourceTree = "<group>"; };
 		63CC4867269DA89400AE3DDB /* DesignProtocol.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DesignProtocol.swift; sourceTree = "<group>"; };
 		63CC4869269DA94D00AE3DDB /* HomePageViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomePageViewController.swift; sourceTree = "<group>"; };
 		63CC486B269DA96A00AE3DDB /* HomePageViewController+Design.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "HomePageViewController+Design.swift"; sourceTree = "<group>"; };
@@ -105,6 +109,7 @@
 			children = (
 				63CC4869269DA94D00AE3DDB /* HomePageViewController.swift */,
 				63CC486B269DA96A00AE3DDB /* HomePageViewController+Design.swift */,
+				63BD081A26A54CE900AF366A /* MovieDetailViewController.swift */,
 			);
 			path = ViewControllers;
 			sourceTree = "<group>";
@@ -163,6 +168,7 @@
 				63CC4877269E397D00AE3DDB /* MovieCell.swift */,
 				63CC4879269E448200AE3DDB /* MovieCell+Design.swift */,
 				638BAF2A269ED40800E8E75F /* FontsConstants.swift */,
+				63BD081826A54B3D00AF366A /* HomePageRouter.swift */,
 			);
 			path = MovieApp;
 			sourceTree = "<group>";
@@ -258,6 +264,7 @@
 				63CC4878269E397D00AE3DDB /* MovieCell.swift in Sources */,
 				63BD081726A4AFA500AF366A /* MovieViewModel.swift in Sources */,
 				63CC486A269DA94D00AE3DDB /* HomePageViewController.swift in Sources */,
+				63BD081B26A54CE900AF366A /* MovieDetailViewController.swift in Sources */,
 				63BD081026A1C30900AF366A /* NetworkClient.swift in Sources */,
 				63CC486C269DA96A00AE3DDB /* HomePageViewController+Design.swift in Sources */,
 				63DAA5E0269C7E210004F235 /* MovieApp.xcdatamodeld in Sources */,
@@ -267,6 +274,7 @@
 				638BAF2D269EDC9F00E8E75F /* HomePagePresenter.swift in Sources */,
 				63CC4876269DB82100AE3DDB /* UIColor+CustomColors.swift in Sources */,
 				63312C3826A1711D004DB7B4 /* RequestError.swift in Sources */,
+				63BD081926A54B3D00AF366A /* HomePageRouter.swift in Sources */,
 				63BD081226A1C31700AF366A /* NetworkClientProtocol.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
