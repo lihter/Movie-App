@@ -1,9 +1,11 @@
 class MoviesUseCase: MoviesUseCaseProtocol {
+    
+    static let shared: MoviesUseCaseProtocol = MoviesUseCase()
 
     private let moviesDataRepo: MoviesDataRepositoryProtocol!
     
-    init(moviesDataRepository dataRepo: MoviesDataRepositoryProtocol) {
-        self.moviesDataRepo = dataRepo
+    init() {
+        self.moviesDataRepo = MoviesDataRepository.shared
     }
     
     func getPopularMovies(completion: @escaping (Result<[Movie]?, RequestError>) -> Void) {
