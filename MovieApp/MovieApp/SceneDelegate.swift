@@ -9,10 +9,8 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
         
         window = UIWindow(windowScene: windowScene)
 
-        let vc = HomePageViewController()
-        let navigationController = UINavigationController(rootViewController: vc)
-        window?.rootViewController = navigationController
-        window?.makeKeyAndVisible()
+        let router: AppRouterProtocol = AppRouter()
+        router.setInitialScreen(in: window)
     }
 
     func sceneDidDisconnect(_ scene: UIScene) {
