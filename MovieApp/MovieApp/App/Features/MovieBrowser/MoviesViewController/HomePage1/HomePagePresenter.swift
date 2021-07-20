@@ -16,11 +16,11 @@ final class HomePagePresenter: HomePagePresenterProtocol {
     }
     
     func getPopularMovies() {
-        useCase.getPopularMovies { result in
+        useCase.getPopularMovies { [weak self] result in
             switch result {
             case .success(let movies):
-                let moviesViewModel: [MovieViewModel]? = self.mapMovies(movies)
-                self.delegate?.reloadCollectionView(with: moviesViewModel)
+                let moviesViewModel: [MovieViewModel]? = self?.mapMovies(movies)
+                self?.delegate?.reloadCollectionView(with: moviesViewModel)
             case .failure(let error):
                 print("Loading error: \(error.localizedDescription)")
             }

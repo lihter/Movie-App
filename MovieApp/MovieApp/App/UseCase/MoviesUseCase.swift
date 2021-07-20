@@ -1,3 +1,5 @@
+import Foundation
+
 class MoviesUseCase: MoviesUseCaseProtocol {
     
     static let shared: MoviesUseCaseProtocol = MoviesUseCase()
@@ -9,10 +11,10 @@ class MoviesUseCase: MoviesUseCaseProtocol {
     }
     
     func getPopularMovies(completion: @escaping (Result<[MovieUseCaseModel]?, RequestError>) -> Void) {
-        moviesDataRepo.fetchPopularMovies { result in
+        moviesDataRepo.fetchPopularMovies { [weak self] result in
             switch result {
             case .success(let movies):
-                let mapppedMovies = self.mapMovies(movies)
+                let mapppedMovies = self?.mapMovies(movies)
                 completion(.success(mapppedMovies))
             case .failure(let error):
                 completion(.failure(error))
@@ -30,7 +32,7 @@ extension MoviesUseCase {
                 identifier: $0.identifier,
                 title: $0.title,
                 backdropPath: $0.backdropPath,
-                posterPath: $0.posterPath,
+                posterPath: URL(string: "https://image.tmdb.org/t/p/w185\($0.posterPath)"),
                 overview: $0.overview,
                 voteAverage: $0.voteAverage,
                 voteCount: $0.voteCount,

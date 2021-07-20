@@ -9,10 +9,10 @@ class MoviesDataRepository: MoviesDataRepositoryProtocol {
     }
     
     func fetchPopularMovies(completion: @escaping (Result<[MovieDataRepositoryModel]?, RequestError>) -> Void) {
-        networkDataSource.fetchPopularMovies { result in
+        networkDataSource.fetchPopularMovies { [weak self] result in
             switch result {
             case .success(let movies):
-                let mappedMovies = self.mapMovies(movies)
+                let mappedMovies = self?.mapMovies(movies)
                 completion(.success(mappedMovies))
             case .failure(let error):
                 completion(.failure(error))

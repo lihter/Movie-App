@@ -9,10 +9,10 @@ class MovieNetworkDataSource: MovieNetworkDataSourceProtocol {
     }
 
     func fetchPopularMovies(completion: @escaping (Result<[MovieNetworkDataSourceModel]?, RequestError>) -> Void) {
-        movieClient.fetchPopularMovies { result in
+        movieClient.fetchPopularMovies { [weak self] result in
             switch result {
             case .success(let movies):
-                let mappedMovies = self.mapMovies(movies)
+                let mappedMovies = self?.mapMovies(movies)
                 completion(.success(mappedMovies))
             case .failure(let error):
                 completion(.failure(error))
