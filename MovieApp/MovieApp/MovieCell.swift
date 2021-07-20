@@ -29,7 +29,7 @@ class MovieCell: UICollectionViewCell {
     func populate(withMovie movie: MovieViewModel) {
         movieTitle.text = movie.title
         movieDescription.text = movie.overview
-        movieImageView.kf.setImage(with: URL(string: "https://image.tmdb.org/t/p/w185\(movie.posterPath)"))
+        movieImageView.kf.setImage(with: movie.posterPath)
     }
 
 }
