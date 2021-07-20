@@ -27,6 +27,7 @@
 		633E7E8026A6BD580091322D /* HomePageTwoViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 633E7E7F26A6BD580091322D /* HomePageTwoViewController.swift */; };
 		633E7E8226A6BD9E0091322D /* FavouritesViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 633E7E8126A6BD9E0091322D /* FavouritesViewController.swift */; };
 		633E7E8426A6BF190091322D /* ImageEnum.swift in Sources */ = {isa = PBXBuildFile; fileRef = 633E7E8326A6BF190091322D /* ImageEnum.swift */; };
+		633E7E8626A6DCBF0091322D /* UITabBarController+styleMovieTabBar.swift in Sources */ = {isa = PBXBuildFile; fileRef = 633E7E8526A6DCBF0091322D /* UITabBarController+styleMovieTabBar.swift */; };
 		638BAF27269ED21B00E8E75F /* ProximaNova-Bold.otf in Resources */ = {isa = PBXBuildFile; fileRef = 638BAF24269ED21A00E8E75F /* ProximaNova-Bold.otf */; };
 		638BAF28269ED21B00E8E75F /* ProximaNova-Medium.otf in Resources */ = {isa = PBXBuildFile; fileRef = 638BAF25269ED21B00E8E75F /* ProximaNova-Medium.otf */; };
 		638BAF29269ED21B00E8E75F /* ProximaNova-Semibold.otf in Resources */ = {isa = PBXBuildFile; fileRef = 638BAF26269ED21B00E8E75F /* ProximaNova-Semibold.otf */; };
@@ -73,6 +74,7 @@
 		633E7E7F26A6BD580091322D /* HomePageTwoViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomePageTwoViewController.swift; sourceTree = "<group>"; };
 		633E7E8126A6BD9E0091322D /* FavouritesViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FavouritesViewController.swift; sourceTree = "<group>"; };
 		633E7E8326A6BF190091322D /* ImageEnum.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ImageEnum.swift; sourceTree = "<group>"; };
+		633E7E8526A6DCBF0091322D /* UITabBarController+styleMovieTabBar.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UITabBarController+styleMovieTabBar.swift"; sourceTree = "<group>"; };
 		638BAF24269ED21A00E8E75F /* ProximaNova-Bold.otf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "ProximaNova-Bold.otf"; sourceTree = "<group>"; };
 		638BAF25269ED21B00E8E75F /* ProximaNova-Medium.otf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "ProximaNova-Medium.otf"; sourceTree = "<group>"; };
 		638BAF26269ED21B00E8E75F /* ProximaNova-Semibold.otf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "ProximaNova-Semibold.otf"; sourceTree = "<group>"; };
@@ -181,6 +183,7 @@
 			isa = PBXGroup;
 			children = (
 				63CC4875269DB82100AE3DDB /* UIColor+CustomColors.swift */,
+				633E7E8526A6DCBF0091322D /* UITabBarController+styleMovieTabBar.swift */,
 			);
 			path = Extensions;
 			sourceTree = "<group>";
@@ -456,6 +459,7 @@
 				638BAF2B269ED40800E8E75F /* FontsConstants.swift in Sources */,
 				63DAA5D6269C7E210004F235 /* AppDelegate.swift in Sources */,
 				63CC4878269E397D00AE3DDB /* MovieCell.swift in Sources */,
+				633E7E8626A6DCBF0091322D /* UITabBarController+styleMovieTabBar.swift in Sources */,
 				633E7E6626A6A55F0091322D /* MovieDataRepositoryModel.swift in Sources */,
 				63BD081726A4AFA500AF366A /* MovieViewModel.swift in Sources */,
 				63CC486A269DA94D00AE3DDB /* HomePageViewController.swift in Sources */,

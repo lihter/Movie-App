@@ -4,6 +4,6 @@ protocol AppRouterProtocol {
     
     func showDetailScreen(for movieId: Int)
     func setInitialScreen(in: UIWindow?)
-    func tabBarScreen()
+    func showTabBarView()
     
 }
