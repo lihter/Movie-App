@@ -1,15 +1,15 @@
-class MoviesDataRepository: MoviesDataRepositoryProtocol {
+class MovieNetworkDataSource: MovieNetworkDataSourceProtocol {
     
-    static let shared: MoviesDataRepositoryProtocol = MoviesDataRepository()
+    static let shared: MovieNetworkDataSourceProtocol = MovieNetworkDataSource()
     
-    private let networkDataSource: MovieNetworkDataSourceProtocol!
+    private let movieClient: MovieClientProtocol!
     
     init() {
-        self.networkDataSource = MovieNetworkDataSource.shared
+        self.movieClient = MovieClient.shared
     }
-    
+
     func fetchPopularMovies(completion: @escaping (Result<[Movie]?, RequestError>) -> Void) {
-        networkDataSource.fetchPopularMovies { result in
+        movieClient.fetchPopularMovies { result in
             switch result {
             case .success(let movies):
                 completion(.success(movies))
