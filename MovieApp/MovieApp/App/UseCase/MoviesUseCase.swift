@@ -1,5 +1,3 @@
-import Foundation
-
 class MoviesUseCase: MoviesUseCaseProtocol {
     
     static let shared: MoviesUseCaseProtocol = MoviesUseCase()
@@ -32,7 +30,7 @@ extension MoviesUseCase {
                 identifier: $0.identifier,
                 title: $0.title,
                 backdropPath: $0.backdropPath,
-                posterPath: URL(string: "https://image.tmdb.org/t/p/w185\($0.posterPath)"),
+                posterPath: $0.posterPath,
                 overview: $0.overview,
                 voteAverage: $0.voteAverage,
                 voteCount: $0.voteCount,

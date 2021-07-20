@@ -1,9 +1,11 @@
+import Foundation
+
 struct MovieDataRepositoryModel {
     
     let identifier: Int
     let title: String
     let backdropPath: String?
-    let posterPath: String
+    let posterPath: URL?
     let overview: String
     let voteAverage: Double
     let voteCount: Double
