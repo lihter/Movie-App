@@ -1,23 +1,40 @@
 import Foundation
 
-final class HomePagePresenter {
-            
-    func getPopularMovies(completion: @escaping (Result<[MovieViewModel]?, RequestError>) -> Void) {
-        MovieClient.shared.fetchPopularMovies { result in
+final class HomePagePresenter: HomePagePresenterProtocol {
+    
+    private weak var delegate: HomePageDelegate?
+    private let useCase: MoviesUseCaseProtocol!
+    private let router: AppRouterProtocol!
+    
+    init (useCase: MoviesUseCaseProtocol, router: AppRouterProtocol) {
+        self.useCase = useCase
+        self.router = router
+    }
+    
+    func setDelegate(delegate: HomePageDelegate) {
+        self.delegate = delegate
+    }
+    
+    func getPopularMovies() {
+        useCase.getPopularMovies { result in
             switch result {
-            case .success(let fetchedMovies):
-                let movies: [MovieViewModel]? = fetchedMovies?.map {
+            case .success(let movies):
+                let moviesViewModel: [MovieViewModel]? = movies?.map {
                     return MovieViewModel(
                         identifier: $0.identifier,
                         title: $0.title,
                         overview: $0.overview,
-                        posterPath: $0.posterPath)
+                        posterPath: "https://image.tmdb.org/t/p/w185\($0.posterPath)")
                 } ?? nil
-                completion(.success(movies))
+                self.delegate?.reloadCollectionView(with: moviesViewModel)
             case .failure(let error):
-                completion(.failure(error))
+                print("Loading error: \(error.localizedDescription)")
             }
         }
+    }
+    
+    func selectedMovie(withId movieId: Int) {
+        router.showDetailScreen(for: movieId)
     }
     
 }
