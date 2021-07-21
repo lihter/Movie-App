@@ -18,6 +18,7 @@ final class AppRouter {
         moviesRepo = MoviesDataRepository.shared
         
         navigationController = UINavigationController()
+        navigationController.setNavigationBarHidden(true, animated: false)
     }
     
 }
