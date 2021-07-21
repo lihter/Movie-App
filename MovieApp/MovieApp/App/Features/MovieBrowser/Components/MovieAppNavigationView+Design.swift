@@ -19,7 +19,7 @@ extension MovieAppNavigationView: DesignProtocol {
     }
     
     func styleViews() {
-        backgroundColor = .headerColor
+        backgroundColor = .primaryBlue
         backButton.isHidden = true
     }
     
