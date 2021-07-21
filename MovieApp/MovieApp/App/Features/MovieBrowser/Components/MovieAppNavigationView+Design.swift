@@ -25,7 +25,7 @@ extension MovieAppNavigationView: DesignProtocol {
     
     func defineLayoutForViews() {
         snp.makeConstraints {
-            $0.height.equalTo(80)
+            $0.height.equalTo(barHeight)
         }
         
         navigationImageView.snp.makeConstraints {

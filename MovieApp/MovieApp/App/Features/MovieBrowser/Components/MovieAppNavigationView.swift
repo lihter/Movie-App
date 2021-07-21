@@ -3,6 +3,7 @@ import UIKit
 class MovieAppNavigationView: UIView {
     
     let offset: CGFloat = 4
+    let barHeight: CGFloat = 80
     
     var navigationImageView: UIImageView!
     var backButton: UIButton!
