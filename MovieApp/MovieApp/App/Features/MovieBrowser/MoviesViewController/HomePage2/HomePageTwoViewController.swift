@@ -6,6 +6,7 @@ class HomePageTwoViewController: UIViewController {
     
     var navigationView: MovieAppNavigationView!
     var searchBar: MovieSearchBar!
+    var subcategoryView: SubcategoryView!
         
     override func viewDidLoad() {
         super.viewDidLoad()

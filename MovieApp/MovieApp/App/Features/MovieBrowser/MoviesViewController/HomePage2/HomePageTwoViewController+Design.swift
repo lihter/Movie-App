@@ -15,6 +15,9 @@ extension HomePageTwoViewController: DesignProtocol {
         
         searchBar = MovieSearchBar()
         view.addSubview(searchBar)
+        
+        subcategoryView = SubcategoryView()
+        view.addSubview(subcategoryView)
     }
     
     func styleViews() {
@@ -29,6 +32,12 @@ extension HomePageTwoViewController: DesignProtocol {
         searchBar.snp.makeConstraints {
             $0.leading.trailing.equalToSuperview()
             $0.top.equalTo(navigationView.snp.bottom).offset(4 * offset)
+        }
+        
+        subcategoryView.snp.makeConstraints {
+            $0.top.equalTo(searchBar.snp.bottom).offset(2 * offset)
+            $0.leading.trailing.equalToSuperview()
+            $0.height.equalTo(30)
         }
     }
         
