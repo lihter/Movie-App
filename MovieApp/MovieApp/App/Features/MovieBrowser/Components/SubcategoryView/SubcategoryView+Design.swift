@@ -19,7 +19,7 @@ extension SubcategoryView: DesignProtocol {
     }
     
     func styleViews() {
-        scrollView.horizontalScrollIndicatorInsets = UIEdgeInsets(top: 0, left: 4 * offset, bottom: 0, right: 0)
+        scrollView.contentInset = UIEdgeInsets(top: 0, left: 4 * offset, bottom: 0, right: 0)
         scrollView.showsHorizontalScrollIndicator = false
         
         subcategoriesStack.alignment = .center
