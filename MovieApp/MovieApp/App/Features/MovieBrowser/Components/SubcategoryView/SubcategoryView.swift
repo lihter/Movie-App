@@ -2,6 +2,8 @@ import UIKit
 
 class SubcategoryView: UIView {
     
+    static let height: CGFloat = 40
+    
     var selectedSubcategory: Int = 0
     
     let offset: CGFloat = 4

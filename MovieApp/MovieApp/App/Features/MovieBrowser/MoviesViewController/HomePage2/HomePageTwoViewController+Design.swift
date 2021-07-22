@@ -37,7 +37,7 @@ extension HomePageTwoViewController: DesignProtocol {
         subcategoryView.snp.makeConstraints {
             $0.top.equalTo(searchBar.snp.bottom).offset(2 * offset)
             $0.leading.trailing.equalToSuperview()
-            $0.height.equalTo(30)
+            $0.height.equalTo(SubcategoryView.height)
         }
     }
         
