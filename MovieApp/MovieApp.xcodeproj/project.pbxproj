@@ -35,6 +35,9 @@
 		633E7E9226A8123E0091322D /* MovieSearchBar+Design.swift in Sources */ = {isa = PBXBuildFile; fileRef = 633E7E9126A8123E0091322D /* MovieSearchBar+Design.swift */; };
 		633E7E9826A942770091322D /* SubcategoryView+Design.swift in Sources */ = {isa = PBXBuildFile; fileRef = 633E7E9726A942770091322D /* SubcategoryView+Design.swift */; };
 		633E7E9A26A942CD0091322D /* SubcategoryView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 633E7E9926A942CD0091322D /* SubcategoryView.swift */; };
+		633E7EA126A96A0D0091322D /* NewMovieCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 633E7EA026A96A0D0091322D /* NewMovieCell.swift */; };
+		633E7EA326A96A3C0091322D /* NewMovieCell+Design.swift in Sources */ = {isa = PBXBuildFile; fileRef = 633E7EA226A96A3C0091322D /* NewMovieCell+Design.swift */; };
+		633E7EA526A96D140091322D /* FavouriteButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = 633E7EA426A96D140091322D /* FavouriteButton.swift */; };
 		638BAF27269ED21B00E8E75F /* ProximaNova-Bold.otf in Resources */ = {isa = PBXBuildFile; fileRef = 638BAF24269ED21A00E8E75F /* ProximaNova-Bold.otf */; };
 		638BAF28269ED21B00E8E75F /* ProximaNova-Medium.otf in Resources */ = {isa = PBXBuildFile; fileRef = 638BAF25269ED21B00E8E75F /* ProximaNova-Medium.otf */; };
 		638BAF29269ED21B00E8E75F /* ProximaNova-Semibold.otf in Resources */ = {isa = PBXBuildFile; fileRef = 638BAF26269ED21B00E8E75F /* ProximaNova-Semibold.otf */; };
@@ -89,6 +92,9 @@
 		633E7E9126A8123E0091322D /* MovieSearchBar+Design.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "MovieSearchBar+Design.swift"; sourceTree = "<group>"; };
 		633E7E9726A942770091322D /* SubcategoryView+Design.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "SubcategoryView+Design.swift"; sourceTree = "<group>"; };
 		633E7E9926A942CD0091322D /* SubcategoryView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SubcategoryView.swift; sourceTree = "<group>"; };
+		633E7EA026A96A0D0091322D /* NewMovieCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NewMovieCell.swift; sourceTree = "<group>"; };
+		633E7EA226A96A3C0091322D /* NewMovieCell+Design.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "NewMovieCell+Design.swift"; sourceTree = "<group>"; };
+		633E7EA426A96D140091322D /* FavouriteButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FavouriteButton.swift; sourceTree = "<group>"; };
 		638BAF24269ED21A00E8E75F /* ProximaNova-Bold.otf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "ProximaNova-Bold.otf"; sourceTree = "<group>"; };
 		638BAF25269ED21B00E8E75F /* ProximaNova-Medium.otf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "ProximaNova-Medium.otf"; sourceTree = "<group>"; };
 		638BAF26269ED21B00E8E75F /* ProximaNova-Semibold.otf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "ProximaNova-Semibold.otf"; sourceTree = "<group>"; };
@@ -226,6 +232,7 @@
 		633E7E7226A6B5CF0091322D /* Components */ = {
 			isa = PBXGroup;
 			children = (
+				633E7E9F26A9691A0091322D /* MovieCollectionViewCell */,
 				633E7E9626A9423B0091322D /* SubcategoryView */,
 				633E7E9526A942240091322D /* MovieAppNavigationView */,
 				633E7E9426A942040091322D /* MovieCellHPv1 */,
@@ -380,6 +387,16 @@
 			path = SubcategoryView;
 			sourceTree = "<group>";
 		};
+		633E7E9F26A9691A0091322D /* MovieCollectionViewCell */ = {
+			isa = PBXGroup;
+			children = (
+				633E7EA026A96A0D0091322D /* NewMovieCell.swift */,
+				633E7EA226A96A3C0091322D /* NewMovieCell+Design.swift */,
+				633E7EA426A96D140091322D /* FavouriteButton.swift */,
+			);
+			path = MovieCollectionViewCell;
+			sourceTree = "<group>";
+		};
 		638BAF23269ED1EB00E8E75F /* Fonts */ = {
 			isa = PBXGroup;
 			children = (
@@ -524,6 +541,7 @@
 				633E7E8A26A70C090091322D /* HomePageTwoViewController+Design.swift in Sources */,
 				633E7E6826A6A7520091322D /* MovieUseCaseModel.swift in Sources */,
 				63BD081D26A5677C00AF366A /* RequestError+localizedDescription.swift in Sources */,
+				633E7EA126A96A0D0091322D /* NewMovieCell.swift in Sources */,
 				63BD081B26A54CE900AF366A /* MovieDetailViewController.swift in Sources */,
 				633E7E6226A69D980091322D /* AppRouterProtocol.swift in Sources */,
 				63BD081026A1C30900AF366A /* NetworkClient.swift in Sources */,
@@ -531,6 +549,7 @@
 				633E7E6026A5C3A90091322D /* MovieNetworkDataSourceProtocol.swift in Sources */,
 				633E7E9A26A942CD0091322D /* SubcategoryView.swift in Sources */,
 				63CC486C269DA96A00AE3DDB /* HomePageViewController+Design.swift in Sources */,
+				633E7EA526A96D140091322D /* FavouriteButton.swift in Sources */,
 				633E7E5126A592C50091322D /* MoviesDataRepository.swift in Sources */,
 				63DAA5E0269C7E210004F235 /* MovieApp.xcdatamodeld in Sources */,
 				63CC4868269DA89400AE3DDB /* DesignProtocol.swift in Sources */,
@@ -540,6 +559,7 @@
 				63CC4876269DB82100AE3DDB /* UIColor+CustomColors.swift in Sources */,
 				63312C3826A1711D004DB7B4 /* RequestError.swift in Sources */,
 				633E7E5A26A5A9A40091322D /* HomePageDelegate.swift in Sources */,
+				633E7EA326A96A3C0091322D /* NewMovieCell+Design.swift in Sources */,
 				63BD081926A54B3D00AF366A /* AppRouter.swift in Sources */,
 				633E7E5C26A5AFB40091322D /* HomePagePresenterProtocol.swift in Sources */,
 				633E7E8026A6BD580091322D /* HomePageTwoViewController.swift in Sources */,
