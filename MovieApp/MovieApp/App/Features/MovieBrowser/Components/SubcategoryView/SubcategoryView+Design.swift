@@ -69,7 +69,7 @@ extension SubcategoryView {
         button.setAttributedTitle(NSAttributedString(
                                     string: "Subcategory",
                                     attributes: [NSAttributedString.Key.font: font,
-                                                 NSAttributedString.Key.underlineStyle: NSUnderlineStyle.single.rawValue,
+                                                 NSAttributedString.Key.underlineStyle: NSUnderlineStyle.thick.rawValue,
                                                  NSAttributedString.Key.underlineColor: UIColor.black,
                                                  NSAttributedString.Key.foregroundColor: UIColor.black]),
                                   for: .normal)
