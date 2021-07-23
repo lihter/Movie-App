@@ -14,19 +14,15 @@ extension SubcategoryView: DesignProtocol {
         
         subcategoriesStack = UIStackView()
         scrollView.addSubview(subcategoriesStack)
-        
-        addButtons()
     }
     
     func styleViews() {
-        scrollView.contentInset = UIEdgeInsets(top: 0, left: 4 * offset, bottom: 0, right: 0)
+        scrollView.contentInset = UIEdgeInsets(top: 0, left: 4 * offset, bottom: 0, right: 4 * offset)
         scrollView.showsHorizontalScrollIndicator = false
         
         subcategoriesStack.alignment = .center
         subcategoriesStack.spacing = 5 * offset
         subcategoriesStack.axis = .horizontal
-        
-        styleButtons()
     }
     
     func defineLayoutForViews() {
@@ -44,7 +40,8 @@ extension SubcategoryView: DesignProtocol {
 extension SubcategoryView {
     
     func addButtons() {
-        for tag in 0..<maxNumberOfSubcategoryItems {
+        let n = (subcategories?.count ?? 0) > maxNumberOfSubcategoryItems ? maxNumberOfSubcategoryItems : subcategories?.count
+        for tag in 0..<(n ?? 0) {
             let button = UIButton()
             button.tag = tag
             button.addTarget(self, action: #selector(subcategoryButtonPressed), for: .touchUpInside)
@@ -65,9 +62,10 @@ extension SubcategoryView {
     }
     
     func styleSelectedSubcategory(_ button: UIButton) {
+        guard let categoryTitle = subcategories?[button.tag] else { return }
         let font = UIFont(name: Fonts.proximaBold, size: 16) ?? .systemFont(ofSize: 16)
         button.setAttributedTitle(NSAttributedString(
-                                    string: "Subcategory",
+                                    string: categoryTitle,
                                     attributes: [NSAttributedString.Key.font: font,
                                                  NSAttributedString.Key.underlineStyle: NSUnderlineStyle.thick.rawValue,
                                                  NSAttributedString.Key.underlineColor: UIColor.black,
@@ -76,9 +74,10 @@ extension SubcategoryView {
     }
     
     func styleUnselectedSubcategory(_ button: UIButton) {
+        guard let categoryTitle = subcategories?[button.tag] else { return }
         let font = UIFont(name: Fonts.proximaNovaSemiBold, size: 16) ?? .systemFont(ofSize: 16)
         button.setAttributedTitle(NSAttributedString(
-                                    string: "Subcategory",
+                                    string: categoryTitle,
                                     attributes: [NSAttributedString.Key.font: font,
                                                  NSAttributedString.Key.foregroundColor: UIColor.secondaryGray]),
                                   for: .normal)

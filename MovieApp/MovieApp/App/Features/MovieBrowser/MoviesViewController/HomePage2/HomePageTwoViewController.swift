@@ -3,60 +3,54 @@ import UIKit
 class HomePageTwoViewController: UIViewController {
     
     let offset: CGFloat = 4
+    let tableRowOffset: CGFloat = 40
     
     var navigationView: MovieAppNavigationView!
     var searchBar: MovieSearchBar!
-    var subcategoryView: SubcategoryView!
-    var moviesCollectionView: UICollectionView!
-    var flowLayout: UICollectionViewFlowLayout!
+    var tableView: UITableView!
         
     override func viewDidLoad() {
         super.viewDidLoad()
         
         buildViews()
-        setupCollectionView()
+        setupTableView()
     }
     
-    private func setupCollectionView() {
-        moviesCollectionView.register(NewMovieCell.self, forCellWithReuseIdentifier: NewMovieCell.reuseIdentifier)
-        moviesCollectionView.dataSource = self
-        moviesCollectionView.delegate = self
+    private func setupTableView() {
+        tableView.register(CategoryCell.self, forCellReuseIdentifier: CategoryCell.reuseIdentifier)
+        tableView.dataSource = self
+        tableView.delegate = self
     }
     
 }
 
-extension HomePageTwoViewController: UICollectionViewDataSource {
+extension HomePageTwoViewController: UITableViewDelegate {
+
+    func numberOfSections(in collectionView: UICollectionView) -> Int {
+        return 1
+    }
+
+}
+
+extension HomePageTwoViewController: UITableViewDataSource {
     
-    func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
-        return 10
+    func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
+        return 8
     }
     
-    func collectionView(
-        _ collectionView: UICollectionView,
-        cellForItemAt indexPath: IndexPath
-    ) -> UICollectionViewCell {
-        guard let cell = collectionView.dequeueReusableCell(
-                withReuseIdentifier: NewMovieCell.reuseIdentifier,
-                for: indexPath) as? NewMovieCell
+    func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
+        guard let cell = tableView.dequeueReusableCell(
+                withIdentifier: CategoryCell.reuseIdentifier,
+                for: indexPath) as? CategoryCell
         else {
-            return UICollectionViewCell()
+            return UITableViewCell()
         }
         let mockMovie = MovieViewModel(identifier: 13, title: "Mock", overview: "Bla bla bla", posterPath: URL(string: "https://image.tmdb.org/t/p/w185/qAZ0pzat24kLdO3o8ejmbLxyOac.jpg"))
+        let mockCategory = CategoryViewModel(categoryTitle: "What's popular", subcategories: ["Streaming", "On TV", "For rent", "In theaters", "Movies", "Free"], movies: [mockMovie, mockMovie, mockMovie, mockMovie, mockMovie, mockMovie, mockMovie])
         
-        cell.populate(withMovie: mockMovie)
+        cell.populate(with: mockCategory)
+        cell.selectionStyle = .none
         return cell
-    }
-    
-}
-
-extension HomePageTwoViewController: UICollectionViewDelegateFlowLayout {
-    
-    func collectionView(
-        _ collectionView: UICollectionView,
-        layout collectionViewLayout: UICollectionViewLayout,
-        sizeForItemAt indexPath: IndexPath
-    ) -> CGSize {
-        return NewMovieCell.cellSize
     }
     
 }

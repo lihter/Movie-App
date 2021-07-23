@@ -1,0 +1,61 @@
+import UIKit
+
+extension CategoryCell: DesignProtocol {
+    
+    func buildViews() {
+        createViews()
+        styleViews()
+        defineLayoutForViews()
+    }
+    
+    func createViews() {
+        categoryLabel = UILabel()
+        contentView.addSubview(categoryLabel)
+        
+        subcategoriesView = SubcategoryView()
+        contentView.addSubview(subcategoriesView)
+        
+        flowLayout = UICollectionViewFlowLayout()
+        moviesCollectionView = UICollectionView(
+            frame: .zero,
+            collectionViewLayout: flowLayout)
+        contentView.addSubview(moviesCollectionView)
+    }
+    
+    func styleViews() {
+        backgroundColor = .clear
+        
+        categoryLabel.textColor = .primaryBlue
+        categoryLabel.adjustsFontSizeToFitWidth = true
+        categoryLabel.font = UIFont(name: Fonts.proximaBold, size: categoryTitleFontSize)
+        categoryLabel.textAlignment = .left
+        
+        flowLayout.scrollDirection = .horizontal
+        flowLayout.sectionInset = UIEdgeInsets(top: 0, left: 4 * offset, bottom: 0, right: 4 * offset)
+        flowLayout.minimumInteritemSpacing = 2 * offset
+        
+        moviesCollectionView.backgroundColor = .clear
+        moviesCollectionView.showsHorizontalScrollIndicator = false
+    }
+    
+    func defineLayoutForViews() {
+        categoryLabel.snp.makeConstraints {
+            $0.leading.equalToSuperview().offset(4 * offset)
+            $0.trailing.equalToSuperview().inset(4 * offset)
+            $0.top.equalToSuperview()
+        }
+        
+        subcategoriesView.snp.makeConstraints {
+            $0.leading.trailing.equalToSuperview()
+            $0.top.equalTo(categoryLabel.snp.bottom).offset(3 * offset)
+            $0.height.equalTo(SubcategoryView.height)
+        }
+        
+        moviesCollectionView.snp.makeConstraints {
+            $0.leading.trailing.equalToSuperview()
+            $0.top.equalTo(subcategoriesView.snp.bottom).offset(3 * offset)
+            $0.height.equalTo(NewMovieCell.cellSize.height)
+        }
+    }
+    
+}
