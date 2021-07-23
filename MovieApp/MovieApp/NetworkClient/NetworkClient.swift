@@ -17,9 +17,35 @@ class NetworkClient: NetworkClientProtocol {
             do {
                 let decodedData = try JSONDecoder().decode(T.self, from: data)
                 completion(.success(decodedData))
+                return
             } catch {
-                completion(.failure(RequestError.decodingError))
+                completion(.failure(.decodingError))
+                return
             }
+        }
+    }
+    
+}
+
+extension NetworkClient {
+    
+    private func mapError(_ error: AFError) -> RequestError {
+        switch error {
+        case .createURLRequestFailed(error: _),
+             .urlRequestValidationFailed(reason: _):
+            return .invalidRequest
+        case .invalidURL(url: _):
+            return .invalidEndpoint
+        case .responseValidationFailed(reason: _),
+             .responseSerializationFailed(reason: _):
+            return .invalidResponse
+        case .serverTrustEvaluationFailed(reason: _),
+             .sessionDeinitialized,
+             .sessionInvalidated(error: _),
+             .sessionTaskFailed(error: _):
+            return .apiError
+        default:
+            return .general
         }
     }
     
