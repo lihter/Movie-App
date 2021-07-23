@@ -1,5 +1,7 @@
 class MoviesDataRepository: MoviesDataRepositoryProtocol {
     
+    static let shared: MoviesDataRepositoryProtocol = MoviesDataRepository()
+    
     private let networkDataSource: MovieClientProtocol!
     
     init() {
