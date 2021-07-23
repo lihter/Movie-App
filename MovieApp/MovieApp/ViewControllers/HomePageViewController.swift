@@ -6,7 +6,7 @@ class HomePageViewController: UIViewController {
     let offset: CGFloat = 4
     let cellHeight: CGFloat = 142
     
-    var movies: [Movie]?
+    var movies: [MovieViewModel]?
     
     var headerView: UIView!
     var headerImageView: UIImageView!
@@ -28,12 +28,28 @@ class HomePageViewController: UIViewController {
         
         buildViews()
         setupCollectionView()
+        
+        loadData()
     }
     
     private func setupCollectionView() {
         filmsCollectionView.register(MovieCell.self, forCellWithReuseIdentifier: MovieCell.reuseIdentifier)
         filmsCollectionView.dataSource = self
         filmsCollectionView.delegate = self
+    }
+    
+    private func loadData() {
+        presenter.getPopularMovies { result in
+            switch result {
+            case .success(let movies):
+                self.movies = movies
+                DispatchQueue.main.async {
+                    self.filmsCollectionView.reloadData()
+                }
+            case .failure(let error):
+                print("Error loading data: \(error)")
+            }
+        }
     }
     
 }
