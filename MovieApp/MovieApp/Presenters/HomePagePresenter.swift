@@ -1,7 +1,7 @@
 import Foundation
 
 final class HomePagePresenter {
-            
+        
     func getPopularMovies(completion: @escaping (Result<[MovieViewModel]?, RequestError>) -> Void) {
         MovieClient.shared.fetchPopularMovies { result in
             switch result {
