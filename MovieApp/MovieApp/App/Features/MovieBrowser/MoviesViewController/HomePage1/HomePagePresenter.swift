@@ -4,9 +4,9 @@ final class HomePagePresenter: HomePagePresenterProtocol {
     
     private weak var delegate: HomePageDelegate?
     private let useCase: MoviesUseCaseProtocol!
-    private let router: AppRouterProtocol!
+    private let router: AppRouter!
     
-    init (useCase: MoviesUseCaseProtocol, router: AppRouterProtocol) {
+    init (useCase: MoviesUseCaseProtocol, router: AppRouter) {
         self.useCase = useCase
         self.router = router
     }
@@ -17,10 +17,12 @@ final class HomePagePresenter: HomePagePresenterProtocol {
     
     func getPopularMovies() {
         useCase.getPopularMovies { [weak self] result in
+            guard let self = self else { return }
+            
             switch result {
             case .success(let movies):
-                let moviesViewModel: [MovieViewModel]? = self?.mapMovies(movies)
-                self?.delegate?.reloadCollectionView(with: moviesViewModel)
+                let moviesViewModel: [MovieViewModel]? = self.mapMovies(movies)
+                self.delegate?.reloadCollectionView(with: moviesViewModel)
             case .failure(let error):
                 print("Loading error: \(error.localizedDescription)")
             }
@@ -35,13 +37,9 @@ final class HomePagePresenter: HomePagePresenterProtocol {
 
 extension HomePagePresenter {
     
-    private func mapMovies(_ movies: [MovieUseCaseModel]?) -> [MovieViewModel]?{
+    private func mapMovies(_ movies: [MovieModel]?) -> [MovieViewModel]?{
         return movies?.map {
-            return MovieViewModel(
-                identifier: $0.identifier,
-                title: $0.title,
-                overview: $0.overview,
-                posterPath: $0.posterPath)
+            return MovieViewModel(fromModel: $0)
         }
     }
     

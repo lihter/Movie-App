@@ -1,5 +1,5 @@
 protocol MovieClientProtocol {
     
-    func fetchPopularMovies(completion: @escaping(Result<[MovieNetworkModel]?, RequestError>) -> Void)
+    func fetchPopularMovies(completion: @escaping(Result<[MovieResponse]?, RequestError>) -> Void)
 
 }

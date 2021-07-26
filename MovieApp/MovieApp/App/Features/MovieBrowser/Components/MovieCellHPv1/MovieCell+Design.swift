@@ -40,14 +40,14 @@ extension MovieCell: DesignProtocol {
         
         movieTitle.textColor = .black
         movieTitle.adjustsFontSizeToFitWidth = true
-        movieTitle.font = UIFont(name: Fonts.proximaBold, size: titleFontSize)
+        movieTitle.font = .regularBold
         movieTitle.textAlignment = .left
         
         movieDescription.numberOfLines = 0
         movieDescription.lineBreakMode = .byWordWrapping
         movieDescription.textAlignment = .left
         movieDescription.textColor = .secondaryTextColor
-        movieDescription.font = UIFont(name: Fonts.proximaMedium, size: descriptionFontSize)
+        movieDescription.font = .regularMedium
         
         movieImageView.clipsToBounds = true
         movieImageView.contentMode = .scaleAspectFill

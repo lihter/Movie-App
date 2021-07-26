@@ -10,9 +10,6 @@ extension HomePageTwoViewController: DesignProtocol {
     }
     
     func createViews() {
-        navigationView = MovieAppNavigationView()
-        view.addSubview(navigationView)
-        
         searchBar = MovieSearchBar()
         view.addSubview(searchBar)
         
@@ -30,13 +27,9 @@ extension HomePageTwoViewController: DesignProtocol {
     }
     
     func defineLayoutForViews() {
-        navigationView.snp.makeConstraints {
-            $0.leading.trailing.top.equalToSuperview()
-        }
-        
         searchBar.snp.makeConstraints {
             $0.leading.trailing.equalToSuperview()
-            $0.top.equalTo(navigationView.snp.bottom).offset(4 * offset)
+            $0.top.equalTo(view.safeAreaLayoutGuide).offset(5 * offset)
         }
         
         tableView.snp.makeConstraints {

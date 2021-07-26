@@ -13,8 +13,7 @@ extension MovieSearchBar: DesignProtocol {
         searchGrayFieldView = UIView()
         addSubview(searchGrayFieldView)
         
-        let image = ImageEnum.searchBarIcon.image
-        searchBarIconImageView = UIImageView(image: image)
+        searchBarIconImageView = UIImageView(image: UIImage(with: .searchBarIcon))
         searchGrayFieldView.addSubview(searchBarIconImageView)
         
         searchTextField = UITextField()
@@ -38,19 +37,21 @@ extension MovieSearchBar: DesignProtocol {
         
         searchTextField.attributedPlaceholder = NSAttributedString(
             string: "Search",
-            attributes: [NSAttributedString.Key.foregroundColor: UIColor.searchPlaceholderColor,
-                         NSAttributedString.Key.font: UIFont(name: Fonts.proximaMedium, size: 16) ?? .systemFont(ofSize: 16)])
-        searchTextField.font = UIFont(name: Fonts.proximaMedium, size: 16) ?? .systemFont(ofSize: 16)
+            attributes: [.foregroundColor: UIColor.searchPlaceholderColor,
+                         .font: UIFont.regularMedium])
+        searchTextField.font = .regularMedium
         
         deleteTextButton.isHidden = true
-        deleteTextButton.setImage(ImageEnum.searchDeleteImage.image, for: .normal)
+        deleteTextButton.setImage(
+            UIImage(systemName: "multiply")?.withTintColor(.primaryBlue, renderingMode: .alwaysOriginal),
+            for: .normal)
         deleteTextButton.imageView?.contentMode = .scaleAspectFit
         deleteTextButton.setTitleColor(.black, for: .normal)
         
         cancelButton.isHidden = true
         cancelButton.setTitle("Cancel", for: .normal)
         cancelButton.setTitleColor(.primaryBlue, for: .normal)
-        cancelButton.titleLabel?.font = UIFont(name: Fonts.proximaMedium, size: 16) ?? .systemFont(ofSize: 16)
+        cancelButton.titleLabel?.font = .regularMedium
     }
     
     func defineLayoutForViews() {
@@ -90,18 +91,21 @@ extension MovieSearchBar: DesignProtocol {
     }
     
     func changeCancelButtonVisibility() {
-        if(cancelButton.isHidden) {
-            UIView.animate(withDuration: 0.5, animations: {
-                self.searchGrayFieldView.snp.remakeConstraints {
-                    $0.leading.equalToSuperview().offset(4 * self.offset)
-                    $0.trailing.equalTo(self.cancelButton.snp.leading).offset(-4 * self.offset)
-                    $0.top.bottom.equalToSuperview()
-                }
-                self.deleteTextButton.isHidden.toggle()
-                self.searchGrayFieldView.superview?.layoutIfNeeded()
-            }, completion: { _ in
-                self.cancelButton.isHidden.toggle()
-            })
+        if cancelButton.isHidden {
+            UIView.animate(
+                withDuration: 0.5,
+                animations: {
+                    self.searchGrayFieldView.snp.remakeConstraints {
+                        $0.leading.equalToSuperview().offset(4 * self.offset)
+                        $0.trailing.equalTo(self.cancelButton.snp.leading).offset(-4 * self.offset)
+                        $0.top.bottom.equalToSuperview()
+                    }
+                    self.deleteTextButton.isHidden.toggle()
+                    self.searchGrayFieldView.superview?.layoutIfNeeded()
+                },
+                completion: { _ in
+                    self.cancelButton.isHidden.toggle()
+                })
         } else {
             cancelButton.isHidden.toggle()
             UIView.animate(withDuration: 0.5) {

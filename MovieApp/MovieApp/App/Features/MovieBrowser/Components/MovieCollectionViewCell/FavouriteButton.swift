@@ -5,7 +5,7 @@ class FavouriteButton: UIButton {
     let size: CGFloat = 32
         
     init() {
-        super.init(frame: CGRect(x: 0, y: 0, width: size, height: size))
+        super.init(frame: .zero)
         
         buildViews()
     }
@@ -28,8 +28,8 @@ extension FavouriteButton: DesignProtocol {
     func createViews() {}
     
     func styleViews() {
-        setImage(ImageEnum.favouriteIcon.image, for: .normal)
-        setBackgroundImage(ImageEnum.favButtonBackground.image, for: .normal)
+        setImage(UIImage(with: .favouriteIcon), for: .normal)
+        setBackgroundImage(UIImage(with: .favButtonBackground), for: .normal)
     }
     
     func defineLayoutForViews() {

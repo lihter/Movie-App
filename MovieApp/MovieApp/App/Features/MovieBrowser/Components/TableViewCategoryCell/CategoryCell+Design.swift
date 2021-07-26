@@ -27,7 +27,7 @@ extension CategoryCell: DesignProtocol {
         
         categoryLabel.textColor = .primaryBlue
         categoryLabel.adjustsFontSizeToFitWidth = true
-        categoryLabel.font = UIFont(name: Fonts.proximaBold, size: categoryTitleFontSize)
+        categoryLabel.font = .heading1
         categoryLabel.textAlignment = .left
         
         flowLayout.scrollDirection = .horizontal

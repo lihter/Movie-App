@@ -4,8 +4,8 @@ class SubcategoryView: UIView {
     
     static let height: CGFloat = 40
     
-    var selectedSubcategory: Int = 0
-    var subcategories: [String]? = nil
+    var selectedSubcategory: Int? = nil
+    var subcategories: [LocalSubcategory]? = nil
     
     let offset: CGFloat = 4
     let maxNumberOfSubcategoryItems: Int = 8
@@ -23,10 +23,13 @@ class SubcategoryView: UIView {
         fatalError("init(coder:) has not been implemented")
     }
     
-    func populate(with subcategories: [String]) {
+    func populate(with subcategories: [LocalSubcategory]) {
         self.subcategories = subcategories
-        
-        addButtons()
+                
+        if subcategoriesStack.arrangedSubviews.isEmpty {
+            selectedSubcategory = self.subcategories?[0].rawValue
+            addButtons()
+        }
         styleButtons()
     }
 }

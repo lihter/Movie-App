@@ -1,6 +1,6 @@
 struct PopularMoviesResponse: Decodable {
     
-    let movies: [MovieNetworkModel]?
+    let movies: [MovieResponse]?
     
     enum CodingKeys: String, CodingKey {
         case movies = "results"
@@ -8,7 +8,7 @@ struct PopularMoviesResponse: Decodable {
     
 }
 
-struct MovieNetworkModel: Decodable {
+struct MovieResponse: Decodable {
     
     let identifier: Int
     let title: String

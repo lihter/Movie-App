@@ -8,7 +8,7 @@ class MovieNetworkDataSource: MovieNetworkDataSourceProtocol {
         self.movieClient = MovieClient.shared
     }
 
-    func fetchPopularMovies(completion: @escaping (Result<[MovieNetworkDataSourceModel]?, RequestError>) -> Void) {
+    func fetchPopularMovies(completion: @escaping (Result<[MovieDataModel]?, RequestError>) -> Void) {
         movieClient.fetchPopularMovies { [weak self] result in
             switch result {
             case .success(let movies):
@@ -24,19 +24,9 @@ class MovieNetworkDataSource: MovieNetworkDataSourceProtocol {
 
 extension MovieNetworkDataSource {
     
-    private func mapMovies(_ movies: [MovieNetworkModel]?) -> [MovieNetworkDataSourceModel]?{
+    private func mapMovies(_ movies: [MovieResponse]?) -> [MovieDataModel]?{
         return movies?.map {
-            return MovieNetworkDataSourceModel(
-                identifier: $0.identifier,
-                title: $0.title,
-                backdropPath: $0.backdropPath,
-                posterPath: $0.posterPath,
-                overview: $0.overview,
-                voteAverage: $0.voteAverage,
-                voteCount: $0.voteCount,
-                releaseDate: $0.releaseDate,
-                genreIds: $0.genreIds,
-                budget: $0.budget)
+            return MovieDataModel(fromModel: $0)
         }
     }
     
