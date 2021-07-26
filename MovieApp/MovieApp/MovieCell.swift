@@ -29,7 +29,11 @@ class MovieCell: UICollectionViewCell {
     func populate(withMovie movie: MovieViewModel) {
         movieTitle.text = movie.title
         movieDescription.text = movie.overview
+<<<<<<< HEAD
+        movieImageView.kf.setImage(with: URL(string: movie.posterPath))
+=======
         movieImageView.kf.setImage(with: movie.posterPath)
+>>>>>>> develop
     }
 
 }

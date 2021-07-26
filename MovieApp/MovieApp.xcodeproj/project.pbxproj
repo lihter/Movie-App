@@ -17,6 +17,7 @@
 		633E7E5526A598B00091322D /* MoviesUseCase.swift in Sources */ = {isa = PBXBuildFile; fileRef = 633E7E5426A598B00091322D /* MoviesUseCase.swift */; };
 		633E7E5726A598C00091322D /* MoviesUseCaseProtocol.swift in Sources */ = {isa = PBXBuildFile; fileRef = 633E7E5626A598C00091322D /* MoviesUseCaseProtocol.swift */; };
 		633E7E5A26A5A9A40091322D /* HomePageDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 633E7E5926A5A9A40091322D /* HomePageDelegate.swift */; };
+		633E7E5C26A5AFB40091322D /* HomePagePresenterProtocol.swift in Sources */ = {isa = PBXBuildFile; fileRef = 633E7E5B26A5AFB40091322D /* HomePagePresenterProtocol.swift */; };
 		633E7E5E26A5C36D0091322D /* MovieNetworkDataSource.swift in Sources */ = {isa = PBXBuildFile; fileRef = 633E7E5D26A5C36D0091322D /* MovieNetworkDataSource.swift */; };
 		633E7E6026A5C3A90091322D /* MovieNetworkDataSourceProtocol.swift in Sources */ = {isa = PBXBuildFile; fileRef = 633E7E5F26A5C3A90091322D /* MovieNetworkDataSourceProtocol.swift */; };
 		638BAF27269ED21B00E8E75F /* ProximaNova-Bold.otf in Resources */ = {isa = PBXBuildFile; fileRef = 638BAF24269ED21A00E8E75F /* ProximaNova-Bold.otf */; };
@@ -56,6 +57,7 @@
 		633E7E5426A598B00091322D /* MoviesUseCase.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MoviesUseCase.swift; sourceTree = "<group>"; };
 		633E7E5626A598C00091322D /* MoviesUseCaseProtocol.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MoviesUseCaseProtocol.swift; sourceTree = "<group>"; };
 		633E7E5926A5A9A40091322D /* HomePageDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomePageDelegate.swift; sourceTree = "<group>"; };
+		633E7E5B26A5AFB40091322D /* HomePagePresenterProtocol.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomePagePresenterProtocol.swift; sourceTree = "<group>"; };
 		633E7E5D26A5C36D0091322D /* MovieNetworkDataSource.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MovieNetworkDataSource.swift; sourceTree = "<group>"; };
 		633E7E5F26A5C3A90091322D /* MovieNetworkDataSourceProtocol.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MovieNetworkDataSourceProtocol.swift; sourceTree = "<group>"; };
 		638BAF24269ED21A00E8E75F /* ProximaNova-Bold.otf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "ProximaNova-Bold.otf"; sourceTree = "<group>"; };
@@ -154,6 +156,7 @@
 			isa = PBXGroup;
 			children = (
 				638BAF2C269EDC9F00E8E75F /* HomePagePresenter.swift */,
+				633E7E5B26A5AFB40091322D /* HomePagePresenterProtocol.swift */,
 			);
 			path = Presenters;
 			sourceTree = "<group>";
@@ -315,6 +318,7 @@
 				63312C3826A1711D004DB7B4 /* RequestError.swift in Sources */,
 				633E7E5A26A5A9A40091322D /* HomePageDelegate.swift in Sources */,
 				63BD081926A54B3D00AF366A /* AppRouter.swift in Sources */,
+				633E7E5C26A5AFB40091322D /* HomePagePresenterProtocol.swift in Sources */,
 				63BD081226A1C31700AF366A /* NetworkClientProtocol.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
