@@ -37,7 +37,7 @@ final class HomePagePresenter: HomePagePresenterProtocol {
 
 extension HomePagePresenter {
     
-    private func mapMovies(_ movies: [MovieModel]?) -> [MovieViewModel]?{
+    private func mapMovies(_ movies: [MovieModel]?) -> [MovieViewModel]? {
         return movies?.map {
             return MovieViewModel(fromModel: $0)
         }
