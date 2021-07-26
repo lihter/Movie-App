@@ -15,11 +15,11 @@ class HomePageViewController: UIViewController {
     var presenter: HomePagePresenter!
     var router: HomePageRouterProtocol!
     
-    init() {
+    init(presenter: HomePagePresenter) {
         super.init(nibName: nil, bundle: nil)
         
-        self.presenter = HomePagePresenter()
-        self.router = HomePageRouter(forVC: self)
+        self.presenter = presenter
+        self.presenter.setDelegate(delegate: self)
     }
     
     required init?(coder: NSCoder) {
@@ -32,7 +32,7 @@ class HomePageViewController: UIViewController {
         buildViews()
         setupCollectionView()
         
-        loadData()
+        presenter.getPopularMovies()
     }
     
     private func setupCollectionView() {
@@ -86,8 +86,8 @@ extension HomePageViewController: UICollectionViewDelegate {
     
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
         guard let movieId = movies?[indexPath.item].identifier else { return }
-                
-        router.showDetailScreen(for: movieId)
+        
+        presenter.selectedMovie(withId: movieId)
     }
     
 }
@@ -100,6 +100,15 @@ extension HomePageViewController: UICollectionViewDelegateFlowLayout {
         sizeForItemAt indexPath: IndexPath
     ) -> CGSize {
         return CGSize(width: view.frame.width - 6 * offset, height: cellHeight)
+    }
+    
+}
+
+extension HomePageViewController: HomePageDelegate {
+    
+    func reloadCollectionView(with movies: [MovieViewModel]?) {
+        self.movies = movies
+        filmsCollectionView.reloadData()
     }
     
 }
