@@ -44,4 +44,34 @@ extension AppRouter: AppRouterProtocol {
         window?.makeKeyAndVisible()
     }
     
+    func showTabBarView() {
+        let tabBarController = createTabBarController()
+        
+        navigationController.setViewControllers([tabBarController], animated: true)
+    }
+    
+}
+
+extension AppRouter {
+    
+    private func createTabBarController() -> UITabBarController {
+        let tabBarController = UITabBarController()
+        let homePageVC = HomePageTwoViewController()
+        let favouritesVC = FavouritesViewController()
+        
+        homePageVC.tabBarItem = UITabBarItem(
+            title: "Home",
+            image: ImageEnum.homeTabBarItem.image,
+            selectedImage: ImageEnum.homeTabBarItemSelected.image)
+        
+        favouritesVC.tabBarItem = UITabBarItem(
+            title: "Favourites",
+            image: ImageEnum.favouritesTabBarItem.image,
+            selectedImage: ImageEnum.favouritesTabBarItemSelected.image)
+        
+        tabBarController.viewControllers = [homePageVC, favouritesVC]
+        tabBarController.styleMovieTabBar()
+        return tabBarController
+    }
+    
 }
