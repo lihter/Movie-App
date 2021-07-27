@@ -11,6 +11,9 @@ extension HomePageViewController: DesignProtocol {
     }
     
     func createViews() {
+        navigationView = MovieAppNavigationView()
+        view.addSubview(navigationView)
+        
         flowLayout = UICollectionViewFlowLayout()
         
         filmsCollectionView = UICollectionView(
@@ -30,9 +33,13 @@ extension HomePageViewController: DesignProtocol {
         filmsCollectionView.showsVerticalScrollIndicator = false
     }
     
-    func defineLayoutForViews() {        
+    func defineLayoutForViews() {
+        navigationView.snp.makeConstraints {
+            $0.leading.trailing.top.equalToSuperview()
+        }
+        
         filmsCollectionView.snp.makeConstraints {
-            $0.top.equalTo(view.safeAreaLayoutGuide)
+            $0.top.equalTo(navigationView.snp.bottom)
             $0.bottom.width.equalToSuperview()
             $0.centerX.equalTo(view.snp.centerX)
         }
