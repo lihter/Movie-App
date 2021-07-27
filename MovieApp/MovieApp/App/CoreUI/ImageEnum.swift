@@ -4,6 +4,9 @@ enum ImageEnum {
     
     case navigationBarTitleImage
     case navigationBarBackButton
+    
+    case searchBarIcon
+    case searchDeleteImage
 
     case homeTabBarItem
     case homeTabBarItemSelected
@@ -12,6 +15,10 @@ enum ImageEnum {
         
     var image: UIImage? {
         switch self {
+        case .searchDeleteImage:
+            return UIImage(systemName: "multiply")?.withTintColor(.primaryBlue, renderingMode: .alwaysOriginal)
+        case .searchBarIcon:
+            return UIImage(named: "SearchIcon.pdf")
         case .navigationBarBackButton:
             return UIImage(named: "BackButton.pdf")
         case .navigationBarTitleImage:

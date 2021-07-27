@@ -1,4 +1,5 @@
 import UIKit
+import SnapKit
 
 extension HomePageTwoViewController: DesignProtocol {
     
@@ -11,6 +12,9 @@ extension HomePageTwoViewController: DesignProtocol {
     func createViews() {
         navigationView = MovieAppNavigationView()
         view.addSubview(navigationView)
+        
+        searchBar = MovieSearchBar()
+        view.addSubview(searchBar)
     }
     
     func styleViews() {
@@ -21,6 +25,11 @@ extension HomePageTwoViewController: DesignProtocol {
         navigationView.snp.makeConstraints {
             $0.leading.trailing.top.equalToSuperview()
         }
+        
+        searchBar.snp.makeConstraints {
+            $0.leading.trailing.equalToSuperview()
+            $0.top.equalTo(navigationView.snp.bottom).offset(4 * offset)
+        }
     }
-    
+        
 }

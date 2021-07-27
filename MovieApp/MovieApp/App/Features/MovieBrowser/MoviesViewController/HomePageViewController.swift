@@ -8,8 +8,7 @@ class HomePageViewController: UIViewController {
     
     var movies: [MovieViewModel]?
     
-    var headerView: UIView!
-    var headerImageView: UIImageView!
+    var navigationView: MovieAppNavigationView!
     var filmsCollectionView: UICollectionView!
     var flowLayout: UICollectionViewFlowLayout!
     var presenter: HomePagePresenter!
