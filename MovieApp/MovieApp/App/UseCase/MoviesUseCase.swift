@@ -9,10 +9,10 @@ class MoviesUseCase: MoviesUseCaseProtocol {
     }
     
     func getPopularMovies(completion: @escaping (Result<[MovieUseCaseModel]?, RequestError>) -> Void) {
-        moviesDataRepo.fetchPopularMovies { result in
+        moviesDataRepo.fetchPopularMovies { [weak self] result in
             switch result {
             case .success(let movies):
-                let mapppedMovies = self.mapMovies(movies)
+                let mapppedMovies = self?.mapMovies(movies)
                 completion(.success(mapppedMovies))
             case .failure(let error):
                 completion(.failure(error))
