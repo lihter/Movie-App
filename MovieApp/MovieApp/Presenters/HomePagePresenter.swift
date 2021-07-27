@@ -16,19 +16,17 @@ final class HomePagePresenter: HomePagePresenterProtocol {
     }
     
     func getPopularMovies() {
-<<<<<<< HEAD
-        useCase.getPopularMovies { [weak self] result in
-            switch result {
-            case .success(let movies):
-                let moviesViewModel: [MovieViewModel]? = self?.mapMovies(movies)
-                self?.delegate?.reloadCollectionView(with: moviesViewModel)
-=======
         useCase.getPopularMovies { result in
             switch result {
             case .success(let movies):
-                let moviesViewModel: [MovieViewModel]? = self.mapMovies(movies)
+                let moviesViewModel: [MovieViewModel]? = movies?.map {
+                    return MovieViewModel(
+                        identifier: $0.identifier,
+                        title: $0.title,
+                        overview: $0.overview,
+                        posterPath: "https://image.tmdb.org/t/p/w185\($0.posterPath)")
+                } ?? nil
                 self.delegate?.reloadCollectionView(with: moviesViewModel)
->>>>>>> develop
             case .failure(let error):
                 print("Loading error: \(error.localizedDescription)")
             }
@@ -37,20 +35,6 @@ final class HomePagePresenter: HomePagePresenterProtocol {
     
     func selectedMovie(withId movieId: Int) {
         router.showDetailScreen(for: movieId)
-    }
-    
-}
-
-extension HomePagePresenter {
-    
-    private func mapMovies(_ movies: [MovieUseCaseModel]?) -> [MovieViewModel]?{
-        return movies?.map {
-            return MovieViewModel(
-                identifier: $0.identifier,
-                title: $0.title,
-                overview: $0.overview,
-                posterPath: $0.posterPath)
-        }
     }
     
 }

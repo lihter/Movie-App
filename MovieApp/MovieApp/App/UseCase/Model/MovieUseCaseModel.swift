@@ -1,11 +1,18 @@
+<<<<<<< HEAD
 import Foundation
 
+=======
+>>>>>>> develop
 struct MovieUseCaseModel {
     
     let identifier: Int
     let title: String
     let backdropPath: String?
+<<<<<<< HEAD
     let posterPath: URL?
+=======
+    let posterPath: String
+>>>>>>> develop
     let overview: String
     let voteAverage: Double
     let voteCount: Double

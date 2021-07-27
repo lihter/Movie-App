@@ -225,7 +225,7 @@
 				63312C3B26A1748A004DB7B4 /* MovieClientProtocol.swift */,
 				633E7E7526A6B8590091322D /* Model */,
 			);
-			path = NetworkClient;
+			path = Networking;
 			sourceTree = "<group>";
 		};
 		633E7E7426A6B7BB0091322D /* ViewModels */ = {
