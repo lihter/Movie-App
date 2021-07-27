@@ -16,25 +16,17 @@ extension HomePageTwoViewController: DesignProtocol {
         searchBar = MovieSearchBar()
         view.addSubview(searchBar)
         
-        subcategoryView = SubcategoryView()
-        view.addSubview(subcategoryView)
-        
-        flowLayout = UICollectionViewFlowLayout()
-        moviesCollectionView = UICollectionView(
-            frame: .zero,
-            collectionViewLayout: flowLayout)
-        view.addSubview(moviesCollectionView)
+        tableView = UITableView(frame: .zero, style: .grouped)
+        view.addSubview(tableView)
     }
     
     func styleViews() {
         view.backgroundColor = .white
         
-        flowLayout.scrollDirection = .horizontal
-        flowLayout.sectionInset = UIEdgeInsets(top: 0, left: 4 * offset, bottom: 0, right: 4 * offset)
-        flowLayout.minimumInteritemSpacing = 2 * offset
-        
-        moviesCollectionView.backgroundColor = .clear
-        moviesCollectionView.showsHorizontalScrollIndicator = false
+        tableView.rowHeight = CategoryCell.height + tableRowOffset
+        tableView.separatorColor = .clear
+        tableView.backgroundColor = .clear
+        tableView.showsVerticalScrollIndicator = false
     }
     
     func defineLayoutForViews() {
@@ -47,16 +39,9 @@ extension HomePageTwoViewController: DesignProtocol {
             $0.top.equalTo(navigationView.snp.bottom).offset(4 * offset)
         }
         
-        subcategoryView.snp.makeConstraints {
+        tableView.snp.makeConstraints {
             $0.top.equalTo(searchBar.snp.bottom).offset(2 * offset)
-            $0.leading.trailing.equalToSuperview()
-            $0.height.equalTo(SubcategoryView.height)
-        }
-        
-        moviesCollectionView.snp.makeConstraints {
-            $0.top.equalTo(subcategoryView.snp.bottom).offset(2 * offset)
-            $0.height.equalTo(NewMovieCell.cellSize.height)
-            $0.leading.trailing.equalToSuperview()
+            $0.leading.trailing.bottom.equalToSuperview()
         }
     }
         

@@ -10,7 +10,6 @@ class NewMovieCell: UICollectionViewCell {
     
     let offset: CGFloat = 8
     
-    var contentContainer: UIView!
     var movieImageView: UIImageView!
     var favouriteButton: FavouriteButton!
     

@@ -5,19 +5,38 @@ class FavouriteButton: UIButton {
     let size: CGFloat = 32
         
     init() {
-        let rect = CGRect(x: 0, y: 0, width: size, height: size)
-        super.init(frame: rect)
+        super.init(frame: CGRect(x: 0, y: 0, width: size, height: size))
         
-        setImage(ImageEnum.favouriteIcon.image, for: .normal)
-        setBackgroundImage(ImageEnum.favButtonBackground.image, for: .normal)
-        imageView?.snp.makeConstraints {
-            $0.center.equalToSuperview()
-            $0.height.equalTo(size / 2)
-        }
+        buildViews()
     }
     
     required init?(coder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
+    }
+    
+}
+
+
+extension FavouriteButton: DesignProtocol {
+    
+    func buildViews() {
+        createViews()
+        styleViews()
+        defineLayoutForViews()
+    }
+    
+    func createViews() {}
+    
+    func styleViews() {
+        setImage(ImageEnum.favouriteIcon.image, for: .normal)
+        setBackgroundImage(ImageEnum.favButtonBackground.image, for: .normal)
+    }
+    
+    func defineLayoutForViews() {
+        imageView?.snp.makeConstraints {
+            $0.center.equalToSuperview()
+            $0.height.equalTo(size / 2)
+        }
     }
     
 }
