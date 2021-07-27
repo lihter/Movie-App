@@ -1,10 +1,6 @@
 import Foundation
 
-<<<<<<< HEAD
 final class HomePagePresenter: HomePagePresenterProtocol {
-=======
-final class HomePagePresenter {
->>>>>>> develop
     
     private weak var delegate: HomePageDelegate?
     private let useCase: MoviesUseCaseProtocol!

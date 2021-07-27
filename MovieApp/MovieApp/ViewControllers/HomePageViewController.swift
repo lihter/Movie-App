@@ -13,7 +13,7 @@ class HomePageViewController: UIViewController {
     var filmsCollectionView: UICollectionView!
     var flowLayout: UICollectionViewFlowLayout!
     var presenter: HomePagePresenter!
-    var router: HomePageRouterProtocol!
+    var router: AppRouter!
     
     init(presenter: HomePagePresenter) {
         super.init(nibName: nil, bundle: nil)
