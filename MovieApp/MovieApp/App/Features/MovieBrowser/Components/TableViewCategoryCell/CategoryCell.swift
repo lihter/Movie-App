@@ -5,7 +5,6 @@ class CategoryCell: UITableViewCell {
     static let reuseIdentifier = String(describing: CategoryCell.self)
     static let height: CGFloat = 270
     
-    let categoryTitleFontSize: CGFloat = 20
     let offset: CGFloat = 4
     
     var movies: [MovieViewModel]?
@@ -51,10 +50,11 @@ extension CategoryCell: UICollectionViewDataSource {
         _ collectionView: UICollectionView,
         cellForItemAt indexPath: IndexPath
     ) -> UICollectionViewCell {
-        guard let cell = collectionView.dequeueReusableCell(
+        guard
+            let cell = collectionView.dequeueReusableCell(
                 withReuseIdentifier: NewMovieCell.reuseIdentifier,
                 for: indexPath) as? NewMovieCell,
-              let movie = movies?[indexPath.item]
+            let movie = movies?[indexPath.item]
         else {
             return UICollectionViewCell()
         }

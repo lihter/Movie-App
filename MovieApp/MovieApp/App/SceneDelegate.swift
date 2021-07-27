@@ -9,7 +9,7 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
         
         window = UIWindow(windowScene: windowScene)
 
-        let router: AppRouterProtocol = AppRouter()
+        let router: AppRouter = AppRouter()
         router.setInitialScreen(in: window)
     }
 

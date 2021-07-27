@@ -40,10 +40,11 @@ extension SubcategoryView: DesignProtocol {
 extension SubcategoryView {
     
     func addButtons() {
-        let n = (subcategories?.count ?? 0) > maxNumberOfSubcategoryItems ? maxNumberOfSubcategoryItems : subcategories?.count
-        for tag in 0..<(n ?? 0) {
+        guard let subcategories = subcategories else { return }
+        
+        for subcategory in subcategories {
             let button = UIButton()
-            button.tag = tag
+            button.tag = subcategory.rawValue
             button.addTarget(self, action: #selector(subcategoryButtonPressed), for: .touchUpInside)
             subcategoriesStack.addArrangedSubview(button)
         }
@@ -51,43 +52,51 @@ extension SubcategoryView {
     
     func styleButtons() {
         for button in subcategoriesStack.arrangedSubviews {
-            if let button = button as? UIButton {
-                if(button.tag == selectedSubcategory) {
-                    styleSelectedSubcategory(button)
-                } else {
-                    styleUnselectedSubcategory(button)
-                }
+            guard let button = button as? UIButton else { continue }
+            
+            if button.tag == selectedSubcategory {
+                styleSelectedSubcategory(button)
+            } else {
+                styleUnselectedSubcategory(button)
             }
         }
     }
     
     func styleSelectedSubcategory(_ button: UIButton) {
-        guard let categoryTitle = subcategories?[button.tag] else { return }
-        let font = UIFont(name: Fonts.proximaBold, size: 16) ?? .systemFont(ofSize: 16)
-        button.setAttributedTitle(NSAttributedString(
-                                    string: categoryTitle,
-                                    attributes: [NSAttributedString.Key.font: font,
-                                                 NSAttributedString.Key.underlineStyle: NSUnderlineStyle.thick.rawValue,
-                                                 NSAttributedString.Key.underlineColor: UIColor.black,
-                                                 NSAttributedString.Key.foregroundColor: UIColor.black]),
-                                  for: .normal)
+        button.setAttributedTitle(
+            NSAttributedString(
+                string: LocalSubcategory(rawValue: button.tag)?.description ?? "_",
+                attributes: [
+                    .font: UIFont.regularBold,
+                    .underlineStyle: NSUnderlineStyle.thick.rawValue,
+                    .underlineColor: UIColor.black,
+                    .foregroundColor: UIColor.black
+                ]),
+            for: .normal)
     }
     
     func styleUnselectedSubcategory(_ button: UIButton) {
-        guard let categoryTitle = subcategories?[button.tag] else { return }
-        let font = UIFont(name: Fonts.proximaNovaSemiBold, size: 16) ?? .systemFont(ofSize: 16)
-        button.setAttributedTitle(NSAttributedString(
-                                    string: categoryTitle,
-                                    attributes: [NSAttributedString.Key.font: font,
-                                                 NSAttributedString.Key.foregroundColor: UIColor.secondaryGray]),
-                                  for: .normal)
+        let font = UIFont.regularSemiBold
+        button.setAttributedTitle(
+            NSAttributedString(
+                string: LocalSubcategory(rawValue: button.tag)?.description ?? "_",
+                attributes: [
+                    .font: font,
+                    .foregroundColor: UIColor.secondaryGray]),
+            for: .normal)
     }
     
     @objc func subcategoryButtonPressed(sender: UIButton) {
-        if let button = subcategoriesStack.arrangedSubviews[selectedSubcategory] as? UIButton {
-            styleUnselectedSubcategory(button)
-            styleSelectedSubcategory(sender)
-            selectedSubcategory = sender.tag
+        guard let selected = selectedSubcategory else { return }
+        
+        for subview in subcategoriesStack.arrangedSubviews {
+            guard let button = subview as? UIButton else { continue }
+            
+            if button.tag == selected {
+                styleUnselectedSubcategory(button)
+                styleSelectedSubcategory(sender)
+                selectedSubcategory = sender.tag
+            }
         }
     }
     

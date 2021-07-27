@@ -8,11 +8,9 @@ class HomePageViewController: UIViewController {
     
     var movies: [MovieViewModel]?
     
-    var navigationView: MovieAppNavigationView!
     var filmsCollectionView: UICollectionView!
     var flowLayout: UICollectionViewFlowLayout!
     var presenter: HomePagePresenter!
-    var router: AppRouter!
     
     init(presenter: HomePagePresenter) {
         super.init(nibName: nil, bundle: nil)
@@ -38,20 +36,6 @@ class HomePageViewController: UIViewController {
         filmsCollectionView.register(MovieCell.self, forCellWithReuseIdentifier: MovieCell.reuseIdentifier)
         filmsCollectionView.dataSource = self
         filmsCollectionView.delegate = self
-    }
-    
-    private func loadData() {
-        presenter.getPopularMovies { result in
-            switch result {
-            case .success(let movies):
-                self.movies = movies
-                DispatchQueue.main.async {
-                    self.filmsCollectionView.reloadData()
-                }
-            case .failure(let error):
-                print("Error loading data: \(error.localizedDescription)")
-            }
-        }
     }
     
 }

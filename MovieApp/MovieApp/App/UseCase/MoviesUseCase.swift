@@ -2,13 +2,13 @@ class MoviesUseCase: MoviesUseCaseProtocol {
     
     static let shared: MoviesUseCaseProtocol = MoviesUseCase()
 
-    private let moviesDataRepo: MoviesDataRepositoryProtocol!
+    private let moviesDataRepo: MovieRepositoryProtocol!
     
     init() {
-        self.moviesDataRepo = MoviesDataRepository.shared
+        self.moviesDataRepo = MovieRepository.shared
     }
     
-    func getPopularMovies(completion: @escaping (Result<[MovieUseCaseModel]?, RequestError>) -> Void) {
+    func getPopularMovies(completion: @escaping (Result<[MovieModel]?, RequestError>) -> Void) {
         moviesDataRepo.fetchPopularMovies { [weak self] result in
             switch result {
             case .success(let movies):
@@ -24,19 +24,9 @@ class MoviesUseCase: MoviesUseCaseProtocol {
 
 extension MoviesUseCase {
     
-    private func mapMovies(_ movies: [MovieDataRepositoryModel]?) -> [MovieUseCaseModel]? {
+    private func mapMovies(_ movies: [MovieRepoModel]?) -> [MovieModel]? {
         return movies?.map {
-            return MovieUseCaseModel(
-                identifier: $0.identifier,
-                title: $0.title,
-                backdropPath: $0.backdropPath,
-                posterPath: $0.posterPath,
-                overview: $0.overview,
-                voteAverage: $0.voteAverage,
-                voteCount: $0.voteCount,
-                releaseDate: $0.releaseDate,
-                genreIds: $0.genreIds,
-                budget: $0.budget)
+            return MovieModel(fromModel: $0)
         }
     }
     

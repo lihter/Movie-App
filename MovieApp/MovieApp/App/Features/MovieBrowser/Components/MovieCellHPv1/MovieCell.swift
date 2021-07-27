@@ -5,7 +5,6 @@ class MovieCell: UICollectionViewCell {
     
     static let reuseIdentifier = String(describing: MovieCell.self)
     
-    let titleFontSize: CGFloat = 16
     let descriptionFontSize: CGFloat = 14
     let offset: CGFloat = 8
     let movieImageWidth: CGFloat = 97

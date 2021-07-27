@@ -1,7 +1,7 @@
 struct CategoryViewModel {
     
     let categoryTitle: String
-    let subcategories: [String]
+    let subcategories: [LocalSubcategory]
     let movies: [MovieViewModel]
     
 }
