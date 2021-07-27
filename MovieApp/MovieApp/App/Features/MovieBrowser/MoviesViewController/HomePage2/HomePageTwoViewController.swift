@@ -6,14 +6,22 @@ class HomePageTwoViewController: UIViewController {
     
     var navigationView: MovieAppNavigationView!
     var searchBar: MovieSearchBar!
+<<<<<<< HEAD
     var subcategoryView: SubcategoryView!
     var moviesCollectionView: UICollectionView!
     var flowLayout: UICollectionViewFlowLayout!
+=======
+<<<<<<< HEAD
+    var subcategoryView: SubcategoryView!
+=======
+>>>>>>> develop
+>>>>>>> develop
         
     override func viewDidLoad() {
         super.viewDidLoad()
         
         buildViews()
+<<<<<<< HEAD
         setupCollectionView()
     }
     
@@ -57,6 +65,8 @@ extension HomePageTwoViewController: UICollectionViewDelegateFlowLayout {
         sizeForItemAt indexPath: IndexPath
     ) -> CGSize {
         return NewMovieCell.cellSize
+=======
+>>>>>>> develop
     }
     
 }
