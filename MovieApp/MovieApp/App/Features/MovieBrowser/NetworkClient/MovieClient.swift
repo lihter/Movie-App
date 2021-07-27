@@ -5,7 +5,7 @@ class MovieClient: MovieClientProtocol {
     
     static let shared: MovieClientProtocol = MovieClient()
         
-    func fetchPopularMovies(completion: @escaping(Result<[Movie]?, RequestError>) -> Void) {
+    func fetchPopularMovies(completion: @escaping(Result<[MovieNetworkModel]?, RequestError>) -> Void) {
         guard let apiKey = Bundle.main.infoDictionary?["API_KEY"] else { return }
         
         let urlPath = "movie/popular"
