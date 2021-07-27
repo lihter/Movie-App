@@ -2,6 +2,9 @@ import UIKit
 
 enum ImageEnum {
     
+    case favouriteIcon
+    case favButtonBackground
+    
     case navigationBarTitleImage
     case navigationBarBackButton
     
@@ -15,6 +18,10 @@ enum ImageEnum {
         
     var image: UIImage? {
         switch self {
+        case .favButtonBackground:
+            return UIImage(named: "FavButtonBackground.pdf")
+        case .favouriteIcon:
+            return UIImage(named: "FavButton3.pdf")
         case .searchDeleteImage:
             return UIImage(systemName: "multiply")?.withTintColor(.primaryBlue, renderingMode: .alwaysOriginal)
         case .searchBarIcon:

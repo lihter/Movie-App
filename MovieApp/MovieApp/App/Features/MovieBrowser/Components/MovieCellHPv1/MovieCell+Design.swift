@@ -70,8 +70,18 @@ extension MovieCell: DesignProtocol {
         
         movieDescription.snp.makeConstraints {
             $0.leading.equalTo(movieImageView.snp.trailing).offset(2 * offset)
+<<<<<<< HEAD
+<<<<<<< HEAD:MovieApp/MovieApp/App/Features/MovieBrowser/Components/MovieCellHPv1/MovieCell+Design.swift
+            $0.trailing.equalToSuperview().inset(2 * offset)
+=======
+            $0.trailing.bottom.equalToSuperview().inset(2 * offset)
+>>>>>>> develop:MovieApp/MovieApp/App/Features/MovieBrowser/Components/MovieCell+Design.swift
+            $0.top.equalTo(movieTitle.snp.bottom).offset(offset)
+            $0.bottom.equalToSuperview().inset(2 * offset)
+=======
             $0.trailing.bottom.equalToSuperview().inset(2 * offset)
             $0.top.equalTo(movieTitle.snp.bottom).offset(offset)
+>>>>>>> develop
         }
     }
 

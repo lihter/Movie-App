@@ -18,10 +18,23 @@ extension HomePageTwoViewController: DesignProtocol {
         
         subcategoryView = SubcategoryView()
         view.addSubview(subcategoryView)
+        
+        flowLayout = UICollectionViewFlowLayout()
+        moviesCollectionView = UICollectionView(
+            frame: .zero,
+            collectionViewLayout: flowLayout)
+        view.addSubview(moviesCollectionView)
     }
     
     func styleViews() {
         view.backgroundColor = .white
+        
+        flowLayout.scrollDirection = .horizontal
+        flowLayout.sectionInset = UIEdgeInsets(top: 0, left: 4 * offset, bottom: 0, right: 4 * offset)
+        flowLayout.minimumInteritemSpacing = 2 * offset
+        
+        moviesCollectionView.backgroundColor = .clear
+        moviesCollectionView.showsHorizontalScrollIndicator = false
     }
     
     func defineLayoutForViews() {
@@ -38,6 +51,12 @@ extension HomePageTwoViewController: DesignProtocol {
             $0.top.equalTo(searchBar.snp.bottom).offset(2 * offset)
             $0.leading.trailing.equalToSuperview()
             $0.height.equalTo(SubcategoryView.height)
+        }
+        
+        moviesCollectionView.snp.makeConstraints {
+            $0.top.equalTo(subcategoryView.snp.bottom).offset(2 * offset)
+            $0.height.equalTo(NewMovieCell.cellSize.height)
+            $0.leading.trailing.equalToSuperview()
         }
     }
         
