@@ -2,6 +2,11 @@
 import Foundation
 
 =======
+<<<<<<< HEAD
+import Foundation
+
+=======
+>>>>>>> develop
 >>>>>>> develop
 struct MovieDataRepositoryModel {
     
@@ -11,7 +16,11 @@ struct MovieDataRepositoryModel {
 <<<<<<< HEAD
     let posterPath: URL?
 =======
+<<<<<<< HEAD
+    let posterPath: URL?
+=======
     let posterPath: String
+>>>>>>> develop
 >>>>>>> develop
     let overview: String
     let voteAverage: Double
