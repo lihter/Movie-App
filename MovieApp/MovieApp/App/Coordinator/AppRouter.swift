@@ -42,7 +42,9 @@ extension AppRouter {
     
     private func createTabBarController() -> UITabBarController {
         let tabBarController = UITabBarController()
-        let homePageVC = HomePageTwoViewController()
+        
+        let homePagePresenter = HomePageTwoPresenter(useCase: moviesUseCase, router: self)
+        let homePageVC = HomePageTwoViewController(presenter: homePagePresenter)
         let favouritesVC = FavouritesViewController()
         
         homePageVC.tabBarItem = UITabBarItem(

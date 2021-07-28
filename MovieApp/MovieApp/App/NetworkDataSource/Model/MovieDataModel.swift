@@ -26,7 +26,21 @@ extension MovieDataModel {
             voteCount: model.voteCount,
             releaseDate: model.releaseDate,
             genreIds: model.genreIds,
-            budget: model.budget)
+            budget: nil)
+    }
+    
+    init(fromModel model: TVShowResponse) {
+        self.init(
+            identifier: model.identifier,
+            title: model.title,
+            backdropPath: model.backdropPath,
+            posterPath: model.posterPath,
+            overview: model.overview,
+            voteAverage: model.voteAverage,
+            voteCount: model.voteCount,
+            releaseDate: model.releaseDate,
+            genreIds: model.genreIds,
+            budget: nil)
     }
     
 }

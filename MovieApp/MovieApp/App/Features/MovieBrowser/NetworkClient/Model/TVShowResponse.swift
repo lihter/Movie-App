@@ -1,14 +1,14 @@
-struct WrapperMovieResponse: Decodable {
+struct WrapperTVShowResponse: Decodable {
     
-    let movies: [MovieResponse]?
+    let shows: [TVShowResponse]?
     
     enum CodingKeys: String, CodingKey {
-        case movies = "results"
+        case shows = "results"
     }
     
 }
 
-struct MovieResponse: Decodable {
+struct TVShowResponse: Decodable {
     
     let identifier: Int
     let title: String
@@ -21,7 +21,7 @@ struct MovieResponse: Decodable {
     let genreIds: [Int]?
     
     private enum CodingKeys: String, CodingKey {
-        case title = "original_title"
+        case title = "original_name"
         case overview
         case identifier = "id"
         case backdropPath = "backdrop_path"

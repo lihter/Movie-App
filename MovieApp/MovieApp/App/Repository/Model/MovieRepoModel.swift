@@ -22,7 +22,7 @@ extension MovieRepoModel {
             identifier: model.identifier,
             title: model.title,
             backdropPath: model.backdropPath,
-            posterPath: URL(string: model.posterPath),
+            posterPath: URL(string: "https://image.tmdb.org/t/p/w185\(model.posterPath)"),
             overview: model.overview,
             voteAverage: model.voteAverage,
             voteCount: model.voteCount,

@@ -4,9 +4,10 @@ enum LocalSubcategory: Int {
     case popularOnTV
     case popularForRent
     case popularInTheaters
+    case popularFreeToWatch
     
-    case freeMovies
-    case freeTv
+    case topRatedTV
+    case topRatedMovies
     
     case trendingToday
     case trendingThisWeek
@@ -21,9 +22,11 @@ enum LocalSubcategory: Int {
             return "For rent"
         case .popularInTheaters:
             return "In theaters"
-        case .freeMovies:
+        case .popularFreeToWatch:
+            return "Free to watch"
+        case .topRatedMovies:
             return "Movies"
-        case .freeTv:
+        case .topRatedTV:
             return "TV"
         case .trendingToday:
             return "Today"

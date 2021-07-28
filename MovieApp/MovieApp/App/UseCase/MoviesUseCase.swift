@@ -20,6 +20,54 @@ class MoviesUseCase: MoviesUseCaseProtocol {
         }
     }
     
+    func getTrendingMoviesToday(completion: @escaping (Result<[MovieModel]?, RequestError>) -> Void) {
+        moviesDataRepo.fetchTrendingToday { [weak self] result in
+            switch result {
+            case .success(let movies):
+                let mapppedMovies = self?.mapMovies(movies)
+                completion(.success(mapppedMovies))
+            case .failure(let error):
+                completion(.failure(error))
+            }
+        }
+    }
+    
+    func getTrendingMoviesThisWeek(completion: @escaping (Result<[MovieModel]?, RequestError>) -> Void) {
+        moviesDataRepo.fetchTrendingThisWeek { [weak self] result in
+            switch result {
+            case .success(let movies):
+                let mapppedMovies = self?.mapMovies(movies)
+                completion(.success(mapppedMovies))
+            case .failure(let error):
+                completion(.failure(error))
+            }
+        }
+    }
+    
+    func getTopRatedMovies(completion: @escaping (Result<[MovieModel]?, RequestError>) -> Void) {
+        moviesDataRepo.fetchTopRatedMovies { [weak self] result in
+            switch result {
+            case .success(let movies):
+                let mapppedMovies = self?.mapMovies(movies)
+                completion(.success(mapppedMovies))
+            case .failure(let error):
+                completion(.failure(error))
+            }
+        }
+    }
+    
+    func getTopRatedTV(completion: @escaping (Result<[MovieModel]?, RequestError>) -> Void) {
+        moviesDataRepo.fetchTopRatedTV { [weak self] result in
+            switch result {
+            case .success(let movies):
+                let mapppedMovies = self?.mapMovies(movies)
+                completion(.success(mapppedMovies))
+            case .failure(let error):
+                completion(.failure(error))
+            }
+        }
+    }
+    
 }
 
 extension MoviesUseCase {

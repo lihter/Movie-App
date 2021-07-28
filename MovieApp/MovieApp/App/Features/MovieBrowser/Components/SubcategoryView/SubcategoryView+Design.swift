@@ -41,6 +41,7 @@ extension SubcategoryView {
     
     func addButtons() {
         guard let subcategories = subcategories else { return }
+        subcategoriesStack.removeAllArrangedSubviews()
         
         for subcategory in subcategories {
             let button = UIButton()
@@ -89,15 +90,18 @@ extension SubcategoryView {
     @objc func subcategoryButtonPressed(sender: UIButton) {
         guard let selected = selectedSubcategory else { return }
         
-        for subview in subcategoriesStack.arrangedSubviews {
-            guard let button = subview as? UIButton else { continue }
-            
-            if button.tag == selected {
-                styleUnselectedSubcategory(button)
-                styleSelectedSubcategory(sender)
-                selectedSubcategory = sender.tag
-            }
+        guard
+            let button = subcategoriesStack
+                .arrangedSubviews
+                .first(where: { ($0 as? UIButton)?.tag == selected }) as? UIButton
+        else {
+            return
         }
+        
+        styleUnselectedSubcategory(button)
+        styleSelectedSubcategory(sender)
+        selectedSubcategory = sender.tag
+        delegate?.changeSubcategory(to: LocalSubcategory(rawValue: selectedSubcategory!))
     }
     
 }
