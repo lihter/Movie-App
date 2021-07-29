@@ -1,6 +1,6 @@
 import Foundation
 
-final class HomePagePresenter: HomePagePresenterProtocol {
+final class HomePagePresenter {
     
     private weak var delegate: HomePageDelegate?
     private let useCase: MoviesUseCaseProtocol!
@@ -38,8 +38,8 @@ final class HomePagePresenter: HomePagePresenterProtocol {
 extension HomePagePresenter {
     
     private func mapMovies(_ movies: [MovieModel]?) -> [MovieViewModel]? {
-        return movies?.map {
-            return MovieViewModel(fromModel: $0)
+        movies?.map {
+            MovieViewModel(fromModel: $0)
         }
     }
     

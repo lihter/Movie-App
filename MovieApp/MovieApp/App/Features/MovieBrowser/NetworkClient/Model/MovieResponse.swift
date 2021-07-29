@@ -1,4 +1,4 @@
-struct WrapperMovieResponse: Decodable {
+struct MoviesWrapperResponse: Decodable {
     
     let movies: [MovieResponse]?
     

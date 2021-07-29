@@ -36,7 +36,7 @@ final class HomePageTwoPresenter {
             
             switch result {
             case .success(let movies):
-                dayMovies = movies ?? []
+                dayMovies = movies
                 if !weekMovies.isEmpty, !dayMovies.isEmpty {
                     let categoryVM: CategoryViewModel? = self.trendingMoviesToCategory(dayMovies: dayMovies, weekMovies: weekMovies)
                     self.delegate?.addToTableView(category: categoryVM)
@@ -51,7 +51,7 @@ final class HomePageTwoPresenter {
             
             switch result {
             case .success(let movies):
-                weekMovies = movies ?? []
+                weekMovies = movies
                 if !weekMovies.isEmpty, !dayMovies.isEmpty {
                     let categoryVM: CategoryViewModel? = self.trendingMoviesToCategory(dayMovies: dayMovies, weekMovies: weekMovies)
                     self.delegate?.addToTableView(category: categoryVM)
@@ -71,7 +71,7 @@ final class HomePageTwoPresenter {
             
             switch result {
             case .success(let result):
-                moviesTopRated = result ?? []
+                moviesTopRated = result
                 if !moviesTopRated.isEmpty, !tvTopRated.isEmpty {
                     let categoryVM: CategoryViewModel? = self.topRatedMoviesToCategory(tvShows: tvTopRated, movies: moviesTopRated)
                     self.delegate?.addToTableView(category: categoryVM)
@@ -86,7 +86,7 @@ final class HomePageTwoPresenter {
             
             switch result {
             case .success(let result):
-                tvTopRated = result ?? []
+                tvTopRated = result
                 if !moviesTopRated.isEmpty, !tvTopRated.isEmpty {
                     let categoryVM: CategoryViewModel? = self.topRatedMoviesToCategory(tvShows: tvTopRated, movies: moviesTopRated)
                     self.delegate?.addToTableView(category: categoryVM)
@@ -115,14 +115,10 @@ extension HomePageTwoPresenter {
             return nil
         }
         
-        let moviesVM = movies.map {
-            return MovieViewModel(fromModel: $0)
-        }
-        let tvShowsVM = tvShows.map {
-            return MovieViewModel(fromModel: $0)
-        }
+        let moviesVM = movies.map { MovieViewModel(fromModel: $0) }
+        let tvShowsVM = tvShows.map { MovieViewModel(fromModel: $0) }
         
-        var dictionary: [LocalSubcategory: [MovieViewModel]] = emptyDictionary(for: .topRated)
+        var dictionary = emptyDictionary(for: .topRated)
         
         dictionary[.topRatedTV] = tvShowsVM
         dictionary[.topRatedMovies] = moviesVM
@@ -141,14 +137,10 @@ extension HomePageTwoPresenter {
             return nil
         }
         
-        let dayMoviesVM = dayMovies.map {
-            return MovieViewModel(fromModel: $0)
-        }
-        let weekMoviesVM = weekMovies.map {
-            return MovieViewModel(fromModel: $0)
-        }
+        let dayMoviesVM = dayMovies.map { MovieViewModel(fromModel: $0) }
+        let weekMoviesVM = weekMovies.map { MovieViewModel(fromModel: $0) }
         
-        var dictionary: [LocalSubcategory: [MovieViewModel]] = emptyDictionary(for: .trending)
+        var dictionary = emptyDictionary(for: .trending)
                 
         dictionary[.trendingToday] = dayMoviesVM
         dictionary[.trendingThisWeek] = weekMoviesVM
@@ -162,11 +154,9 @@ extension HomePageTwoPresenter {
     private func popularMoviesToCategory(_ movies: [MovieModel]?) -> CategoryViewModel? {
         guard let movies = movies else { return nil }
         
-        let moviesVM = movies.map {
-            return MovieViewModel(fromModel: $0)
-        }
+        let moviesVM = movies.map { MovieViewModel(fromModel: $0) }
         
-        var dictionary: [LocalSubcategory: [MovieViewModel]] = emptyDictionary(for: .popular)
+        var dictionary = emptyDictionary(for: .popular)
         
         for movieVM in moviesVM {
             let firstLetter = movieVM.title.prefix(1).lowercased()

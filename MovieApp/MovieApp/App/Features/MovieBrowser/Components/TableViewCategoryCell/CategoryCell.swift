@@ -35,9 +35,9 @@ class CategoryCell: UITableViewCell {
         moviesCollectionView.delegate = self
     }
     
-    func populate(with category: CategoryViewModel?) {
-        categoryKey = category?.categoryKey
-        subcategoryMovies = category?.subcategoryMovies ?? [:]
+    func populate(with category: CategoryViewModel) {
+        categoryKey = category.categoryKey
+        subcategoryMovies = category.subcategoryMovies
         
         categoryLabel.text = categoryKey?.title
         subcategoriesView.populate(with: Array(subcategoryMovies!.keys))
@@ -49,7 +49,7 @@ class CategoryCell: UITableViewCell {
 extension CategoryCell: UICollectionViewDataSource {
     
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
-        return movies?.count ?? 0
+        movies?.count ?? 0
     }
     
     func collectionView(
@@ -88,15 +88,14 @@ extension CategoryCell: CategoryCellDelegate {
     func changeSubcategory(to subcategory: LocalSubcategory?) {
         guard
             let subcategoryMovies = subcategoryMovies,
-            let subcategory = subcategory
+            let subcategory = subcategory,
+            let movies = subcategoryMovies[subcategory]
         else {
             return
         }
         
-        if Array(subcategoryMovies.keys).contains(subcategory) {
-            movies = subcategoryMovies[subcategory]
-            moviesCollectionView.reloadData()
-        }
+        self.movies = movies
+        moviesCollectionView.reloadData()
     }
     
 }

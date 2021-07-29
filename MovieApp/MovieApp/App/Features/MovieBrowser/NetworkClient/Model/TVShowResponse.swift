@@ -1,4 +1,4 @@
-struct WrapperTVShowResponse: Decodable {
+struct TVShowsWrapperResponse: Decodable {
     
     let shows: [TVShowResponse]?
     

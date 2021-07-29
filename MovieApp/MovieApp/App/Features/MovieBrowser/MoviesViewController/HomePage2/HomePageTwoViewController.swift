@@ -46,7 +46,7 @@ class HomePageTwoViewController: UIViewController {
 extension HomePageTwoViewController: UITableViewDelegate {
 
     func numberOfSections(in collectionView: UICollectionView) -> Int {
-        return 1
+        1
     }
 
 }
@@ -54,7 +54,7 @@ extension HomePageTwoViewController: UITableViewDelegate {
 extension HomePageTwoViewController: UITableViewDataSource {
     
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return categories.count
+        categories.count
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
@@ -77,6 +77,7 @@ extension HomePageTwoViewController: HomePageTwoDelegate {
     
     func addToTableView(category: CategoryViewModel?) {
         guard let category = category else { return }
+        
         categories.append(category)
         tableView.reloadData()
     }
