@@ -89,6 +89,7 @@ extension CategoryCell: CategoryCellDelegate {
         
         movies = getSubcategoryMovies(subcategory)
         moviesCollectionView.reloadData()
+        moviesCollectionView.setContentOffset(CGPoint(x: 0, y: 0), animated: false)
     }
     
 }
