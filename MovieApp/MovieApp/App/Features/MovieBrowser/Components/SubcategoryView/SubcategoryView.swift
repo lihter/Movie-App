@@ -31,11 +31,14 @@ class SubcategoryView: UIView {
     func populate(with subcategories: [LocalSubcategory]?) {
         guard let subcategories = subcategories else { return }
         
-        self.subcategories = subcategories
-        selectedSubcategory = self.subcategories?[0].rawValue
-        addButtons()
-        delegate?.changeSubcategory(to: LocalSubcategory(rawValue: selectedSubcategory!))
+        if !subcategories.isEmpty {
+            self.subcategories = subcategories
+            selectedSubcategory = self.subcategories?[0].rawValue
+            addButtons()
+            delegate?.changeSubcategory(to: LocalSubcategory(rawValue: selectedSubcategory!))
 
-        styleButtons()
+            styleButtons()
+        }
     }
+    
 }

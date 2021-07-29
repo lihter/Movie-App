@@ -6,16 +6,17 @@ class CategoryCell: UITableViewCell {
     static let height: CGFloat = 270
     
     let offset: CGFloat = 4
-    
-    var categoryKey: LocalCategory?
+
     var movies: [MovieViewModel]?
-    var subcategoryMovies: [LocalSubcategory : [MovieViewModel]]?
     
     var categoryLabel: UILabel!
     var subcategoriesView: SubcategoryView!
     var flowLayout: UICollectionViewFlowLayout!
     var moviesCollectionView: UICollectionView!
     
+    public var getSubcategories: ((LocalCategory) -> [LocalSubcategory])!
+    public var getSubcategoryMovies: ((LocalSubcategory) -> [MovieViewModel])!
+        
     override init(style: UITableViewCell.CellStyle, reuseIdentifier: String?) {
         super.init(style: style, reuseIdentifier: reuseIdentifier)
         
@@ -35,13 +36,11 @@ class CategoryCell: UITableViewCell {
         moviesCollectionView.delegate = self
     }
     
-    func populate(with category: CategoryViewModel?) {
-        categoryKey = category?.categoryKey
-        subcategoryMovies = category?.subcategoryMovies ?? [:]
+    func populate(with category: LocalCategory?) {
+        guard let category = category else { return }
         
-        categoryLabel.text = categoryKey?.title
-        subcategoriesView.populate(with: Array(subcategoryMovies!.keys))
-        moviesCollectionView.reloadData()
+        categoryLabel.text = category.title
+        subcategoriesView.populate(with: getSubcategories(category))
     }
 
 }
@@ -86,17 +85,10 @@ extension CategoryCell: UICollectionViewDelegateFlowLayout {
 extension CategoryCell: CategoryCellDelegate {
     
     func changeSubcategory(to subcategory: LocalSubcategory?) {
-        guard
-            let subcategoryMovies = subcategoryMovies,
-            let subcategory = subcategory
-        else {
-            return
-        }
+        guard let subcategory = subcategory else { return }
         
-        if Array(subcategoryMovies.keys).contains(subcategory) {
-            movies = subcategoryMovies[subcategory]
-            moviesCollectionView.reloadData()
-        }
+        movies = getSubcategoryMovies(subcategory)
+        moviesCollectionView.reloadData()
     }
     
 }

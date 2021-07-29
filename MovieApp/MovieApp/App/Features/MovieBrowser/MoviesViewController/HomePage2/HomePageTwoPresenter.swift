@@ -4,13 +4,43 @@ final class HomePageTwoPresenter {
     private let useCase: MoviesUseCaseProtocol!
     private let router: AppRouter!
     
+    var categories: [CategoryViewModel]!
+    
     init (useCase: MoviesUseCaseProtocol, router: AppRouter) {
         self.useCase = useCase
         self.router = router
+        
+        categories = []
     }
     
     func setDelegate(delegate: HomePageTwoDelegate) {
         self.delegate = delegate
+    }
+    
+    func getAllCategories() {
+        getPopularMovies()
+        getTrendingMovies()
+        getTopRatedMovies()
+    }
+    
+    func getMovies(for subcategory: LocalSubcategory) -> [MovieViewModel] {
+        var movies: [MovieViewModel] = []
+        categories.forEach {
+            if $0.subcategoryMovies.keys.contains(subcategory) {
+                movies = $0.subcategoryMovies[subcategory] ?? []
+            }
+        }
+        return movies
+    }
+    
+    func getSubcategories(for category: LocalCategory) -> [LocalSubcategory] {
+        var subcategories: [LocalSubcategory] = []
+        categories.forEach {
+            if $0.categoryKey == category {
+                subcategories = Array($0.subcategoryMovies.keys)
+            }
+        }
+        return subcategories
     }
     
     func getPopularMovies() {
@@ -19,8 +49,9 @@ final class HomePageTwoPresenter {
             
             switch result {
             case .success(let movies):
-                let categoryVM: CategoryViewModel? = self.popularMoviesToCategory(movies)
-                self.delegate?.addToTableView(category: categoryVM)
+                guard let categoryVM = self.popularMoviesToCategory(movies) else { return }
+                self.categories.append(categoryVM)
+                self.delegate?.addToTableView(category: categoryVM.categoryKey)
             case .failure(let error):
                 print("Loading error: \(error.localizedDescription)")
             }
@@ -38,8 +69,9 @@ final class HomePageTwoPresenter {
             case .success(let movies):
                 dayMovies = movies ?? []
                 if !weekMovies.isEmpty, !dayMovies.isEmpty {
-                    let categoryVM: CategoryViewModel? = self.trendingMoviesToCategory(dayMovies: dayMovies, weekMovies: weekMovies)
-                    self.delegate?.addToTableView(category: categoryVM)
+                    guard let categoryVM = self.trendingMoviesToCategory(dayMovies: dayMovies, weekMovies: weekMovies) else { return }
+                    self.categories.append(categoryVM)
+                    self.delegate?.addToTableView(category: categoryVM.categoryKey)
                 }
             case .failure(let error):
                 print("Loading error: \(error.localizedDescription)")
@@ -53,8 +85,9 @@ final class HomePageTwoPresenter {
             case .success(let movies):
                 weekMovies = movies ?? []
                 if !weekMovies.isEmpty, !dayMovies.isEmpty {
-                    let categoryVM: CategoryViewModel? = self.trendingMoviesToCategory(dayMovies: dayMovies, weekMovies: weekMovies)
-                    self.delegate?.addToTableView(category: categoryVM)
+                    guard let categoryVM = self.trendingMoviesToCategory(dayMovies: dayMovies, weekMovies: weekMovies) else { return }
+                    self.categories.append(categoryVM)
+                    self.delegate?.addToTableView(category: categoryVM.categoryKey)
                 }
             case .failure(let error):
                 print("Loading error: \(error.localizedDescription)")
@@ -73,8 +106,9 @@ final class HomePageTwoPresenter {
             case .success(let result):
                 moviesTopRated = result ?? []
                 if !moviesTopRated.isEmpty, !tvTopRated.isEmpty {
-                    let categoryVM: CategoryViewModel? = self.topRatedMoviesToCategory(tvShows: tvTopRated, movies: moviesTopRated)
-                    self.delegate?.addToTableView(category: categoryVM)
+                    guard let categoryVM = self.topRatedMoviesToCategory(tvShows: tvTopRated, movies: moviesTopRated) else { return }
+                    self.categories.append(categoryVM)
+                    self.delegate?.addToTableView(category: categoryVM.categoryKey)
                 }
             case .failure(let error):
                 print("Loading error: \(error.localizedDescription)")
@@ -88,8 +122,9 @@ final class HomePageTwoPresenter {
             case .success(let result):
                 tvTopRated = result ?? []
                 if !moviesTopRated.isEmpty, !tvTopRated.isEmpty {
-                    let categoryVM: CategoryViewModel? = self.topRatedMoviesToCategory(tvShows: tvTopRated, movies: moviesTopRated)
-                    self.delegate?.addToTableView(category: categoryVM)
+                    guard let categoryVM = self.topRatedMoviesToCategory(tvShows: tvTopRated, movies: moviesTopRated) else { return }
+                    self.categories.append(categoryVM)
+                    self.delegate?.addToTableView(category: categoryVM.categoryKey)
                 }
             case .failure(let error):
                 print("Loading error: \(error.localizedDescription)")
