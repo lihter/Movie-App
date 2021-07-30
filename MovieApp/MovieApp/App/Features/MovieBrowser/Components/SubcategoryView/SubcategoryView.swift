@@ -8,7 +8,7 @@ class SubcategoryView: UIView {
     let maxNumberOfSubcategoryItems: Int = 8
     
     var selectedSubcategory: Int!
-    var subcategories: [LocalSubcategory]? = nil
+    var subcategories: [LocalSubcategory]?
     
     weak var delegate: CategoryCellDelegate?
     var scrollView: UIScrollView!

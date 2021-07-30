@@ -6,7 +6,7 @@ class CategoryCell: UITableViewCell {
     static let height: CGFloat = 270
     
     let offset: CGFloat = 4
-
+    
     var movies: [MovieViewModel]?
     
     var categoryLabel: UILabel!
@@ -54,7 +54,7 @@ class CategoryCell: UITableViewCell {
 extension CategoryCell: UICollectionViewDataSource {
     
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
-        return movies?.count ?? 0
+        movies?.count ?? 0
     }
     
     func collectionView(

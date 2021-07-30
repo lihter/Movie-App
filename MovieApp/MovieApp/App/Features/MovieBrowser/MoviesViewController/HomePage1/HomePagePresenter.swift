@@ -1,6 +1,6 @@
 import Foundation
 
-final class HomePagePresenter: HomePagePresenterProtocol {
+final class HomePagePresenter {
     
     private weak var delegate: HomePageDelegate?
     private let useCase: MoviesUseCaseProtocol!
@@ -21,7 +21,7 @@ final class HomePagePresenter: HomePagePresenterProtocol {
             
             switch result {
             case .success(let movies):
-                let moviesViewModel: [MovieViewModel]? = self.mapMovies(movies)
+                let moviesViewModel: [MovieViewModel]? = movies.map { MovieViewModel(fromModel: $0) }
                 self.delegate?.reloadCollectionView(with: moviesViewModel)
             case .failure(let error):
                 print("Loading error: \(error.localizedDescription)")
@@ -31,16 +31,6 @@ final class HomePagePresenter: HomePagePresenterProtocol {
     
     func selectedMovie(withId movieId: Int) {
         router.showDetailScreen(for: movieId)
-    }
-    
-}
-
-extension HomePagePresenter {
-    
-    private func mapMovies(_ movies: [MovieModel]?) -> [MovieViewModel]? {
-        return movies?.map {
-            return MovieViewModel(fromModel: $0)
-        }
     }
     
 }

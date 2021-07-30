@@ -4,110 +4,61 @@ import Alamofire
 class MovieClient: MovieClientProtocol {
     
     static let shared: MovieClientProtocol = MovieClient()
-        
-    func fetchPopularMovies(completion: @escaping(Result<[MovieResponse]?, RequestError>) -> Void) {
-        guard let apiKey = Bundle.main.infoDictionary?["API_KEY"] else { return }
-        
-        let urlPath = "movie/popular"
+    
+    func fetchPopularMovies(completion: @escaping(Result<[MovieResponse], RequestError>) -> Void) {
+        fetch(forUrl: "movie/popular") { (result: Result<MoviesWrapperResponse, RequestError>) in
+            completion(result.map { $0.movies ?? [] })
+        }
+    }
+    
+    func fetchTrendingToday(completion: @escaping(Result<[MovieResponse], RequestError>) -> Void) {
+        fetch(forUrl: "trending/movie/day") { (result: Result<MoviesWrapperResponse, RequestError>) in
+            completion(result.map { $0.movies ?? [] })
+        }
+    }
+    
+    func fetchTrendingThisWeek(completion: @escaping(Result<[MovieResponse], RequestError>) -> Void) {
+        fetch(forUrl: "trending/movie/week") { (result: Result<MoviesWrapperResponse, RequestError>) in
+            completion(result.map { $0.movies ?? [] })
+        }
+    }
+    
+    func fetchTopRatedMovies(completion: @escaping(Result<[MovieResponse], RequestError>) -> Void) {
+        fetch(forUrl: "movie/top_rated") { (result: Result<MoviesWrapperResponse, RequestError>) in
+            completion(result.map { $0.movies ?? [] })
+        }
+    }
+    
+    func fetchTopRatedTV(completion: @escaping(Result<[TVShowResponse], RequestError>) -> Void) {
+        fetch(forUrl: "tv/top_rated") { (result: Result<TVShowsWrapperResponse, RequestError>) in
+            completion(result.map { $0.shows ?? [] })
+        }
+    }
+    
+}
 
+extension MovieClient {
+    
+    func fetch<T: Decodable>(forUrl urlPath: String, completion: @escaping (Result<T, RequestError>) -> Void) {
+        guard let apiKey = Bundle.main.infoDictionary?["API_KEY"] else {
+            completion(.failure(.general))
+            return
+        }
+        
         let parameters: Parameters = [
             "api_key": apiKey,
             "language": "en-US",
             "page": 1
         ]
         
-        NetworkClient.shared.executeUrlRequest(urlPath, method: .get, parameters: parameters) { (result: Result<WrapperMovieResponse, RequestError>) in
+        NetworkClient.shared.executeUrlRequest(urlPath, method: .get, parameters: parameters) { (result: Result<T, RequestError>) in
             switch result {
             case .failure(let error):
                 completion(.failure(error))
             case .success(let value):
-                completion(.success(value.movies))
+                completion(.success(value))
             }
         }
     }
     
-    func fetchTrendingToday(completion: @escaping(Result<[MovieResponse]?, RequestError>) -> Void) {
-        guard let apiKey = Bundle.main.infoDictionary?["API_KEY"] else { return }
-        
-        let urlPath = "trending/movie/day"
-        
-        let parameters: Parameters = [
-            "api_key": apiKey,
-            "language": "en-US",
-            "page": 1
-        ]
-        
-        NetworkClient.shared.executeUrlRequest(urlPath, method: .get, parameters: parameters) { (result: Result<WrapperMovieResponse, RequestError>) in
-            switch result {
-            case .failure(let error):
-                completion(.failure(error))
-            case .success(let value):
-                completion(.success(value.movies))
-            }
-        }
-    }
-    
-    func fetchTrendingThisWeek(completion: @escaping(Result<[MovieResponse]?, RequestError>) -> Void) {
-        guard let apiKey = Bundle.main.infoDictionary?["API_KEY"] else { return }
-        
-        let urlPath = "trending/movie/week"
-        
-        let parameters: Parameters = [
-            "api_key": apiKey,
-            "language": "en-US",
-            "page": 1
-        ]
-        
-        NetworkClient.shared.executeUrlRequest(urlPath, method: .get, parameters: parameters) { (result: Result<WrapperMovieResponse, RequestError>) in
-            switch result {
-            case .failure(let error):
-                completion(.failure(error))
-            case .success(let value):
-                completion(.success(value.movies))
-            }
-        }
-    }
-    
-    func fetchTopRatedMovies(completion: @escaping(Result<[MovieResponse]?, RequestError>) -> Void) {
-        guard let apiKey = Bundle.main.infoDictionary?["API_KEY"] else { return }
-        
-        let urlPath = "movie/top_rated"
-        
-        let parameters: Parameters = [
-            "api_key": apiKey,
-            "language": "en-US",
-            "page": 1
-        ]
-        
-        NetworkClient.shared.executeUrlRequest(urlPath, method: .get, parameters: parameters) { (result: Result<WrapperMovieResponse, RequestError>) in
-            switch result {
-            case .failure(let error):
-                completion(.failure(error))
-            case .success(let value):
-                completion(.success(value.movies))
-            }
-        }
-    }
-    
-    func fetchTopRatedTV(completion: @escaping(Result<[TVShowResponse]?, RequestError>) -> Void) {
-        guard let apiKey = Bundle.main.infoDictionary?["API_KEY"] else { return }
-        
-        let urlPath = "tv/top_rated"
-        
-        let parameters: Parameters = [
-            "api_key": apiKey,
-            "language": "en-US",
-            "page": 1
-        ]
-        
-        NetworkClient.shared.executeUrlRequest(urlPath, method: .get, parameters: parameters) { (result: Result<WrapperTVShowResponse, RequestError>) in
-            switch result {
-            case .failure(let error):
-                completion(.failure(error))
-            case .success(let value):
-                completion(.success(value.shows))
-            }
-        }
-    }
-
 }
