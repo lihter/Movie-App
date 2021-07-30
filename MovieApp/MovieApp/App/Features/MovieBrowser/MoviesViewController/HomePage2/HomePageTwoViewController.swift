@@ -6,6 +6,8 @@ class HomePageTwoViewController: UIViewController {
     let tableRowOffset: CGFloat = 40
     
     var categories: [LocalCategory]!
+    var storedCVOffsets: [Int: CGFloat]!
+    var storedSelectedSubcategories: [Int: Int]!
     
     var searchBar: MovieSearchBar!
     var tableView: UITableView!
@@ -18,6 +20,8 @@ class HomePageTwoViewController: UIViewController {
         self.presenter.setDelegate(delegate: self)
         
         categories = []
+        storedCVOffsets = [:]
+        storedSelectedSubcategories  = [:]
     }
     
     required init?(coder: NSCoder) {
@@ -74,10 +78,24 @@ extension HomePageTwoViewController: UITableViewDataSource {
             
             return self.presenter.getSubcategories(for: category)
         }
-                
+        
         cell.populate(with: categories[indexPath.row])
         cell.selectionStyle = .none
         return cell
+    }
+    
+    func tableView(_ tableView: UITableView, willDisplay cell: UITableViewCell, forRowAt indexPath: IndexPath) {
+        guard let cell = cell as? CategoryCell else { return }
+        
+        cell.subcategoriesView.selectedSubcategory = storedSelectedSubcategories[indexPath.row] ?? cell.subcategoriesView.selectedSubcategory
+        cell.collectionViewOffset = storedCVOffsets[indexPath.row] ?? 0
+    }
+    
+    func tableView(_ tableView: UITableView, didEndDisplaying cell: UITableViewCell, forRowAt indexPath: IndexPath) {
+        guard let cell = cell as? CategoryCell else { return }
+        
+        storedSelectedSubcategories[indexPath.row] = cell.subcategoriesView.selectedSubcategory
+        storedCVOffsets[indexPath.row] = cell.collectionViewOffset
     }
     
 }

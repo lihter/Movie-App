@@ -14,6 +14,11 @@ class CategoryCell: UITableViewCell {
     var flowLayout: UICollectionViewFlowLayout!
     var moviesCollectionView: UICollectionView!
     
+    var collectionViewOffset: CGFloat {
+        set { moviesCollectionView.contentOffset.x = newValue }
+        get { moviesCollectionView.contentOffset.x }
+    }
+    
     public var getSubcategories: ((LocalCategory) -> [LocalSubcategory])!
     public var getSubcategoryMovies: ((LocalSubcategory) -> [MovieViewModel])!
         
@@ -34,6 +39,7 @@ class CategoryCell: UITableViewCell {
         moviesCollectionView.register(NewMovieCell.self, forCellWithReuseIdentifier: NewMovieCell.reuseIdentifier)
         moviesCollectionView.dataSource = self
         moviesCollectionView.delegate = self
+        moviesCollectionView.setContentOffset(moviesCollectionView.contentOffset, animated: false)
     }
     
     func populate(with category: LocalCategory?) {
