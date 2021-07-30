@@ -5,14 +5,34 @@ class HomePageTwoViewController: UIViewController {
     let offset: CGFloat = 4
     let tableRowOffset: CGFloat = 40
     
+    var categories: [CategoryViewModel]!
+    
     var searchBar: MovieSearchBar!
     var tableView: UITableView!
-       
+    var presenter: HomePageTwoPresenter!
+    
+    init(presenter: HomePageTwoPresenter) {
+        super.init(nibName: nil, bundle: nil)
+        
+        self.presenter = presenter
+        self.presenter.setDelegate(delegate: self)
+        
+        self.categories = []
+    }
+    
+    required init?(coder: NSCoder) {
+        fatalError("init(coder:) has not been implemented")
+    }
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         
         buildViews()
         setupTableView()
+        
+        presenter.getPopularMovies()
+        presenter.getTrendingMovies()
+        presenter.getTopRatedMovies()
     }
     
     private func setupTableView() {
@@ -26,7 +46,7 @@ class HomePageTwoViewController: UIViewController {
 extension HomePageTwoViewController: UITableViewDelegate {
 
     func numberOfSections(in collectionView: UICollectionView) -> Int {
-        return 1
+        1
     }
 
 }
@@ -34,7 +54,7 @@ extension HomePageTwoViewController: UITableViewDelegate {
 extension HomePageTwoViewController: UITableViewDataSource {
     
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return 8
+        categories.count
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
@@ -45,13 +65,21 @@ extension HomePageTwoViewController: UITableViewDataSource {
         else {
             return UITableViewCell()
         }
-        
-        let mockMovie = MovieViewModel(identifier: 13, title: "Mock", overview: "Bla bla bla", posterPath: URL(string: "https://image.tmdb.org/t/p/w185/qAZ0pzat24kLdO3o8ejmbLxyOac.jpg"))
-        let mockCategory = CategoryViewModel(categoryTitle: "What's popular", subcategories: [LocalSubcategory.popularStreaming, LocalSubcategory.popularOnTV, LocalSubcategory.popularForRent, LocalSubcategory.popularInTheaters], movies: [mockMovie, mockMovie, mockMovie, mockMovie, mockMovie, mockMovie, mockMovie])
-        
-        cell.populate(with: mockCategory)
+
+        cell.populate(with: categories[indexPath.row])
         cell.selectionStyle = .none
         return cell
+    }
+    
+}
+
+extension HomePageTwoViewController: HomePageTwoDelegate {
+    
+    func addToTableView(category: CategoryViewModel?) {
+        guard let category = category else { return }
+        
+        categories.append(category)
+        tableView.reloadData()
     }
     
 }

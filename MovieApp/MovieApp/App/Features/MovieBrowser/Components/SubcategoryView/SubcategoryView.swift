@@ -4,12 +4,13 @@ class SubcategoryView: UIView {
     
     static let height: CGFloat = 40
     
-    var selectedSubcategory: Int? = nil
-    var subcategories: [LocalSubcategory]? = nil
-    
     let offset: CGFloat = 4
     let maxNumberOfSubcategoryItems: Int = 8
     
+    var selectedSubcategory: Int? = nil
+    var subcategories: [LocalSubcategory]? = nil
+    
+    weak var delegate: CategoryCellDelegate?
     var scrollView: UIScrollView!
     var subcategoriesStack: UIStackView!
     
@@ -23,13 +24,18 @@ class SubcategoryView: UIView {
         fatalError("init(coder:) has not been implemented")
     }
     
-    func populate(with subcategories: [LocalSubcategory]) {
+    func setDelegate(delegate: CategoryCellDelegate) {
+        self.delegate = delegate
+    }
+    
+    func populate(with subcategories: [LocalSubcategory]?) {
+        guard let subcategories = subcategories else { return }
+        
         self.subcategories = subcategories
-                
-        if subcategoriesStack.arrangedSubviews.isEmpty {
-            selectedSubcategory = self.subcategories?[0].rawValue
-            addButtons()
-        }
+        selectedSubcategory = self.subcategories?[0].rawValue
+        addButtons()
+        delegate?.changeSubcategory(to: LocalSubcategory(rawValue: selectedSubcategory!))
+
         styleButtons()
     }
 }

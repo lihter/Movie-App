@@ -7,7 +7,9 @@ class CategoryCell: UITableViewCell {
     
     let offset: CGFloat = 4
     
+    var categoryKey: LocalCategory?
     var movies: [MovieViewModel]?
+    var subcategoryMovies: [LocalSubcategory : [MovieViewModel]]?
     
     var categoryLabel: UILabel!
     var subcategoriesView: SubcategoryView!
@@ -19,6 +21,8 @@ class CategoryCell: UITableViewCell {
         
         buildViews()
         setupCollectionView()
+        
+        subcategoriesView.setDelegate(delegate: self)
     }
     
     required init?(coder: NSCoder) {
@@ -32,9 +36,11 @@ class CategoryCell: UITableViewCell {
     }
     
     func populate(with category: CategoryViewModel) {
-        categoryLabel.text = category.categoryTitle
-        subcategoriesView.populate(with: category.subcategories)
-        movies = category.movies
+        categoryKey = category.categoryKey
+        subcategoryMovies = category.subcategoryMovies
+        
+        categoryLabel.text = categoryKey?.title
+        subcategoriesView.populate(with: Array(subcategoryMovies!.keys))
         moviesCollectionView.reloadData()
     }
 
@@ -43,7 +49,7 @@ class CategoryCell: UITableViewCell {
 extension CategoryCell: UICollectionViewDataSource {
     
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
-        return movies?.count ?? 0
+        movies?.count ?? 0
     }
     
     func collectionView(
@@ -77,3 +83,19 @@ extension CategoryCell: UICollectionViewDelegateFlowLayout {
     
 }
 
+extension CategoryCell: CategoryCellDelegate {
+    
+    func changeSubcategory(to subcategory: LocalSubcategory?) {
+        guard
+            let subcategoryMovies = subcategoryMovies,
+            let subcategory = subcategory,
+            let movies = subcategoryMovies[subcategory]
+        else {
+            return
+        }
+        
+        self.movies = movies
+        moviesCollectionView.reloadData()
+    }
+    
+}

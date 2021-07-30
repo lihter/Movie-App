@@ -10,15 +10,33 @@ class MovieRepository: MovieRepositoryProtocol {
         self.networkDataSource = MovieNetworkDataSource.shared
     }
     
-    func fetchPopularMovies(completion: @escaping (Result<[MovieRepoModel]?, RequestError>) -> Void) {
+    func fetchPopularMovies(completion: @escaping (Result<[MovieRepoModel], RequestError>) -> Void) {
         networkDataSource.fetchPopularMovies { [weak self] result in
-            switch result {
-            case .success(let movies):
-                let mappedMovies = self?.mapMovies(movies)
-                completion(.success(mappedMovies))
-            case .failure(let error):
-                completion(.failure(error))
-            }
+            self?.mapResult(result: result, completion: completion)
+        }
+    }
+    
+    func fetchTrendingToday(completion: @escaping(Result<[MovieRepoModel], RequestError>) -> Void) {
+        networkDataSource.fetchTrendingToday { [weak self] result in
+            self?.mapResult(result: result, completion: completion)
+        }
+    }
+    
+    func fetchTrendingThisWeek(completion: @escaping(Result<[MovieRepoModel], RequestError>) -> Void) {
+        networkDataSource.fetchTrendingThisWeek { [weak self] result in
+            self?.mapResult(result: result, completion: completion)
+        }
+    }
+    
+    func fetchTopRatedMovies(completion: @escaping(Result<[MovieRepoModel], RequestError>) -> Void) {
+        networkDataSource.fetchTopRatedMovies { [weak self] result in
+            self?.mapResult(result: result, completion: completion)
+        }
+    }
+    
+    func fetchTopRatedTV(completion: @escaping(Result<[MovieRepoModel], RequestError>) -> Void) {
+        networkDataSource.fetchTopRatedTV { [weak self] result in
+            self?.mapResult(result: result, completion: completion)
         }
     }
     
@@ -26,9 +44,13 @@ class MovieRepository: MovieRepositoryProtocol {
 
 extension MovieRepository {
     
-    private func mapMovies(_ movies: [MovieDataModel]?) -> [MovieRepoModel]?{
-        return movies?.map {
-            return MovieRepoModel(fromModel: $0)
+    private func mapResult(result: Result<[MovieDataModel], RequestError>, completion:@escaping(Result<[MovieRepoModel], RequestError>) -> Void) {
+        switch result {
+        case .success(let movies):
+            let mappedMovies = movies.map { MovieRepoModel(fromModel: $0) }
+            completion(.success(mappedMovies))
+        case .failure(let error):
+            completion(.failure(error))
         }
     }
     

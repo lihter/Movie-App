@@ -43,7 +43,7 @@ class HomePageViewController: UIViewController {
 extension HomePageViewController: UICollectionViewDataSource {
     
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
-        return movies?.count ?? 0
+        movies?.count ?? 0
     }
     
     func collectionView(
