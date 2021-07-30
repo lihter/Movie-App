@@ -78,6 +78,11 @@ extension HomePageTwoViewController: UITableViewDataSource {
             
             return self.presenter.getSubcategories(for: category)
         }
+        cell.showDetailScreen = { [weak self] movieId in
+            guard let self = self else { return }
+            
+            self.presenter.showDetailScreen(for: movieId)
+        }
         
         cell.populate(with: categories[indexPath.row])
         cell.selectionStyle = .none

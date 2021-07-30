@@ -6,12 +6,14 @@ class NewMovieCell: UICollectionViewCell {
     static let reuseIdentifier = String(describing: NewMovieCell.self)
     static let cellSize = CGSize(width: 122, height: 179)
     
-    var movieId: Int? = nil
+    var movieId: Int!
     
     let offset: CGFloat = 8
     
     var movieImageView: UIImageView!
     var favouriteButton: FavouriteButton!
+    
+    public var showDetailScreen: ((Int) -> ())!
     
     override init(frame: CGRect) {
         super.init(frame: frame)
@@ -29,11 +31,11 @@ class NewMovieCell: UICollectionViewCell {
     }
     
     @objc func addToFavourites() {
-        print("Adding movie with id \(movieId ?? -1) to favourites.")
+        print("Adding movie with id \(movieId ?? 0) to favourites.")
     }
     
-    @objc func imageTapped() {
-        print("Selected movie with id \(movieId ?? -1)")
+    @objc func imageTapped() {        
+        showDetailScreen(movieId)
     }
     
 }

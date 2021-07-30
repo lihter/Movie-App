@@ -33,6 +33,10 @@ final class HomePageTwoPresenter {
         return movies
     }
     
+    func showDetailScreen(for movieId: Int) {
+        router.showDetailScreen(for: movieId)
+    }
+    
     func getSubcategories(for category: LocalCategory) -> [LocalSubcategory] {
         var subcategories: [LocalSubcategory] = []
         categories.forEach {
