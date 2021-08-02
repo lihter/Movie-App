@@ -9,7 +9,7 @@ class ProgressBarView: UIView {
     var percentageLabel: UILabel!
     var userScoreLabel: UILabel!
     
-    init(endPoint: Int) {
+    init(percentage endPoint: Int) {
         super.init(frame: .zero)
         
         self.endPoint = endPoint
