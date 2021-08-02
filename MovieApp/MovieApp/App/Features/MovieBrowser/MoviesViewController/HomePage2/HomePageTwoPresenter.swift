@@ -34,13 +34,12 @@ final class HomePageTwoPresenter {
     }
     
     func getSubcategories(for category: LocalCategory) -> [LocalSubcategory] {
-        var subcategories: [LocalSubcategory] = []
-        categories.forEach {
-            if $0.categoryKey == category {
-                subcategories = Array($0.subcategoryMovies.keys)
-            }
+        guard
+            let keys = categories.first(where: { $0.categoryKey == category })?.subcategoryMovies.keys
+        else {
+            return []
         }
-        return subcategories
+        return Array(keys)
     }
     
     func getPopularMovies() {
