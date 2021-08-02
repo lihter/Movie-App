@@ -17,7 +17,6 @@ class MovieDetailViewController: UIViewController {
         super.viewDidLoad()
         
         view.backgroundColor = .red
-        print(movieId ?? 0)
     }
     
 }
