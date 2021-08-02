@@ -25,4 +25,8 @@ extension UIColor {
     static var secondaryGray: UIColor {
         UIColor(red: 0.51, green: 0.51, blue: 0.51, alpha: 1)
     }
+    
+    static var progressBarGreen: UIColor {
+        UIColor(red: 32/255, green: 204/255, blue: 120/255, alpha: 1)
+    }
 }

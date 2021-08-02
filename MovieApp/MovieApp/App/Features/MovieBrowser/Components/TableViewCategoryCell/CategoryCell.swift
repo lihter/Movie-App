@@ -40,7 +40,7 @@ class CategoryCell: UITableViewCell {
         moviesCollectionView.register(NewMovieCell.self, forCellWithReuseIdentifier: NewMovieCell.reuseIdentifier)
         moviesCollectionView.dataSource = self
         moviesCollectionView.delegate = self
-        moviesCollectionView.setContentOffset(moviesCollectionView.contentOffset, animated: false)
+        moviesCollectionView.setContentOffset(moviesCollectionView.contentOffset, animated: true)
     }
     
     func populate(with category: LocalCategory?) {
@@ -101,7 +101,7 @@ extension CategoryCell: CategoryCellDelegate {
         
         movies = getSubcategoryMovies(subcategory)
         moviesCollectionView.reloadData()
-        moviesCollectionView.setContentOffset(CGPoint(x: 0, y: 0), animated: false)
+        moviesCollectionView.setContentOffset(CGPoint(x: 0, y: 0), animated: true)
     }
     
 }

@@ -2,11 +2,25 @@ import UIKit
 
 class MovieDetailViewController: UIViewController {
     
-    let movieId: Int!
+    let offset: CGFloat = 4
     
-    init(withMovieId movieId: Int) {
-        self.movieId = movieId
+    var movieId: Int!
+    
+    var presenter: MovieDetailPresenter!
+    
+    var scrollView: UIScrollView!
+    var contentView: UIView!
+    var titleView: DetailTitleView!
+    var overviewTitle: UILabel!
+    var overview: UILabel!
+    var castView: CastView!
+    var recommendationsView: RecommendationsView!
+    
+    init(presenter: MovieDetailPresenter, withMovieId movieId: Int) {
         super.init(nibName: nil, bundle: nil)
+        
+        self.presenter = presenter
+        self.movieId = movieId
     }
     
     required init?(coder: NSCoder) {
@@ -16,7 +30,7 @@ class MovieDetailViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        view.backgroundColor = .red
+        buildViews()
         print(movieId ?? 0)
     }
     

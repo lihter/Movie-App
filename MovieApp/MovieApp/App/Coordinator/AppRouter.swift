@@ -22,8 +22,9 @@ final class AppRouter {
     }
     
     func showDetailScreen(for movieId: Int) {
-        let vc = MovieDetailViewController(withMovieId: movieId)
-                
+        let movieDetailPresenter = MovieDetailPresenter()
+        let vc = MovieDetailViewController(presenter: movieDetailPresenter, withMovieId: movieId)
+        
         navigationController?.pushViewController(vc, animated: true)
     }
     
@@ -64,9 +65,9 @@ extension AppRouter {
     }
     
     private func styleNavigationBar() {
-        navigationController?.navigationBar.barTintColor = .primaryBlue
-        navigationController?.navigationBar.backIndicatorImage = UIImage(with: .navigationBarBackButton)
-        navigationController?.navigationBar.isTranslucent = false
+        navigationController.navigationBar.barTintColor = .primaryBlue
+        navigationController.navigationBar.isTranslucent = false
+        navigationController.navigationBar.tintColor = .white
     }
     
 }
