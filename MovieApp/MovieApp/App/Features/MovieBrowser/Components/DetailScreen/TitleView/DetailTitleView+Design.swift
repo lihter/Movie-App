@@ -33,7 +33,7 @@ extension DetailTitleView: DesignProtocol {
         favouritesButton = FavouriteButton()
         addSubview(favouritesButton)
         
-        progressBar = ProgressBarView(endPoint: details.userScore)
+        progressBar = ProgressBarView(percentage: details.userScore)
         addSubview(progressBar)
     }
     
