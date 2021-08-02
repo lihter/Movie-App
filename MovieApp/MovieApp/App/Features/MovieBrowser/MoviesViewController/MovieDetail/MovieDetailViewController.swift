@@ -31,7 +31,6 @@ class MovieDetailViewController: UIViewController {
         super.viewDidLoad()
         
         buildViews()
-        print(movieId ?? 0)
     }
     
 }

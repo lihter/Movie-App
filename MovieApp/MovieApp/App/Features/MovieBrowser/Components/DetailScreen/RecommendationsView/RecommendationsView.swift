@@ -59,9 +59,7 @@ extension RecommendationsView: UICollectionViewDataSource {
 
 extension RecommendationsView: UICollectionViewDelegate {
     
-    func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
-        print(indexPath.item)
-    }
+    func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) { }
     
 }
 
