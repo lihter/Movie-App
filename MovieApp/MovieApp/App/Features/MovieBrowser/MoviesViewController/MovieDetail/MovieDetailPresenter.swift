@@ -6,9 +6,7 @@ final class MovieDetailPresenter {
     private weak var delegate: MovieDetailDelegate?
     private let useCase: MoviesUseCaseProtocol!
     private let router: AppRouter!
-    
-    var movieDetails: MovieDetailViewModel!
-    
+        
     init (useCase: MoviesUseCaseProtocol, router: AppRouter) {
         self.useCase = useCase
         self.router = router
@@ -24,8 +22,7 @@ final class MovieDetailPresenter {
             
             switch result {
             case .success(let movie):
-                self.movieDetails = MovieDetailViewModel(fromModel: movie)
-                self.delegate?.fillDetailTitleView(with: DetailTitleViewModel(fromModel: self.movieDetails))
+                self.delegate?.fillDetailTitleView(with: DetailTitleViewModel(fromModel: movie))
             case .failure(let error):
                 print("Loading error: \(error.localizedDescription)")
             }

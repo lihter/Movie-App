@@ -14,7 +14,7 @@ struct DetailTitleViewModel {
 
 extension DetailTitleViewModel {
     
-    init(fromModel model: MovieDetailViewModel) {
+    init(fromModel model: MovieModel) {
         self.init(
             title: model.title,
             year: String(model.releaseDate?.split(separator: "-")[0] ?? ""),
