@@ -42,6 +42,17 @@ class MoviesUseCase: MoviesUseCaseProtocol {
             self?.mapMovieDetailResult(result: result, completion: completion)
         }
     }
+    
+    func getMovieOverview(for movieId: Int, completion: @escaping(Result<String, RequestError>) -> Void) {
+        moviesDataRepo.fetchMovieDetails(for: movieId) { result in
+            switch result {
+            case .failure(let error):
+                completion(.failure(error))
+            case .success(let movie):
+                completion(.success(movie.overview))
+            }
+        }
+    }
 
 }
 

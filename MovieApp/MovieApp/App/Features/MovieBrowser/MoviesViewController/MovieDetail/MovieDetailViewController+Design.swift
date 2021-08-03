@@ -52,7 +52,7 @@ extension MovieDetailViewController: DesignProtocol {
     func styleViews() {
         view.backgroundColor = .white
         
-        scrollView.contentSize = CGSize(width: UIScreen.main.bounds.width, height: 1400)
+        scrollView.contentSize = CGSize(width: UIScreen.main.bounds.width, height: 1550)
         scrollView.showsVerticalScrollIndicator = false
         scrollView.isUserInteractionEnabled = true
         scrollView.isExclusiveTouch = true
@@ -65,12 +65,10 @@ extension MovieDetailViewController: DesignProtocol {
         overviewTitle.font = .heading1
         overviewTitle.textColor = .primaryBlue
         
-        overview.text = presenter.getOverview(for: movieId)
         overview.font = .regularMedium
         overview.textColor = .black
         overview.numberOfLines = 0
         overview.lineBreakMode = .byWordWrapping
-        overview.setLineSpacing(lineSpacing: 0, lineHeightMultiple: 1.4)
     }
     
     func defineLayoutForViews() {
@@ -81,7 +79,7 @@ extension MovieDetailViewController: DesignProtocol {
         contentView.snp.makeConstraints {
             $0.width.equalTo(UIScreen.main.bounds.width)
             $0.top.equalToSuperview()
-            $0.height.equalTo(1400)
+            $0.height.equalTo(1550)
         }
         
         titleView.snp.makeConstraints {

@@ -34,7 +34,7 @@ class MovieDetailViewController: UIViewController {
         
         buildViews()
         
-        presenter.getMovieDetails(for: movieId)
+        presenter.fetchAll(for: movieId)
     }
     
 }
@@ -43,6 +43,11 @@ extension MovieDetailViewController: MovieDetailDelegate {
     
     func fillDetailTitleView(with movieDetails: DetailTitleViewModel) {
         titleView.populate(with: movieDetails)
+    }
+    
+    func fillOverview(with overview: String) {
+        self.overview.text = overview
+        self.overview.setLineSpacing(lineSpacing: 0, lineHeightMultiple: 1.4)
     }
     
 }
