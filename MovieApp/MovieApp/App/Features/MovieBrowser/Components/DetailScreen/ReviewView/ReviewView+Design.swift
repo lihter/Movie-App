@@ -39,8 +39,12 @@ extension ReviewView: DesignProtocol {
         titleLabel.text = "A review written by \(review.author)"
         
         let text = NSMutableAttributedString(string: "Written by \(review.author) on \(review.createdAt)")
-        text.setAttributes([.font: UIFont.regularMedium, .foregroundColor: UIColor.secondaryGray], range: NSMakeRange(0, text.length))
-        text.setAttributes([.font: UIFont.regularMedium, .foregroundColor: UIColor.black], range: NSMakeRange(11, review.author.lengthOfBytes(using: .utf8)))
+        text.setAttributes(
+            [.font: UIFont.regularMedium, .foregroundColor: UIColor.secondaryGray],
+            range: NSMakeRange(0, text.length))
+        text.setAttributes(
+            [.font: UIFont.regularMedium, .foregroundColor: UIColor.black],
+            range: NSMakeRange(11, review.author.lengthOfBytes(using: .utf8)))
         writtenByLabel.attributedText = text
         writtenByLabel.numberOfLines = 0
         writtenByLabel.lineBreakMode = .byWordWrapping
