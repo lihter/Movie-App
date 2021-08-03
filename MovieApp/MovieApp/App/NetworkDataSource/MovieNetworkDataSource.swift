@@ -43,6 +43,12 @@ class MovieNetworkDataSource: MovieNetworkDataSourceProtocol {
             }
         }
     }
+    
+    func fetchMovieDetails(for movieId: Int, completion: @escaping(Result<MovieDataModel, RequestError>) -> Void) {
+        movieClient.fetchMovieDetails(for: movieId) { [weak self] result in
+            self?.mapMovieDetailResult(result: result, completion: completion)
+        }
+    }
 
 }
 
@@ -53,6 +59,16 @@ extension MovieNetworkDataSource {
         case .success(let movies):
             let mappedMovies = movies.map { MovieDataModel(fromModel: $0) }
             completion(.success(mappedMovies))
+        case .failure(let error):
+            completion(.failure(error))
+        }
+    }
+    
+    private func mapMovieDetailResult(result: Result<MovieDetailResponse, RequestError>, completion: @escaping(Result<MovieDataModel, RequestError>) -> Void) {
+        switch result {
+        case .success(let movie):
+            let mappedMovie = MovieDataModel(fromModel: movie)
+            completion(.success(mappedMovie))
         case .failure(let error):
             completion(.failure(error))
         }

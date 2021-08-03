@@ -21,6 +21,7 @@ class MovieDetailViewController: UIViewController {
         super.init(nibName: nil, bundle: nil)
         
         self.presenter = presenter
+        self.presenter.setDelegate(delegate: self)
         self.movieId = movieId
     }
     
@@ -32,6 +33,16 @@ class MovieDetailViewController: UIViewController {
         super.viewDidLoad()
         
         buildViews()
+        
+        presenter.getMovieDetails(for: movieId)
+    }
+    
+}
+
+extension MovieDetailViewController: MovieDetailDelegate {
+    
+    func fillDetailTitleView(with movieDetails: DetailTitleViewModel) {
+        titleView.populate(with: movieDetails)
     }
     
 }

@@ -33,12 +33,11 @@ extension DetailTitleView: DesignProtocol {
         favouritesButton = FavouriteButton()
         addSubview(favouritesButton)
         
-        progressBar = ProgressBarView(percentage: details.userScore)
+        progressBar = ProgressBarView()
         addSubview(progressBar)
     }
     
     func styleViews() {
-        backgroundImageView.kf.setImage(with: details.posterPath)
         backgroundImageView.contentMode = .scaleAspectFill
         backgroundImageView.clipsToBounds = true
         
@@ -47,27 +46,20 @@ extension DetailTitleView: DesignProtocol {
         gradientLayer.colors = [UIColor.clear.cgColor, UIColor.black.cgColor]
         gradientView.layer.insertSublayer(gradientLayer, at: 0)
                 
-        titleLabel.text = details.title
         titleLabel.textColor = .white
         titleLabel.font = .heading2
         
-        yearLabel.text = "(\(details.year))"
         yearLabel.textColor = .white
         yearLabel.font = .heading2regular
         
-        releaseDateLabel.text = details.releaseDate
         releaseDateLabel.textColor = .white
         releaseDateLabel.font = .regularMedium
         
-        genresLabel.text = details.genres.joined(separator: ", ")
         genresLabel.textColor = .white
         genresLabel.font = .regularMedium
         
-        durationLabel.text = details.duration
         durationLabel.textColor = .white
         durationLabel.font = .smallBold
-        
-        progressBar.progressAnimation(duration: 1.2)
     }
     
     func defineLayoutForViews() {
@@ -89,14 +81,14 @@ extension DetailTitleView: DesignProtocol {
             $0.leading.equalToSuperview().offset(4 * offset)
         }
         
-        durationLabel.snp.makeConstraints {
-            $0.bottom.equalTo(genresLabel.snp.bottom)
-            $0.leading.equalTo(genresLabel.snp.trailing).offset(2 * offset)
-        }
-        
         releaseDateLabel.snp.makeConstraints {
             $0.bottom.equalTo(genresLabel.snp.top).offset(-2 * offset)
             $0.leading.equalToSuperview().offset(4 * offset)
+        }
+        
+        durationLabel.snp.makeConstraints {
+            $0.bottom.equalTo(genresLabel.snp.bottom)
+            $0.leading.equalTo(genresLabel.snp.trailing).offset(2 * offset)
         }
         
         titleLabel.snp.makeConstraints {

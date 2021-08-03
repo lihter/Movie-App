@@ -10,4 +10,6 @@ protocol MovieNetworkDataSourceProtocol {
     
     func fetchTopRatedTV(completion: @escaping(Result<[MovieDataModel], RequestError>) -> Void)
     
+    func fetchMovieDetails(for movieId: Int, completion: @escaping(Result<MovieDataModel, RequestError>) -> Void)
+    
 }

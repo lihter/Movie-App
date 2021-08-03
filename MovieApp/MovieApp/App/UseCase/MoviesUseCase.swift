@@ -36,6 +36,12 @@ class MoviesUseCase: MoviesUseCaseProtocol {
             self?.mapResult(result: result, completion: completion)
         }
     }
+    
+    func getMovieDetails(for movieId: Int, completion: @escaping(Result<MovieModel, RequestError>) -> Void) {
+        moviesDataRepo.fetchMovieDetails(for: movieId) { [weak self] result in
+            self?.mapMovieDetailResult(result: result, completion: completion)
+        }
+    }
 
 }
 
@@ -46,6 +52,16 @@ extension MoviesUseCase {
         case .success(let movies):
             let mappedMovies = movies.map { MovieModel(fromModel: $0) }
             completion(.success(mappedMovies))
+        case .failure(let error):
+            completion(.failure(error))
+        }
+    }
+    
+    private func mapMovieDetailResult(result: Result<MovieRepoModel, RequestError>, completion: @escaping(Result<MovieModel, RequestError>) -> Void) {
+        switch result {
+        case .success(let movie):
+            let mappedMovie = MovieModel(fromModel: movie)
+            completion(.success(mappedMovie))
         case .failure(let error):
             completion(.failure(error))
         }

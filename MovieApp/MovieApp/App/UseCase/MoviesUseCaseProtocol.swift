@@ -9,5 +9,7 @@ protocol MoviesUseCaseProtocol {
     func getTopRatedMovies(completion: @escaping (Result<[MovieModel], RequestError>) -> Void)
     
     func getTopRatedTV(completion: @escaping (Result<[MovieModel], RequestError>) -> Void)
+    
+    func getMovieDetails(for movieId: Int, completion: @escaping(Result<MovieModel, RequestError>) -> Void)
 
 }

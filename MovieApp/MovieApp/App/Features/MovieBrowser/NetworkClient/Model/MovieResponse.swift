@@ -18,7 +18,8 @@ struct MovieResponse: Decodable {
     let voteAverage: Double
     let voteCount: Double
     let releaseDate: String?
-    let genreIds: [Int]?
+    let genreIds: [Int]
+    let runtime: Int?
     
     private enum CodingKeys: String, CodingKey {
         case title = "original_title"
@@ -30,6 +31,7 @@ struct MovieResponse: Decodable {
         case voteCount = "vote_count"
         case releaseDate = "release_date"
         case genreIds = "genre_ids"
+        case runtime
     }
     
 }

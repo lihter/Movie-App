@@ -1,6 +1,6 @@
 import Foundation
 
-struct MovieModel {
+struct MovieDetailViewModel {
     
     let identifier: Int
     let title: String
@@ -11,14 +11,13 @@ struct MovieModel {
     let voteCount: Double
     let releaseDate: String?
     let genreIds: [Int]?
-    let budget: Int?
     let runtime: Int?
     
 }
 
-extension MovieModel {
+extension MovieDetailViewModel {
     
-    init(fromModel model: MovieRepoModel) {
+    init(fromModel model: MovieModel) {
         self.init(
             identifier: model.identifier,
             title: model.title,
@@ -29,7 +28,6 @@ extension MovieModel {
             voteCount: model.voteCount,
             releaseDate: model.releaseDate,
             genreIds: model.genreIds,
-            budget: model.budget,
             runtime: model.runtime)
     }
     

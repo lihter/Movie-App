@@ -39,6 +39,12 @@ class MovieRepository: MovieRepositoryProtocol {
             self?.mapResult(result: result, completion: completion)
         }
     }
+    
+    func fetchMovieDetails(for movieId: Int, completion: @escaping(Result<MovieRepoModel, RequestError>) -> Void) {
+        networkDataSource.fetchMovieDetails(for: movieId) { [weak self] result in
+            self?.mapMovieDetailResult(result: result, completion: completion)
+        }
+    }
 
 }
 
@@ -54,4 +60,13 @@ extension MovieRepository {
         }
     }
     
+    private func mapMovieDetailResult(result: Result<MovieDataModel, RequestError>, completion: @escaping(Result<MovieRepoModel, RequestError>) -> Void) {
+        switch result {
+        case .success(let movie):
+            let mappedMovie = MovieRepoModel(fromModel: movie)
+            completion(.success(mappedMovie))
+        case .failure(let error):
+            completion(.failure(error))
+        }
+    }
 }

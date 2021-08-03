@@ -15,12 +15,7 @@ extension MovieDetailViewController: DesignProtocol {
         contentView = UIView()
         scrollView.addSubview(contentView)
         
-        let details: (() -> DetailTitleViewModel?) = { [weak self] in
-            guard let self = self else { return nil }
-            
-            return self.presenter.getMovieDetails(for: self.movieId)
-        }
-        titleView = DetailTitleView(getDetailsFunction: details)
+        titleView = DetailTitleView()
         contentView.addSubview(titleView)
         
         overviewTitle = UILabel()

@@ -9,15 +9,10 @@ class ProgressBarView: UIView {
     var percentageLabel: UILabel!
     var userScoreLabel: UILabel!
     
-    init(percentage endPoint: Int) {
-        super.init(frame: .zero)
-        
+    func setPercentage(to endPoint: Int) {
         self.endPoint = endPoint
+        
         buildViews()
-    }
-    
-    required init?(coder: NSCoder) {
-        super.init(coder: coder)
     }
     
     func progressAnimation(duration: TimeInterval) {
