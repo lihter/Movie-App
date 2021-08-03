@@ -11,4 +11,6 @@ final class MovieDetailPresenter {
     
     func getRecommendations(for movieId: Int) -> [MovieViewModel] { }
     
+    func getReview(for movieId: Int) -> ReviewViewModel { }
+    
 }

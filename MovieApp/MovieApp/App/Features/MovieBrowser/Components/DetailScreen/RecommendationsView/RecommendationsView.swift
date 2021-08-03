@@ -2,7 +2,7 @@ import UIKit
 
 class RecommendationsView: UIView {
     
-    static let height: CGFloat = 115
+    static let height: CGFloat = RecommendationCell.cellSize.height + 40
     
     let offset: CGFloat = 4
     

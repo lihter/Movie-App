@@ -14,6 +14,7 @@ class MovieDetailViewController: UIViewController {
     var overviewTitle: UILabel!
     var overview: UILabel!
     var castView: CastView!
+    var review: ReviewView!
     var recommendationsView: RecommendationsView!
     
     init(presenter: MovieDetailPresenter, withMovieId movieId: Int) {
