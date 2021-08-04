@@ -62,7 +62,19 @@ final class MovieDetailPresenter {
         }
     }
     
-    func getRecommendations(for movieId: Int) -> [MovieViewModel] { }
+    func getRecommendations(for movieId: Int) {
+        useCase.getRecommendations(for: movieId) { [weak self] result in
+            guard let self = self else { return }
+            
+            switch result {
+            case .success(let movies):
+                let mappedMovies = movies.map { MovieViewModel(fromModel: $0) }
+                self.delegate?.fillRecommendationsCV(with: mappedMovies)
+            case .failure(let error):
+                print("Loading error: \(error.localizedDescription)")
+            }
+        }
+    }
     
     func getReview(for movieId: Int) -> ReviewViewModel { }
     

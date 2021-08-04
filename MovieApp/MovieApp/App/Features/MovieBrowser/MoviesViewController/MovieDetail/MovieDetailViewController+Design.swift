@@ -35,12 +35,7 @@ extension MovieDetailViewController: DesignProtocol {
         review = ReviewView(getReviews: getReview)
         contentView.addSubview(review)
         
-        let recommendations: (() -> [MovieViewModel]) = { [weak self] in
-            guard let self = self else { return [] }
-            
-            return self.presenter.getRecommendations(for: self.movieId)
-        }
-        recommendationsView = RecommendationsView(getRecommendations: recommendations)
+        recommendationsView = RecommendationsView()
         contentView.addSubview(recommendationsView)
     }
     

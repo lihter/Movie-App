@@ -53,4 +53,8 @@ extension MovieDetailViewController: MovieDetailDelegate {
     func fillCastCV(with cast: [CastViewModel]) {
         castView.populate(with: cast)
     }
+    
+    func fillRecommendationsCV(with movies: [MovieViewModel]) {
+        recommendationsView.populate(with: movies)
+    }
 }
