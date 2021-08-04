@@ -53,6 +53,12 @@ class MovieClient: MovieClientProtocol {
         }
     }
     
+    func fetchReviews(for movieId: Int, completion: @escaping(Result<[ReviewResponse], RequestError>) -> Void) {
+        fetch(forUrl: "/movie/\(movieId)/reviews") { (result: Result<ReviewWrapperResponse, RequestError>) in
+            completion(result.map { $0.reviews ?? [] })
+        }
+    }
+    
 }
 
 extension MovieClient {

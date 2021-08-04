@@ -21,6 +21,7 @@ final class MovieDetailPresenter {
         getOverview(for: movieId)
         getMostPopularCast(for: movieId)
         getRecommendations(for: movieId)
+        getReview(for: movieId)
     }
     
     func getMovieDetails(for movieId: Int) {

@@ -74,6 +74,20 @@ class MoviesUseCase: MoviesUseCaseProtocol {
             self?.mapResult(result: result, completion: completion)
         }
     }
+    
+    func getReview(for movieId: Int, completion: @escaping(Result<ReviewModel, RequestError>) -> Void) {
+        moviesDataRepo.fetchReviews(for: movieId) { result in
+            switch result {
+            case .success(let reviews):
+                if reviews.count > 0 {
+                    let mappedReview = ReviewModel(fromModel: reviews[0])
+                    completion(.success(mappedReview))
+                }
+            case .failure(let error):
+                completion(.failure(error))
+            }
+        }
+    }
 
 }
 

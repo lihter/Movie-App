@@ -5,7 +5,7 @@ struct AuthorRepoModel {
     let name: String
     let username: String
     let avatarPath: URL?
-    let rating: Int?
+    let rating: Double?
     
 }
 

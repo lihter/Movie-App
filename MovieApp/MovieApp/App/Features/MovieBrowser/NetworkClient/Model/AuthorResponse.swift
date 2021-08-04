@@ -2,8 +2,8 @@ struct AuthorResponse: Decodable {
     
     let name: String
     let username: String
-    let avatarPath: String
-    let rating: Int?
+    let avatarPath: String?
+    let rating: Double?
     
     enum CodingKeys: String, CodingKey {
         case name

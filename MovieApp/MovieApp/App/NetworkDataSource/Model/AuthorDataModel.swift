@@ -3,7 +3,7 @@ struct AuthorDataModel {
     let name: String
     let username: String
     let avatarPath: String
-    let rating: Int?
+    let rating: Double?
     
 }
 
@@ -13,7 +13,7 @@ extension AuthorDataModel {
         self.init(
             name: model.name,
             username: model.username,
-            avatarPath: model.avatarPath,
+            avatarPath: model.avatarPath ?? "",
             rating: model.rating)
     }
     

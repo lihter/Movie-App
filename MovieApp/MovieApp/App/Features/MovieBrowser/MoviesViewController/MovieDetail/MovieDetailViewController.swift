@@ -59,6 +59,6 @@ extension MovieDetailViewController: MovieDetailDelegate {
     }
     
     func fillReview(with review: ReviewViewModel) {
-        review.populate(with: review)
+        self.review.populate(with: review)
     }
 }
