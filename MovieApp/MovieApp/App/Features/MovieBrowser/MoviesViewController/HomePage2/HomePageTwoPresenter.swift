@@ -33,13 +33,18 @@ final class HomePageTwoPresenter {
         return movies
     }
     
+    func showDetailScreen(for movieId: Int) {
+        router.showDetailScreen(for: movieId)
+    }
+    
     func getSubcategories(for category: LocalCategory) -> [LocalSubcategory] {
-        guard
-            let keys = categories.first(where: { $0.categoryKey == category })?.subcategoryMovies.keys
-        else {
-            return []
+        var subcategories: [LocalSubcategory] = []
+        categories.forEach {
+            if $0.categoryKey == category {
+                subcategories = Array($0.subcategoryMovies.keys)
+            }
         }
-        return Array(keys)
+        return subcategories
     }
     
     func getPopularMovies() {

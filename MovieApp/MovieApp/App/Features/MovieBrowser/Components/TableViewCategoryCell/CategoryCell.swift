@@ -21,6 +21,7 @@ class CategoryCell: UITableViewCell {
     
     public var getSubcategories: ((LocalCategory) -> [LocalSubcategory])!
     public var getSubcategoryMovies: ((LocalSubcategory) -> [MovieViewModel])!
+    public var showDetailScreen: ((Int) -> ())!
         
     override init(style: UITableViewCell.CellStyle, reuseIdentifier: String?) {
         super.init(style: style, reuseIdentifier: reuseIdentifier)
@@ -70,6 +71,11 @@ extension CategoryCell: UICollectionViewDataSource {
             return UICollectionViewCell()
         }
         
+        cell.showDetailScreen = { [weak self] movieId in
+            guard let self = self else { return }
+            
+            self.showDetailScreen(movieId)
+        }
         cell.populate(withMovie: movie)
         return cell
     }

@@ -149,6 +149,14 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		630CDD5926B3DB770052D290 /* MovieDetail */ = {
+			isa = PBXGroup;
+			children = (
+				63BD081A26A54CE900AF366A /* MovieDetailViewController.swift */,
+			);
+			path = MovieDetail;
+			sourceTree = "<group>";
+		};
 		633E7E6926A6B4400091322D /* App */ = {
 			isa = PBXGroup;
 			children = (
@@ -238,6 +246,7 @@
 		633E7E7126A6B5C10091322D /* MoviesViewController */ = {
 			isa = PBXGroup;
 			children = (
+				630CDD5926B3DB770052D290 /* MovieDetail */,
 				633E7E7E26A6BD300091322D /* Favourites */,
 				633E7E7D26A6BD270091322D /* HomePage2 */,
 				633E7E7C26A6BD030091322D /* HomePage1 */,
@@ -345,7 +354,6 @@
 			children = (
 				63CC4869269DA94D00AE3DDB /* HomePageViewController.swift */,
 				63CC486B269DA96A00AE3DDB /* HomePageViewController+Design.swift */,
-				63BD081A26A54CE900AF366A /* MovieDetailViewController.swift */,
 				638BAF2C269EDC9F00E8E75F /* HomePagePresenter.swift */,
 				633E7E5926A5A9A40091322D /* HomePageDelegate.swift */,
 			);
