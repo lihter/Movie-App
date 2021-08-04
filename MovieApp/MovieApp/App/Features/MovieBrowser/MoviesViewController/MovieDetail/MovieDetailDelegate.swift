@@ -8,4 +8,6 @@ protocol MovieDetailDelegate: AnyObject {
     
     func fillRecommendationsCV(with movies: [MovieViewModel])
     
+    fillReview(with review: ReviewViewModel)
+    
 }

@@ -77,6 +77,17 @@ final class MovieDetailPresenter {
         }
     }
     
-    func getReview(for movieId: Int) -> ReviewViewModel { }
+    func getReview(for movieId: Int) {
+        useCase.getReview(for: movieId) { [weak self] result in
+            guard let self = self else { return }
+            
+            switch result {
+            case .success(let review):
+                self.delegate?.fillReview(with: ReviewViewModel(fromModel: review))
+            case .failure(let error):
+                print("Loading error: \(error.localizedDescription)")
+            }
+        }
+    }
     
 }
