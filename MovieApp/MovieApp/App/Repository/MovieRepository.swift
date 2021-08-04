@@ -57,6 +57,12 @@ class MovieRepository: MovieRepositoryProtocol {
             }
         }
     }
+    
+    func fetchRecommendations(for movieId: Int, completion: @escaping(Result<[MovieRepoModel], RequestError>) -> Void) {
+        networkDataSource.fetchRecommendations(for: movieId) { [weak self] result in
+            self?.mapResult(result: result, completion: completion)
+        }
+    }
 
 }
 

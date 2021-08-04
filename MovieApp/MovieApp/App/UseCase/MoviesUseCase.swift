@@ -68,6 +68,12 @@ class MoviesUseCase: MoviesUseCaseProtocol {
             }
         }
     }
+    
+    func getRecommendations(for movieId: Int, completion: @escaping(Result<[MovieModel], RequestError>) -> Void) {
+        moviesDataRepo.fetchRecommendations(for: movieId) { [weak self] result in
+            self?.mapResult(result: result, completion: completion)
+        }
+    }
 
 }
 
