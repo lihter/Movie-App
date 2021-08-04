@@ -41,6 +41,7 @@ extension SubcategoryView {
     
     func addButtons() {
         guard let subcategories = subcategories else { return }
+        subcategoriesStack.removeAllArrangedSubviews()
         
         subcategoriesStack.removeAllArrangedSubviews()
         

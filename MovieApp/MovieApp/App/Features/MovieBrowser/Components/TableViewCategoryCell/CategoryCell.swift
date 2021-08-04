@@ -7,15 +7,21 @@ class CategoryCell: UITableViewCell {
     
     let offset: CGFloat = 4
     
-    var categoryKey: LocalCategory?
     var movies: [MovieViewModel]?
-    var subcategoryMovies: [LocalSubcategory : [MovieViewModel]]?
     
     var categoryLabel: UILabel!
     var subcategoriesView: SubcategoryView!
     var flowLayout: UICollectionViewFlowLayout!
     var moviesCollectionView: UICollectionView!
     
+    var collectionViewOffset: CGFloat {
+        set { moviesCollectionView.contentOffset.x = newValue }
+        get { moviesCollectionView.contentOffset.x }
+    }
+    
+    public var getSubcategories: ((LocalCategory) -> [LocalSubcategory])!
+    public var getSubcategoryMovies: ((LocalSubcategory) -> [MovieViewModel])!
+        
     override init(style: UITableViewCell.CellStyle, reuseIdentifier: String?) {
         super.init(style: style, reuseIdentifier: reuseIdentifier)
         
@@ -33,15 +39,14 @@ class CategoryCell: UITableViewCell {
         moviesCollectionView.register(NewMovieCell.self, forCellWithReuseIdentifier: NewMovieCell.reuseIdentifier)
         moviesCollectionView.dataSource = self
         moviesCollectionView.delegate = self
+        moviesCollectionView.setContentOffset(moviesCollectionView.contentOffset, animated: false)
     }
     
-    func populate(with category: CategoryViewModel) {
-        categoryKey = category.categoryKey
-        subcategoryMovies = category.subcategoryMovies
+    func populate(with category: LocalCategory?) {
+        guard let category = category else { return }
         
-        categoryLabel.text = categoryKey?.title
-        subcategoriesView.populate(with: Array(subcategoryMovies!.keys))
-        moviesCollectionView.reloadData()
+        categoryLabel.text = category.title
+        subcategoriesView.populate(with: getSubcategories(category))
     }
 
 }
@@ -86,16 +91,11 @@ extension CategoryCell: UICollectionViewDelegateFlowLayout {
 extension CategoryCell: CategoryCellDelegate {
     
     func changeSubcategory(to subcategory: LocalSubcategory?) {
-        guard
-            let subcategoryMovies = subcategoryMovies,
-            let subcategory = subcategory,
-            let movies = subcategoryMovies[subcategory]
-        else {
-            return
-        }
+        guard let subcategory = subcategory else { return }
         
-        self.movies = movies
+        movies = getSubcategoryMovies(subcategory)
         moviesCollectionView.reloadData()
+        moviesCollectionView.setContentOffset(CGPoint(x: 0, y: 0), animated: false)
     }
     
 }

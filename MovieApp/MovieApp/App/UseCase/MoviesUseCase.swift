@@ -36,7 +36,7 @@ class MoviesUseCase: MoviesUseCaseProtocol {
             self?.mapResult(result: result, completion: completion)
         }
     }
-    
+
 }
 
 extension MoviesUseCase {

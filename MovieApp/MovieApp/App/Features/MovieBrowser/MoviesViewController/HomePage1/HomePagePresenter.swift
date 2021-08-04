@@ -21,7 +21,7 @@ final class HomePagePresenter {
             
             switch result {
             case .success(let movies):
-                let moviesViewModel: [MovieViewModel]? = self.mapMovies(movies)
+                let moviesViewModel: [MovieViewModel]? = movies.map { MovieViewModel(fromModel: $0) }
                 self.delegate?.reloadCollectionView(with: moviesViewModel)
             case .failure(let error):
                 print("Loading error: \(error.localizedDescription)")
@@ -31,16 +31,6 @@ final class HomePagePresenter {
     
     func selectedMovie(withId movieId: Int) {
         router.showDetailScreen(for: movieId)
-    }
-    
-}
-
-extension HomePagePresenter {
-    
-    private func mapMovies(_ movies: [MovieModel]?) -> [MovieViewModel]? {
-        movies?.map {
-            MovieViewModel(fromModel: $0)
-        }
     }
     
 }

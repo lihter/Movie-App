@@ -5,7 +5,9 @@ class HomePageTwoViewController: UIViewController {
     let offset: CGFloat = 4
     let tableRowOffset: CGFloat = 40
     
-    var categories: [CategoryViewModel]!
+    var categories: [LocalCategory]!
+    var storedCVOffsets: [Int: CGFloat]!
+    var storedSelectedSubcategories: [Int: Int]!
     
     var searchBar: MovieSearchBar!
     var tableView: UITableView!
@@ -17,7 +19,9 @@ class HomePageTwoViewController: UIViewController {
         self.presenter = presenter
         self.presenter.setDelegate(delegate: self)
         
-        self.categories = []
+        categories = []
+        storedCVOffsets = [:]
+        storedSelectedSubcategories  = [:]
     }
     
     required init?(coder: NSCoder) {
@@ -30,9 +34,7 @@ class HomePageTwoViewController: UIViewController {
         buildViews()
         setupTableView()
         
-        presenter.getPopularMovies()
-        presenter.getTrendingMovies()
-        presenter.getTopRatedMovies()
+        presenter.getAllCategories()
     }
     
     private func setupTableView() {
@@ -66,16 +68,41 @@ extension HomePageTwoViewController: UITableViewDataSource {
             return UITableViewCell()
         }
 
+        cell.getSubcategoryMovies = { [weak self] subcategory in
+            guard let self = self else { return [] }
+            
+            return self.presenter.getMovies(for: subcategory)
+        }
+        cell.getSubcategories = { [weak self] category in
+            guard let self = self else { return [] }
+            
+            return self.presenter.getSubcategories(for: category)
+        }
+        
         cell.populate(with: categories[indexPath.row])
         cell.selectionStyle = .none
         return cell
+    }
+    
+    func tableView(_ tableView: UITableView, willDisplay cell: UITableViewCell, forRowAt indexPath: IndexPath) {
+        guard let cell = cell as? CategoryCell else { return }
+        
+        cell.subcategoriesView.selectedSubcategory = storedSelectedSubcategories[indexPath.row] ?? cell.subcategoriesView.selectedSubcategory
+        cell.collectionViewOffset = storedCVOffsets[indexPath.row] ?? 0
+    }
+    
+    func tableView(_ tableView: UITableView, didEndDisplaying cell: UITableViewCell, forRowAt indexPath: IndexPath) {
+        guard let cell = cell as? CategoryCell else { return }
+        
+        storedSelectedSubcategories[indexPath.row] = cell.subcategoriesView.selectedSubcategory
+        storedCVOffsets[indexPath.row] = cell.collectionViewOffset
     }
     
 }
 
 extension HomePageTwoViewController: HomePageTwoDelegate {
     
-    func addToTableView(category: CategoryViewModel?) {
+    func addToTableView(category: LocalCategory?) {
         guard let category = category else { return }
         
         categories.append(category)

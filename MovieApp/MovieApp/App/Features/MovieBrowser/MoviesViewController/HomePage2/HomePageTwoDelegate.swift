@@ -1,5 +1,5 @@
 protocol HomePageTwoDelegate: AnyObject {
     
-    func addToTableView(category: CategoryViewModel?)
+    func addToTableView(category: LocalCategory?)
     
 }

@@ -39,7 +39,7 @@ class MovieRepository: MovieRepositoryProtocol {
             self?.mapResult(result: result, completion: completion)
         }
     }
-    
+
 }
 
 extension MovieRepository {
