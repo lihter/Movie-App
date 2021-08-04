@@ -45,6 +45,18 @@ class MovieRepository: MovieRepositoryProtocol {
             self?.mapMovieDetailResult(result: result, completion: completion)
         }
     }
+    
+    func fetchCast(for movieId: Int, completion: @escaping(Result<[CastRepoModel], RequestError>) -> Void) {
+        networkDataSource.fetchCast(for: movieId) { result in
+            switch result {
+            case .success(let cast):
+                let mappedCast = cast.map { CastRepoModel(fromModel: $0) }
+                completion(.success(mappedCast))
+            case .failure(let error):
+                completion(.failure(error))
+            }
+        }
+    }
 
 }
 

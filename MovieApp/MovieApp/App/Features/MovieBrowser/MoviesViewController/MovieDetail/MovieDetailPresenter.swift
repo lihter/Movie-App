@@ -19,6 +19,7 @@ final class MovieDetailPresenter {
     func fetchAll(for movieId: Int) {
         getMovieDetails(for: movieId)
         getOverview(for: movieId)
+        getMostPopularCast(for: movieId)
     }
     
     func getMovieDetails(for movieId: Int) {
@@ -47,7 +48,19 @@ final class MovieDetailPresenter {
         }
     }
     
-    func getCast(for movieId: Int) -> [CastViewModel] { }
+    func getMostPopularCast(for movieId: Int) {
+        useCase.getMostPopularCast(for: movieId) { [weak self] result in
+            guard let self = self else { return }
+            
+            switch result {
+            case .success(let cast):
+                let mappedCast = cast.map { CastViewModel(fromModel: $0) }
+                self.delegate?.fillCastCV(with: mappedCast)
+            case .failure(let error):
+                print("Loading error: \(error.localizedDescription)")
+            }
+        }
+    }
     
     func getRecommendations(for movieId: Int) -> [MovieViewModel] { }
     

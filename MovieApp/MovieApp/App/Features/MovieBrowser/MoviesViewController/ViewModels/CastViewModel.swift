@@ -7,3 +7,14 @@ struct CastViewModel {
     let posterPath: URL?
     
 }
+
+extension CastViewModel {
+    
+    init(fromModel model: CastModel) {
+        self.init(
+            name: model.name,
+            characterName: model.characterName,
+            posterPath: model.posterPath)
+    }
+    
+}
