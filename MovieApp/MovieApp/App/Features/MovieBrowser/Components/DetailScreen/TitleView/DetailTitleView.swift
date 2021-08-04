@@ -9,7 +9,6 @@ class DetailTitleView: UIView {
     var backgroundImageView: UIImageView!
     var gradientView: UIView!
     var titleLabel: UILabel!
-    var yearLabel: UILabel!
     var releaseDateLabel: UILabel!
     var genresLabel: UILabel!
     var durationLabel: UILabel!
@@ -28,8 +27,12 @@ class DetailTitleView: UIView {
     
     func populate(with movieDetails: DetailTitleViewModel) {
         backgroundImageView.kf.setImage(with: movieDetails.posterPath)
-        titleLabel.text = movieDetails.title
-        yearLabel.text = "(\(movieDetails.year))"
+        
+        let text = NSMutableAttributedString(string: "\(movieDetails.title) (\(movieDetails.year))")
+        text.addAttributes(
+            [.font: UIFont.heading2regular, .foregroundColor: UIColor.white],
+            range: NSMakeRange(text.length - 6, 6))
+        titleLabel.attributedText = text
         releaseDateLabel.text = movieDetails.releaseDate
         genresLabel.text = movieDetails.genres.joined(separator: ", ")
         durationLabel.text = movieDetails.duration

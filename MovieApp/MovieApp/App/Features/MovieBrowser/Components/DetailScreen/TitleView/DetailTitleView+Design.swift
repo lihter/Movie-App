@@ -18,9 +18,6 @@ extension DetailTitleView: DesignProtocol {
         titleLabel = UILabel()
         addSubview(titleLabel)
         
-        yearLabel = UILabel()
-        addSubview(yearLabel)
-        
         releaseDateLabel = UILabel()
         addSubview(releaseDateLabel)
         
@@ -48,9 +45,7 @@ extension DetailTitleView: DesignProtocol {
                 
         titleLabel.textColor = .white
         titleLabel.font = .heading2
-        
-        yearLabel.textColor = .white
-        yearLabel.font = .heading2regular
+        titleLabel.adjustsFontSizeToFitWidth = true
         
         releaseDateLabel.textColor = .white
         releaseDateLabel.font = .regularMedium
@@ -94,11 +89,7 @@ extension DetailTitleView: DesignProtocol {
         titleLabel.snp.makeConstraints {
             $0.bottom.equalTo(releaseDateLabel.snp.top).offset(-3 * offset)
             $0.leading.equalToSuperview().offset(4 * offset)
-        }
-        
-        yearLabel.snp.makeConstraints {
-            $0.bottom.equalTo(titleLabel.snp.bottom)
-            $0.leading.equalTo(titleLabel.snp.trailing).offset(offset)
+            $0.trailing.equalToSuperview().inset(4 * offset)
         }
         
         progressBar.snp.makeConstraints {
