@@ -46,19 +46,20 @@ extension AppRouter {
         
         let homePagePresenter = HomePageTwoPresenter(useCase: moviesUseCase, router: self)
         let homePageVC = HomePageTwoViewController(presenter: homePagePresenter)
-        let favouritesVC = FavouritesViewController()
+        let favoritesPresenter = FavoritesPresenter(router: self)
+        let favoritesVC = FavoritesViewController(presenter: favoritesPresenter)
         
         homePageVC.tabBarItem = UITabBarItem(
             title: "Home",
             image: UIImage(with: .homeTabBarItem),
             selectedImage: UIImage(with: .homeTabBarItemSelected))
         
-        favouritesVC.tabBarItem = UITabBarItem(
+        favoritesVC.tabBarItem = UITabBarItem(
             title: "Favourites",
             image: UIImage(with: .favouritesTabBarItem),
             selectedImage: UIImage(with: .favouritesTabBarItemSelected))
         
-        tabBarController.viewControllers = [homePageVC, favouritesVC]
+        tabBarController.viewControllers = [homePageVC, favoritesVC]
         tabBarController.styleMovieTabBar()
         tabBarController.navigationItem.titleView = UIImageView(image: UIImage(with: .navigationBarTitleImage))
         return tabBarController

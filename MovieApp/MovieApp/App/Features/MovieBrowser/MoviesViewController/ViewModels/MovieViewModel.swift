@@ -7,6 +7,7 @@ struct MovieViewModel {
     let overview: String
     let posterPath: URL?
     let genreIds: [Int]?
+    let isFavourite: Bool
 
 }
 
@@ -18,7 +19,8 @@ extension MovieViewModel {
             title: model.title,
             overview: model.overview,
             posterPath: model.posterPath,
-            genreIds: model.genreIds)
+            genreIds: model.genreIds,
+            isFavourite: false)
     }
     
     init(fromModel model: MovieModel, withGenre genreId: Int) {
@@ -27,7 +29,8 @@ extension MovieViewModel {
             title: model.title,
             overview: model.overview,
             posterPath: model.posterPath,
-            genreIds: [genreId])
+            genreIds: [genreId],
+            isFavourite: false)
     }
     
 }
