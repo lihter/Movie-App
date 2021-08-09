@@ -37,7 +37,6 @@ extension MovieDetailViewController: DesignProtocol {
     func styleViews() {
         view.backgroundColor = .white
         
-        scrollView.contentSize = CGSize(width: UIScreen.main.bounds.width, height: 1550)
         scrollView.showsVerticalScrollIndicator = false
         scrollView.isUserInteractionEnabled = true
         scrollView.isExclusiveTouch = true
@@ -64,7 +63,7 @@ extension MovieDetailViewController: DesignProtocol {
         contentView.snp.makeConstraints {
             $0.width.equalTo(UIScreen.main.bounds.width)
             $0.top.equalToSuperview()
-            $0.height.equalTo(1550)
+            $0.height.equalTo(0)
         }
         
         titleView.snp.makeConstraints {
@@ -93,7 +92,7 @@ extension MovieDetailViewController: DesignProtocol {
         review.snp.makeConstraints {
             $0.top.equalTo(castView.snp.bottom).offset(10 * offset)
             $0.leading.trailing.equalToSuperview()
-            $0.height.equalTo(ReviewView.height)
+            $0.bottom.equalTo(review.reviewLabel.snp.bottom)
         }
         
         recommendationsView.snp.makeConstraints {

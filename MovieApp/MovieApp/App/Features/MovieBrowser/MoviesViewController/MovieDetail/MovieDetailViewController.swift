@@ -36,6 +36,20 @@ class MovieDetailViewController: UIViewController {
         
         presenter.fetchAll(for: movieId)
     }
+
+    override func viewDidLayoutSubviews() {
+        var height: CGFloat = 0
+        contentView.subviews.forEach {
+            height += $0.frame.height
+        }
+        
+        height += 34 * offset + 30
+        
+        scrollView.contentSize = CGSize(width: UIScreen.main.bounds.width, height: height)
+        contentView.snp.updateConstraints {
+            $0.height.equalTo(height)
+        }
+    }
     
 }
 
