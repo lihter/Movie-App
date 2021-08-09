@@ -41,7 +41,6 @@ extension SubcategoryView {
     
     func addButtons() {
         guard let subcategories = subcategories else { return }
-        subcategoriesStack.removeAllArrangedSubviews()
         
         subcategoriesStack.removeAllArrangedSubviews()
         
@@ -68,7 +67,7 @@ extension SubcategoryView {
     func styleSelectedSubcategory(_ button: UIButton) {
         button.setAttributedTitle(
             NSAttributedString(
-                string: LocalSubcategory(rawValue: button.tag)?.description ?? "_",
+                string: Genre(rawValue: button.tag)?.genreName ?? "_",
                 attributes: [
                     .font: UIFont.regularBold,
                     .underlineStyle: NSUnderlineStyle.thick.rawValue,
@@ -82,7 +81,7 @@ extension SubcategoryView {
         let font = UIFont.regularSemiBold
         button.setAttributedTitle(
             NSAttributedString(
-                string: LocalSubcategory(rawValue: button.tag)?.description ?? "_",
+                string: Genre(rawValue: button.tag)?.genreName ?? "_",
                 attributes: [
                     .font: font,
                     .foregroundColor: UIColor.secondaryGray]),
@@ -102,7 +101,7 @@ extension SubcategoryView {
         styleUnselectedSubcategory(button)
         styleSelectedSubcategory(sender)
         selectedSubcategory = sender.tag
-        delegate?.changeSubcategory(to: LocalSubcategory(rawValue: selectedSubcategory!))
+        delegate?.changeSubcategory(to: Genre(rawValue: selectedSubcategory!), resetOffset: true)
     }
     
 }

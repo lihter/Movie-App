@@ -75,7 +75,6 @@
 		633E7EA526A96D140091322D /* FavouriteButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = 633E7EA426A96D140091322D /* FavouriteButton.swift */; };
 		634F13E826AE983700DE6C7B /* UIImage+initWithBundleImage.swift in Sources */ = {isa = PBXBuildFile; fileRef = 634F13E726AE983700DE6C7B /* UIImage+initWithBundleImage.swift */; };
 		634F13EA26AEA0C600DE6C7B /* UIFont+customFonts.swift in Sources */ = {isa = PBXBuildFile; fileRef = 634F13E926AEA0C600DE6C7B /* UIFont+customFonts.swift */; };
-		634F13EE26AEC62200DE6C7B /* LocalSubcategory.swift in Sources */ = {isa = PBXBuildFile; fileRef = 634F13ED26AEC62200DE6C7B /* LocalSubcategory.swift */; };
 		638BAF27269ED21B00E8E75F /* ProximaNova-Bold.otf in Resources */ = {isa = PBXBuildFile; fileRef = 638BAF24269ED21A00E8E75F /* ProximaNova-Bold.otf */; };
 		638BAF28269ED21B00E8E75F /* ProximaNova-Medium.otf in Resources */ = {isa = PBXBuildFile; fileRef = 638BAF25269ED21B00E8E75F /* ProximaNova-Medium.otf */; };
 		638BAF29269ED21B00E8E75F /* ProximaNova-Semibold.otf in Resources */ = {isa = PBXBuildFile; fileRef = 638BAF26269ED21B00E8E75F /* ProximaNova-Semibold.otf */; };
@@ -103,7 +102,6 @@
 		63DAA5E2269C7E240004F235 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 63DAA5E1269C7E240004F235 /* Assets.xcassets */; };
 		63DD737426A9A38E004A6D8C /* CategoryCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 63DD737326A9A38E004A6D8C /* CategoryCell.swift */; };
 		63DD737626A9A39E004A6D8C /* CategoryCell+Design.swift in Sources */ = {isa = PBXBuildFile; fileRef = 63DD737526A9A39E004A6D8C /* CategoryCell+Design.swift */; };
-		63DD737826AA90F5004A6D8C /* CategoryViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 63DD737726AA90F5004A6D8C /* CategoryViewModel.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -174,7 +172,6 @@
 		633E7EA426A96D140091322D /* FavouriteButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FavouriteButton.swift; sourceTree = "<group>"; };
 		634F13E726AE983700DE6C7B /* UIImage+initWithBundleImage.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIImage+initWithBundleImage.swift"; sourceTree = "<group>"; };
 		634F13E926AEA0C600DE6C7B /* UIFont+customFonts.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIFont+customFonts.swift"; sourceTree = "<group>"; };
-		634F13ED26AEC62200DE6C7B /* LocalSubcategory.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LocalSubcategory.swift; sourceTree = "<group>"; };
 		638BAF24269ED21A00E8E75F /* ProximaNova-Bold.otf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "ProximaNova-Bold.otf"; sourceTree = "<group>"; };
 		638BAF25269ED21B00E8E75F /* ProximaNova-Medium.otf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "ProximaNova-Medium.otf"; sourceTree = "<group>"; };
 		638BAF26269ED21B00E8E75F /* ProximaNova-Semibold.otf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "ProximaNova-Semibold.otf"; sourceTree = "<group>"; };
@@ -202,7 +199,6 @@
 		63DAA5E6269C7E240004F235 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		63DD737326A9A38E004A6D8C /* CategoryCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CategoryCell.swift; sourceTree = "<group>"; };
 		63DD737526A9A39E004A6D8C /* CategoryCell+Design.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "CategoryCell+Design.swift"; sourceTree = "<group>"; };
-		63DD737726AA90F5004A6D8C /* CategoryViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CategoryViewModel.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -323,7 +319,6 @@
 			isa = PBXGroup;
 			children = (
 				63CC4867269DA89400AE3DDB /* DesignProtocol.swift */,
-				634F13ED26AEC62200DE6C7B /* LocalSubcategory.swift */,
 				63019A2326B1245A00584356 /* LocalCategory.swift */,
 			);
 			path = Core;
@@ -409,7 +404,6 @@
 			isa = PBXGroup;
 			children = (
 				63BD081626A4AFA500AF366A /* MovieViewModel.swift */,
-				63DD737726AA90F5004A6D8C /* CategoryViewModel.swift */,
 				630CDD6226B3F6A70052D290 /* DetailTitleViewModel.swift */,
 				630CDD7126B43C280052D290 /* CastViewModel.swift */,
 				630CDD8726B824FF0052D290 /* ReviewViewModel.swift */,
@@ -699,7 +693,6 @@
 				630CDD9826BA5E7A0052D290 /* CastResponse.swift in Sources */,
 				633E7E5726A598C00091322D /* MoviesUseCaseProtocol.swift in Sources */,
 				630CDD8126B7ED840052D290 /* ProgressBarView+Design.swift in Sources */,
-				634F13EE26AEC62200DE6C7B /* LocalSubcategory.swift in Sources */,
 				633E7E9826A942770091322D /* SubcategoryView+Design.swift in Sources */,
 				638BAF33269EE12F00E8E75F /* MovieResponse.swift in Sources */,
 				630CDD9226BA5D6B0052D290 /* CastModel.swift in Sources */,
@@ -767,7 +760,6 @@
 				630CDD6126B3F4B00052D290 /* DetailTitleView+Design.swift in Sources */,
 				638BAF2D269EDC9F00E8E75F /* HomePagePresenter.swift in Sources */,
 				63CC4876269DB82100AE3DDB /* UIColor+CustomColors.swift in Sources */,
-				63DD737826AA90F5004A6D8C /* CategoryViewModel.swift in Sources */,
 				630CDD5B26B3E9760052D290 /* MovieDetailViewController+Design.swift in Sources */,
 				63019A2626B1281300584356 /* CategoryCellDelegate.swift in Sources */,
 				630CDD8E26B95B9E0052D290 /* MovieDetailResponse.swift in Sources */,

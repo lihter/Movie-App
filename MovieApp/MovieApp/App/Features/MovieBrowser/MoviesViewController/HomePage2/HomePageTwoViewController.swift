@@ -68,10 +68,10 @@ extension HomePageTwoViewController: UITableViewDataSource {
             return UITableViewCell()
         }
 
-        cell.getSubcategoryMovies = { [weak self] subcategory in
+        cell.getSubcategoryMovies = { [weak self] category, genreId in
             guard let self = self else { return [] }
             
-            return self.presenter.getMovies(for: subcategory)
+            return self.presenter.getMovies(for: category, genreId: genreId)
         }
         cell.getSubcategories = { [weak self] category in
             guard let self = self else { return [] }

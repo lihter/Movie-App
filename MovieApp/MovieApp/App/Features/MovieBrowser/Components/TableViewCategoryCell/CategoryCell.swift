@@ -7,6 +7,7 @@ class CategoryCell: UITableViewCell {
     
     let offset: CGFloat = 4
     
+    var category: LocalCategory!
     var movies: [MovieViewModel]?
     
     var categoryLabel: UILabel!
@@ -19,8 +20,8 @@ class CategoryCell: UITableViewCell {
         get { moviesCollectionView.contentOffset.x }
     }
     
-    public var getSubcategories: ((LocalCategory) -> [LocalSubcategory])!
-    public var getSubcategoryMovies: ((LocalSubcategory) -> [MovieViewModel])!
+    public var getSubcategories: ((LocalCategory) -> [Genre])!
+    public var getSubcategoryMovies: ((LocalCategory, Int) -> [MovieViewModel])!
     public var showDetailScreen: ((Int) -> ())!
         
     override init(style: UITableViewCell.CellStyle, reuseIdentifier: String?) {
@@ -46,6 +47,7 @@ class CategoryCell: UITableViewCell {
     func populate(with category: LocalCategory?) {
         guard let category = category else { return }
         
+        self.category = category
         categoryLabel.text = category.title
         subcategoriesView.populate(with: getSubcategories(category))
     }
@@ -96,12 +98,14 @@ extension CategoryCell: UICollectionViewDelegateFlowLayout {
 
 extension CategoryCell: CategoryCellDelegate {
     
-    func changeSubcategory(to subcategory: LocalSubcategory?) {
+    func changeSubcategory(to subcategory: Genre?, resetOffset: Bool) {
         guard let subcategory = subcategory else { return }
         
-        movies = getSubcategoryMovies(subcategory)
+        movies = getSubcategoryMovies(category, subcategory.rawValue)
         moviesCollectionView.reloadData()
-        moviesCollectionView.setContentOffset(CGPoint(x: 0, y: 0), animated: true)
+        if resetOffset {
+            moviesCollectionView.setContentOffset(CGPoint(x: 0, y: 0), animated: true)
+        }
     }
     
 }

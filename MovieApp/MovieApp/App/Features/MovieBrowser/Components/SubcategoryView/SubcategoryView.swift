@@ -8,7 +8,7 @@ class SubcategoryView: UIView {
     let maxNumberOfSubcategoryItems: Int = 8
     
     var selectedSubcategory: Int!
-    var subcategories: [LocalSubcategory]?
+    var subcategories: [Genre]?
     
     weak var delegate: CategoryCellDelegate?
     var scrollView: UIScrollView!
@@ -28,7 +28,7 @@ class SubcategoryView: UIView {
         self.delegate = delegate
     }
     
-    func populate(with subcategories: [LocalSubcategory]?) {
+    func populate(with subcategories: [Genre]?) {
         guard let subcategories = subcategories,
               !subcategories.isEmpty
         else {
@@ -38,7 +38,7 @@ class SubcategoryView: UIView {
         self.subcategories = subcategories
         selectedSubcategory = selectedSubcategory ?? self.subcategories?[0].rawValue
         addButtons()
-        delegate?.changeSubcategory(to: LocalSubcategory(rawValue: selectedSubcategory!))
+        delegate?.changeSubcategory(to: Genre(rawValue: selectedSubcategory!), resetOffset: false)
         
         styleButtons()
     }
