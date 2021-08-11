@@ -3,6 +3,7 @@ import UIKit
 enum BundleImage: String {
     
     case favouriteIcon = "FavButton3"
+    case favouriteIconFilled = "HeartFilled"
     case favButtonBackground = "FavButtonBackground"
     
     case navigationBarTitleImage = "AppIcon"

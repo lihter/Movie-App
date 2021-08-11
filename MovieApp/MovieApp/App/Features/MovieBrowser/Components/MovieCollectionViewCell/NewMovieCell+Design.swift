@@ -15,7 +15,7 @@ extension NewMovieCell: DesignProtocol {
         contentView.addSubview(movieImageView)
         
         favouriteButton = FavouriteButton()
-        favouriteButton.addTarget(self, action: #selector(addToFavourites), for: .touchUpInside)
+        favouriteButton.addTarget(self, action: #selector(favoriteButtonPressed), for: .touchUpInside)
         contentView.addSubview(favouriteButton)
     }
     

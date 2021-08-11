@@ -83,6 +83,11 @@ extension HomePageTwoViewController: UITableViewDataSource {
             
             self.presenter.showDetailScreen(for: movieId)
         }
+        cell.favoritePressed = { [weak self] movieId in
+            guard let self = self else { return }
+            
+            self.presenter.toggleFavorite(movieId)
+        }
         
         cell.populate(with: categories[indexPath.row])
         cell.selectionStyle = .none
@@ -111,6 +116,10 @@ extension HomePageTwoViewController: HomePageTwoDelegate {
         guard let category = category else { return }
         
         categories.append(category)
+        tableView.reloadData()
+    }
+    
+    func reloadData() {
         tableView.reloadData()
     }
     
