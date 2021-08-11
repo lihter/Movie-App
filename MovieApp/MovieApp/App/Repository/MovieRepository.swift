@@ -136,18 +136,12 @@ extension MovieRepository {
     
     private func mapResult(result: Result<[MovieDataModel], RequestError>,
                            category: LocalCategory,
-                           completion: @escaping(Result<[MovieRepoModel], RequestError>) -> Void,
-                           append: Bool = false
+                           completion: @escaping(Result<[MovieRepoModel], RequestError>) -> Void
     ) {
         switch result {
         case .success(let movies):
             let mappedMovies: [MovieRepoModel] = movies.map {
                 MovieRepoModel(fromModel: $0, isFavorite: userDefaultsDataSource.favorites.contains($0.identifier))
-            }
-            if append {
-                categoryMovies[category]?.append(contentsOf: mappedMovies)
-            } else {
-                categoryMovies[category] = mappedMovies
             }
             completion(.success(mappedMovies))
         case .failure(let error):
