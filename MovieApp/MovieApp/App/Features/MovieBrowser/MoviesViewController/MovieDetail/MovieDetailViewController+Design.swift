@@ -35,6 +35,13 @@ extension MovieDetailViewController: DesignProtocol {
         }
         contentView.addSubview(castView)
         
+        review = ReviewView { [weak self] in
+            guard let self = self else { return nil }
+            
+            return self.presenter.getReview(for: self.movieId)
+        }
+        contentView.addSubview(review)
+                
         recommendationsView = RecommendationsView { [weak self] in
             guard let self = self else { return [] }
             
@@ -46,7 +53,7 @@ extension MovieDetailViewController: DesignProtocol {
     func styleViews() {
         view.backgroundColor = .white
         
-        scrollView.contentSize = CGSize(width: UIScreen.main.bounds.width, height: 1000)
+        scrollView.contentSize = CGSize(width: UIScreen.main.bounds.width, height: 1400)
         scrollView.showsVerticalScrollIndicator = false
         scrollView.isUserInteractionEnabled = true
         scrollView.isExclusiveTouch = true
@@ -73,9 +80,9 @@ extension MovieDetailViewController: DesignProtocol {
         }
         
         contentView.snp.makeConstraints {
-            $0.width.equalTo(view.frame.width)
+            $0.width.equalTo(view)
             $0.top.equalToSuperview()
-            $0.height.equalTo(1000)
+            $0.height.equalTo(1400)
         }
         
         titleView.snp.makeConstraints {
@@ -102,8 +109,14 @@ extension MovieDetailViewController: DesignProtocol {
             $0.height.equalTo(CastView.height)
         }
         
+        review.snp.makeConstraints {
+            $0.top.equalTo(castView.snp.bottom).offset(10 * offset)
+            $0.leading.trailing.equalToSuperview()
+            $0.height.equalTo(ReviewView.height)
+        }
+        
         recommendationsView.snp.makeConstraints {
-            $0.top.equalTo(castView.snp.bottom).offset(8 * offset)
+            $0.top.equalTo(review.snp.bottom).offset(8 * offset)
             $0.leading.trailing.equalToSuperview()
             $0.bottom.equalToSuperview().inset(4 * offset)
         }
