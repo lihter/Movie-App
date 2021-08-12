@@ -4,4 +4,6 @@ protocol MovieDetailDelegate: AnyObject {
     
     func fillOverview(with overview: String)
     
+    func fillCastCV(with cast: [CastViewModel])
+    
 }

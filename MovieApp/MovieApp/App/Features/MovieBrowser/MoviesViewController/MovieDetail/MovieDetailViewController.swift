@@ -47,4 +47,7 @@ extension MovieDetailViewController: MovieDetailDelegate {
         self.overview.setLineSpacing(lineSpacing: 0, lineHeightMultiple: 1.4)
     }
     
+    func fillCastCV(with cast: [CastViewModel]) {
+        castView.populate(with: cast)
+    }
 }

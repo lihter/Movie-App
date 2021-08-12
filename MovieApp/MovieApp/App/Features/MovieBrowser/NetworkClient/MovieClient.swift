@@ -41,6 +41,12 @@ class MovieClient: MovieClientProtocol {
         }
     }
     
+    func fetchCast(for movieId: Int, completion: @escaping(Result<[CastResponse], RequestError>) -> Void) {
+        fetch(forUrl: "/movie/\(movieId)/credits") { (result: Result<CastWrapperResponse, RequestError>) in
+            completion(result.map { $0.cast ?? [] })
+        }
+    }
+    
 }
 
 extension MovieClient {

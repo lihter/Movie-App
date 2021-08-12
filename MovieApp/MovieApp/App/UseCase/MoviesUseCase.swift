@@ -53,6 +53,21 @@ class MoviesUseCase: MoviesUseCaseProtocol {
             }
         }
     }
+    
+    func getMostPopularCast(for movieId: Int, completion: @escaping(Result<[CastModel], RequestError>) -> Void) {
+        moviesDataRepo.fetchCast(for: movieId) { result in
+            switch result {
+            case .failure(let error):
+                completion(.failure(error))
+            case .success(let cast):
+                let mappedCast = cast
+                    .sorted { $0.popularity > $1.popularity }
+                    .prefix(10)
+                    .map { CastModel(fromModel: $0) }
+                completion(.success(mappedCast))
+            }
+        }
+    }
 
 }
 

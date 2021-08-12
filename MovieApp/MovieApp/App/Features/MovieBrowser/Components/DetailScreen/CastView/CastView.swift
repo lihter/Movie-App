@@ -13,10 +13,9 @@ class CastView: UIView {
     var flowLayout: UICollectionViewFlowLayout!
     var collectionView: UICollectionView!
         
-    init(getCast: (() -> [CastViewModel])) {
+    init() {
         super.init(frame: .zero)
         
-        cast = getCast()
         buildViews()
         setupCollectionView()
     }
@@ -29,6 +28,11 @@ class CastView: UIView {
         collectionView.register(CastCell.self, forCellWithReuseIdentifier: CastCell.reuseIdentifier)
         collectionView.dataSource = self
         collectionView.delegate = self
+    }
+    
+    func populate(with cast: [CastViewModel]) {
+        self.cast = cast
+        collectionView.reloadData()
     }
     
 }

@@ -24,11 +24,7 @@ extension MovieDetailViewController: DesignProtocol {
         overview = UILabel()
         contentView.addSubview(overview)
         
-        castView = CastView { [weak self] in
-            guard let self = self else { return [] }
-            
-            return self.presenter.getCast()
-        }
+        castView = CastView()
         contentView.addSubview(castView)
         
         review = ReviewView { [weak self] in

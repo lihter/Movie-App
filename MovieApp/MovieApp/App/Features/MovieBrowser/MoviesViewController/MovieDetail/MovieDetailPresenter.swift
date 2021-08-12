@@ -22,6 +22,7 @@ final class MovieDetailPresenter {
     func fetchAll() {
         getMovieDetails()
         getOverview()
+        getMostPopularCast()
     }
     
     func getMovieDetails() {
@@ -50,9 +51,18 @@ final class MovieDetailPresenter {
         }
     }
     
-    func getCast() -> [CastViewModel] {
-        let person = CastViewModel(name: "Edward Norton", characterName: "The Narrator", posterPath: URL(string: "https://image.tmdb.org/t/p/original/5XBzD5WuTyVQZeS4VI25z2moMeY.jpg"))
-        return Array(repeating: person, count: 6)
+    func getMostPopularCast() {
+        useCase.getMostPopularCast(for: movieId) { [weak self] result in
+            guard let self = self else { return }
+            
+            switch result {
+            case .success(let cast):
+                let mappedCast = cast.map { CastViewModel(fromModel: $0) }
+                self.delegate?.fillCastCV(with: mappedCast)
+            case .failure(let error):
+                print("Loading error: \(error.localizedDescription)")
+            }
+        }
     }
     
     func getRecommendations() -> [MovieViewModel] {

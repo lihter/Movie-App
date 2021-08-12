@@ -25,7 +25,7 @@ extension CastView: DesignProtocol {
     func styleViews() {
         backgroundColor = .clear
         
-        titleLabel.text = "Top Billed Cast"
+        titleLabel.text = "Cast's Most Popular"
         titleLabel.font = .heading1
         titleLabel.textColor = .primaryBlue
         
