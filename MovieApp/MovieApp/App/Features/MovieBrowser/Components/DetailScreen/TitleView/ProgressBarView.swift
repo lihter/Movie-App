@@ -26,14 +26,14 @@ class ProgressBarView: UIView {
         super.layoutSubviews()
         
         circularPath = UIBezierPath(
-            arcCenter: CGPoint(x: frame.size.width / 2.0, y: frame.size.height / 2.0),
+            arcCenter: CGPoint(x: 0, y: frame.size.height / 2.0),
             radius: 21,
             startAngle: CGFloat(-Double.pi / 2),
             endAngle: CGFloat(3 * Double.pi / 2),
             clockwise: true)
         
         progressPath = UIBezierPath(
-            arcCenter: CGPoint(x: frame.size.width / 2.0, y: frame.size.height / 2.0),
+            arcCenter: CGPoint(x: 0, y: frame.size.height / 2.0),
             radius: 21,
             startAngle: CGFloat(-Double.pi / 2),
             endAngle: CGFloat(endPoint) * 0.06283185307179 + CGFloat(-Double.pi / 2),

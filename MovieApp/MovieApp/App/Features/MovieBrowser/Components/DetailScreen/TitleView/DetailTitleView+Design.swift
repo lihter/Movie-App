@@ -80,7 +80,7 @@ extension DetailTitleView: DesignProtocol {
         }
         
         progressBar.snp.makeConstraints {
-            $0.top.greaterThanOrEqualToSuperview().offset(125)
+            $0.top.greaterThanOrEqualToSuperview()
             $0.leading.equalToSuperview().offset(4 * offset + 21)
             $0.trailing.lessThanOrEqualToSuperview().inset(4 * offset)
         }
@@ -88,11 +88,9 @@ extension DetailTitleView: DesignProtocol {
         titleLabel.snp.makeConstraints {
             $0.top.equalTo(progressBar.snp.bottom).offset(3 * offset + 21)
             $0.leading.equalToSuperview().offset(4 * offset)
-            $0.trailing.lessThanOrEqualToSuperview().inset(15 * offset)
         }
         
         yearLabel.snp.makeConstraints {
-            $0.top.greaterThanOrEqualTo(progressBar.snp.bottom).offset(3 * offset + 21)
             $0.bottom.equalTo(titleLabel.snp.bottom)
             $0.leading.equalTo(titleLabel.snp.trailing).offset(offset)
             $0.trailing.lessThanOrEqualToSuperview().inset(4 * offset)
@@ -107,11 +105,9 @@ extension DetailTitleView: DesignProtocol {
         genresLabel.snp.makeConstraints {
             $0.top.equalTo(releaseDateLabel.snp.bottom).offset(2 * offset)
             $0.leading.equalToSuperview().offset(4 * offset)
-            $0.trailing.lessThanOrEqualToSuperview().inset(15 * offset)
         }
         
         durationLabel.snp.makeConstraints {
-            $0.top.greaterThanOrEqualTo(releaseDateLabel.snp.bottom).offset(2 * offset)
             $0.bottom.equalTo(genresLabel.snp.bottom)
             $0.leading.equalTo(genresLabel.snp.trailing).offset(2 * offset)
             $0.trailing.lessThanOrEqualToSuperview().inset(4 * offset)
@@ -121,6 +117,8 @@ extension DetailTitleView: DesignProtocol {
             $0.top.equalTo(genresLabel.snp.bottom).offset(4 * offset)
             $0.bottom.equalToSuperview().inset(5 * offset)
             $0.leading.equalToSuperview().offset(4 * offset)
+            $0.trailing.lessThanOrEqualToSuperview().inset(4 * offset)
         }
     }
+    
 }
