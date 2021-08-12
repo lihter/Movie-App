@@ -15,12 +15,11 @@ extension MovieDetailViewController: DesignProtocol {
         contentView = UIView()
         scrollView.addSubview(contentView)
         
-        let details: (() -> DetailTitleViewModel?) = { [weak self] in
+        titleView = DetailTitleView { [weak self] in
             guard let self = self else { return nil }
             
             return self.presenter.getMovieDetails(for: self.movieId)
         }
-        titleView = DetailTitleView(getDetailsFunction: details)
         contentView.addSubview(titleView)
         
         overviewTitle = UILabel()
@@ -29,20 +28,18 @@ extension MovieDetailViewController: DesignProtocol {
         overview = UILabel()
         contentView.addSubview(overview)
         
-        let cast: (() -> [CastViewModel]) = { [weak self] in
+        castView = CastView { [weak self] in
             guard let self = self else { return [] }
             
             return self.presenter.getCast(for: self.movieId)
         }
-        castView = CastView(getCast: cast)
         contentView.addSubview(castView)
         
-        let recommendations: (() -> [MovieViewModel]) = { [weak self] in
+        recommendationsView = RecommendationsView { [weak self] in
             guard let self = self else { return [] }
             
             return self.presenter.getRecommendations(for: self.movieId)
         }
-        recommendationsView = RecommendationsView(getRecommendations: recommendations)
         contentView.addSubview(recommendationsView)
     }
     
@@ -76,7 +73,7 @@ extension MovieDetailViewController: DesignProtocol {
         }
         
         contentView.snp.makeConstraints {
-            $0.width.equalTo(UIScreen.main.bounds.width)
+            $0.width.equalTo(view.frame.width)
             $0.top.equalToSuperview()
             $0.height.equalTo(1000)
         }
@@ -90,6 +87,7 @@ extension MovieDetailViewController: DesignProtocol {
         overviewTitle.snp.makeConstraints {
             $0.top.equalTo(titleView.snp.bottom).offset(5 * offset)
             $0.leading.equalToSuperview().offset(4 * offset)
+            $0.trailing.lessThanOrEqualToSuperview().inset(4 * offset)
         }
         
         overview.snp.makeConstraints {
@@ -107,7 +105,7 @@ extension MovieDetailViewController: DesignProtocol {
         recommendationsView.snp.makeConstraints {
             $0.top.equalTo(castView.snp.bottom).offset(8 * offset)
             $0.leading.trailing.equalToSuperview()
-            $0.height.equalTo(RecommendationsView.height)
+            $0.bottom.equalToSuperview().inset(4 * offset)
         }
     }
     

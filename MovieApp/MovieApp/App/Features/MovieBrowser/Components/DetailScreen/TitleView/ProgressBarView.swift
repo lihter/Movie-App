@@ -8,6 +8,8 @@ class ProgressBarView: UIView {
     var progressLayer: CAShapeLayer!
     var percentageLabel: UILabel!
     var userScoreLabel: UILabel!
+    var circularPath: UIBezierPath!
+    var progressPath: UIBezierPath!
     
     init(percentage endPoint: Int) {
         super.init(frame: .zero)
@@ -18,6 +20,27 @@ class ProgressBarView: UIView {
     
     required init?(coder: NSCoder) {
         super.init(coder: coder)
+    }
+    
+    override func layoutSubviews() {
+        super.layoutSubviews()
+        
+        circularPath = UIBezierPath(
+            arcCenter: CGPoint(x: frame.size.width / 2.0, y: frame.size.height / 2.0),
+            radius: 21,
+            startAngle: CGFloat(-Double.pi / 2),
+            endAngle: CGFloat(3 * Double.pi / 2),
+            clockwise: true)
+        
+        progressPath = UIBezierPath(
+            arcCenter: CGPoint(x: frame.size.width / 2.0, y: frame.size.height / 2.0),
+            radius: 21,
+            startAngle: CGFloat(-Double.pi / 2),
+            endAngle: CGFloat(endPoint) * 0.06283185307179 + CGFloat(-Double.pi / 2),
+            clockwise: true)
+        
+        circleLayer.path = circularPath.cgPath
+        progressLayer.path = progressPath.cgPath
     }
     
     func progressAnimation(duration: TimeInterval) {
