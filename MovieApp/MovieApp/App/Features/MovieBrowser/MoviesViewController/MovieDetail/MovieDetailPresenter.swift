@@ -19,6 +19,11 @@ final class MovieDetailPresenter {
         self.delegate = delegate
     }
     
+    func fetchAll() {
+        getMovieDetails()
+        getOverview()
+    }
+    
     func getMovieDetails() {
         useCase.getMovieDetails(for: movieId) { [weak self] result in
             guard let self = self else { return }
@@ -32,8 +37,17 @@ final class MovieDetailPresenter {
         }
     }
     
-    func getOverview() -> String {
-        "One year after outwitting the FBI and winning the public’s adulation with their mind-bending spectacles, the Four Horsemen resurface only to find themselves face to face with a new enemy who enlists them to pull off their most dangerous heist yet."
+    func getOverview() {
+        useCase.getMovieOverview(for: movieId) { [weak self] result in
+            guard let self = self else { return }
+            
+            switch result {
+            case .success(let overview):
+                self.delegate?.fillOverview(with: overview)
+            case .failure(let error):
+                print("Loading error: \(error.localizedDescription)")
+            }
+        }
     }
     
     func getCast() -> [CastViewModel] {
