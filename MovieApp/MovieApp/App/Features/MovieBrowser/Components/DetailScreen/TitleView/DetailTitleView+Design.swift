@@ -15,6 +15,9 @@ extension DetailTitleView: DesignProtocol {
         gradientView = UIView()
         addSubview(gradientView)
         
+        gradientLayer = CAGradientLayer()
+        gradientView.layer.insertSublayer(gradientLayer, at: 0)
+        
         titleLabel = UILabel()
         addSubview(titleLabel)
         
@@ -42,11 +45,8 @@ extension DetailTitleView: DesignProtocol {
         backgroundImageView.contentMode = .scaleAspectFill
         backgroundImageView.clipsToBounds = true
         
-        let gradientLayer = CAGradientLayer()
-        gradientLayer.frame = CGRect(x: 0, y: 0, width: Int(UIScreen.main.bounds.width) + 1, height: DetailTitleView.height)
         gradientLayer.colors = [UIColor.clear.cgColor, UIColor.black.cgColor]
-        gradientView.layer.insertSublayer(gradientLayer, at: 0)
-                
+        
         titleLabel.text = details.title
         titleLabel.textColor = .white
         titleLabel.font = .heading2
@@ -78,40 +78,46 @@ extension DetailTitleView: DesignProtocol {
         gradientView.snp.makeConstraints {
             $0.edges.equalTo(backgroundImageView.snp.edges)
         }
-                
-        favouritesButton.snp.makeConstraints {
-            $0.bottom.equalToSuperview().inset(5 * offset)
-            $0.leading.equalToSuperview().offset(4 * offset)
-        }
         
-        genresLabel.snp.makeConstraints {
-            $0.bottom.equalTo(favouritesButton.snp.top).offset(-4 * offset)
-            $0.leading.equalToSuperview().offset(4 * offset)
-        }
-        
-        durationLabel.snp.makeConstraints {
-            $0.bottom.equalTo(genresLabel.snp.bottom)
-            $0.leading.equalTo(genresLabel.snp.trailing).offset(2 * offset)
-        }
-        
-        releaseDateLabel.snp.makeConstraints {
-            $0.bottom.equalTo(genresLabel.snp.top).offset(-2 * offset)
-            $0.leading.equalToSuperview().offset(4 * offset)
+        progressBar.snp.makeConstraints {
+            $0.top.greaterThanOrEqualToSuperview()
+            $0.leading.equalToSuperview().offset(4 * offset + 21)
+            $0.trailing.lessThanOrEqualToSuperview().inset(4 * offset)
         }
         
         titleLabel.snp.makeConstraints {
-            $0.bottom.equalTo(releaseDateLabel.snp.top).offset(-3 * offset)
+            $0.top.equalTo(progressBar.snp.bottom).offset(3 * offset + 21)
             $0.leading.equalToSuperview().offset(4 * offset)
         }
         
         yearLabel.snp.makeConstraints {
             $0.bottom.equalTo(titleLabel.snp.bottom)
             $0.leading.equalTo(titleLabel.snp.trailing).offset(offset)
+            $0.trailing.lessThanOrEqualToSuperview().inset(4 * offset)
         }
         
-        progressBar.snp.makeConstraints {
-            $0.bottom.equalTo(titleLabel.snp.top).offset(-3 * offset - 21)
-            $0.leading.equalToSuperview().offset(4 * offset + 21)
+        releaseDateLabel.snp.makeConstraints {
+            $0.top.equalTo(titleLabel.snp.bottom).offset(3 * offset)
+            $0.leading.equalToSuperview().offset(4 * offset)
+            $0.trailing.lessThanOrEqualToSuperview().inset(4 * offset)
+        }
+        
+        genresLabel.snp.makeConstraints {
+            $0.top.equalTo(releaseDateLabel.snp.bottom).offset(2 * offset)
+            $0.leading.equalToSuperview().offset(4 * offset)
+        }
+        
+        durationLabel.snp.makeConstraints {
+            $0.bottom.equalTo(genresLabel.snp.bottom)
+            $0.leading.equalTo(genresLabel.snp.trailing).offset(2 * offset)
+            $0.trailing.lessThanOrEqualToSuperview().inset(4 * offset)
+        }
+        
+        favouritesButton.snp.makeConstraints {
+            $0.top.equalTo(genresLabel.snp.bottom).offset(4 * offset)
+            $0.bottom.equalToSuperview().inset(5 * offset)
+            $0.leading.equalToSuperview().offset(4 * offset)
+            $0.trailing.lessThanOrEqualToSuperview().inset(4 * offset)
         }
     }
     
