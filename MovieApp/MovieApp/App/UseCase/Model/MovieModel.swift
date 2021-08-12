@@ -12,6 +12,7 @@ struct MovieModel {
     let releaseDate: String?
     let genreIds: [Int]?
     let budget: Int?
+    let runtime: Int?
     
 }
 
@@ -28,7 +29,8 @@ extension MovieModel {
             voteCount: model.voteCount,
             releaseDate: model.releaseDate,
             genreIds: model.genreIds,
-            budget: model.budget)
+            budget: model.budget,
+            runtime: model.runtime)
     }
     
 }

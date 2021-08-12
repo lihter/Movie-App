@@ -5,9 +5,7 @@ class DetailTitleView: UIView {
     static let height = 300
     
     let offset: CGFloat = 4
-    
-    var details: DetailTitleViewModel!
-    
+        
     var backgroundImageView: UIImageView!
     var gradientView: UIView!
     var titleLabel: UILabel!
@@ -19,16 +17,26 @@ class DetailTitleView: UIView {
     var favouritesButton: FavouriteButton!
     var progressBar: ProgressBarView!
         
-    init(getDetailsFunction function: (() -> DetailTitleViewModel?)) {
+    init() {
         super.init(frame: .zero)
-        
-        details = function()
-        
+                
         buildViews()
     }
     
     required init?(coder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
+    }
+    
+    func populate(with movieDetails: DetailTitleViewModel) {
+        backgroundImageView.kf.setImage(with: movieDetails.posterPath)
+        titleLabel.text = movieDetails.title
+        yearLabel.text = "(\(movieDetails.year))"
+        releaseDateLabel.text = movieDetails.releaseDate
+        genresLabel.text = movieDetails.genres.joined(separator: ", ")
+        durationLabel.text = movieDetails.duration
+        
+        progressBar.setPercentage(to: movieDetails.userScore)
+        progressBar.progressAnimation(duration: 1.2)
     }
     
     override func layoutSubviews() {

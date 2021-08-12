@@ -11,15 +11,10 @@ class ProgressBarView: UIView {
     var circularPath: UIBezierPath!
     var progressPath: UIBezierPath!
     
-    init(percentage endPoint: Int) {
-        super.init(frame: .zero)
-        
+    func setPercentage(to endPoint: Int) {
         self.endPoint = endPoint
+        
         buildViews()
-    }
-    
-    required init?(coder: NSCoder) {
-        super.init(coder: coder)
     }
     
     override func layoutSubviews() {

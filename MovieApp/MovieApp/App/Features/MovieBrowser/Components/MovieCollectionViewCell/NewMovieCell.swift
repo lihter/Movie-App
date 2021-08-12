@@ -30,9 +30,7 @@ class NewMovieCell: UICollectionViewCell {
         movieImageView.kf.setImage(with: movie.posterPath)
     }
     
-    @objc func addToFavourites() {
-        print("Adding movie with id \(movieId ?? 0) to favourites.")
-    }
+    @objc func addToFavourites() { }
     
     @objc func imageTapped() {        
         showDetailScreen(movieId)

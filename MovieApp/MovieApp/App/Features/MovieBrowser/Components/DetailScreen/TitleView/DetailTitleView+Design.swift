@@ -36,38 +36,30 @@ extension DetailTitleView: DesignProtocol {
         favouritesButton = FavouriteButton()
         addSubview(favouritesButton)
         
-        progressBar = ProgressBarView(percentage: details.userScore)
+        progressBar = ProgressBarView()
         addSubview(progressBar)
     }
     
     func styleViews() {
-        backgroundImageView.kf.setImage(with: details.posterPath)
         backgroundImageView.contentMode = .scaleAspectFill
         backgroundImageView.clipsToBounds = true
         
         gradientLayer.colors = [UIColor.clear.cgColor, UIColor.black.cgColor]
-        
-        titleLabel.text = details.title
+
         titleLabel.textColor = .white
         titleLabel.font = .heading2
         
-        yearLabel.text = "(\(details.year))"
         yearLabel.textColor = .white
         yearLabel.font = .heading2regular
         
-        releaseDateLabel.text = details.releaseDate
         releaseDateLabel.textColor = .white
         releaseDateLabel.font = .regularMedium
         
-        genresLabel.text = details.genres.joined(separator: ", ")
         genresLabel.textColor = .white
         genresLabel.font = .regularMedium
         
-        durationLabel.text = details.duration
         durationLabel.textColor = .white
         durationLabel.font = .smallBold
-        
-        progressBar.progressAnimation(duration: 1.2)
     }
     
     func defineLayoutForViews() {
@@ -91,7 +83,9 @@ extension DetailTitleView: DesignProtocol {
         }
         
         yearLabel.snp.makeConstraints {
-            $0.bottom.equalTo(titleLabel.snp.bottom)
+            $0.centerY.equalTo(titleLabel.snp.centerY)
+            $0.top.equalTo(progressBar.snp.bottom).offset(3 * offset + 21)
+            $0.bottom.equalTo(releaseDateLabel.snp.top).offset(-3 * offset)
             $0.leading.equalTo(titleLabel.snp.trailing).offset(offset)
             $0.trailing.lessThanOrEqualToSuperview().inset(4 * offset)
         }

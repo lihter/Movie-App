@@ -12,6 +12,7 @@ struct MovieRepoModel {
     let releaseDate: String?
     let genreIds: [Int]?
     let budget: Int?
+    let runtime: Int?
     
 }
 
@@ -22,13 +23,14 @@ extension MovieRepoModel {
             identifier: model.identifier,
             title: model.title,
             backdropPath: model.backdropPath,
-            posterPath: URL(string: "https://image.tmdb.org/t/p/w185\(model.posterPath)"),
+            posterPath: URL(string: "https://image.tmdb.org/t/p/w500\(model.posterPath)"),
             overview: model.overview,
             voteAverage: model.voteAverage,
             voteCount: model.voteCount,
             releaseDate: model.releaseDate,
             genreIds: model.genreIds,
-            budget: model.budget)
+            budget: model.budget,
+            runtime: model.runtime)
     }
     
 }

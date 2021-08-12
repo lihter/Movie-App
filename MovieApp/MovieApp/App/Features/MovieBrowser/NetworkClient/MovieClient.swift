@@ -35,6 +35,12 @@ class MovieClient: MovieClientProtocol {
         }
     }
     
+    func fetchMovieDetails(for movieId: Int, completion: @escaping(Result<MovieDetailResponse, RequestError>) -> Void) {
+        fetch(forUrl: "/movie/\(movieId)") { (result: Result<MovieDetailResponse, RequestError>) in
+            completion(result)
+        }
+    }
+    
 }
 
 extension MovieClient {
