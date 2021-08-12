@@ -15,15 +15,26 @@ struct DetailTitleViewModel {
 extension DetailTitleViewModel {
     
     init(fromModel model: MovieModel) {
+        var dateString = ""
+        var year = ""
+        
+        if let date = model.releaseDate {
+            let dateSplitted = date.split(separator: "-")
+            dateString = "\(dateSplitted[1])/\(dateSplitted[2])/\(dateSplitted[0])"
+            year = String(dateSplitted[0])
+        }
+        
+        let hours = (model.runtime ?? 0) / 60
+        let minutes = (model.runtime ?? 0) % 60
+        
         self.init(
             title: model.title,
-            year: String(model.releaseDate?.split(separator: "-")[0] ?? ""),
-            releaseDate: "\(String(model.releaseDate?.split(separator: "-")[1] ?? ""))/\(String(model.releaseDate?.split(separator: "-")[2] ?? ""))/ \(String(model.releaseDate?.split(separator: "-")[0] ?? ""))",
+            year: year,
+            releaseDate: dateString,
             genres: model.genreIds!.map { Genre(rawValue: $0)?.genreName ?? "" },
-            duration: "\((model.runtime ?? 0) / 60)h \((model.runtime ?? 0) % 60)m",
+            duration: "\(hours)h \(minutes)m",
             userScore: Int(model.voteAverage * 10),
             posterPath: model.posterPath)
-        
     }
     
 }

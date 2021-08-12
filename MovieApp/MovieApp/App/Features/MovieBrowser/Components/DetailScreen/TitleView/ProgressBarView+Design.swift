@@ -23,17 +23,12 @@ extension ProgressBarView: DesignProtocol {
     }
     
     func styleViews() {
-        let circularPath = UIBezierPath(arcCenter: CGPoint(x: frame.size.width / 2.0, y: frame.size.height / 2.0), radius: 21, startAngle: CGFloat(-Double.pi / 2), endAngle: CGFloat(3 * Double.pi / 2), clockwise: true)
-        let progressParh = UIBezierPath(arcCenter: CGPoint(x: frame.size.width / 2.0, y: frame.size.height / 2.0), radius: 21, startAngle: CGFloat(-Double.pi / 2), endAngle: CGFloat(endPoint) * 0.06283185307179 + CGFloat(-Double.pi / 2), clockwise: true)
-        
-        circleLayer.path = circularPath.cgPath
         circleLayer.fillColor = UIColor.clear.cgColor
         circleLayer.lineCap = .round
         circleLayer.lineWidth = 5.0
         circleLayer.strokeEnd = 1.0
         circleLayer.strokeColor = UIColor.progressBarGreen.withAlphaComponent(0.3).cgColor
 
-        progressLayer.path = progressParh.cgPath
         progressLayer.fillColor = UIColor.clear.cgColor
         progressLayer.lineCap = .round
         progressLayer.lineWidth = 5.0
@@ -41,8 +36,12 @@ extension ProgressBarView: DesignProtocol {
         progressLayer.strokeColor = UIColor.progressBarGreen.cgColor
 
         let text = NSMutableAttributedString(string: "\(endPoint ?? 0)%")
-        text.setAttributes([.font: UIFont.extraSmallBold, .foregroundColor: UIColor.white], range: NSMakeRange(0, text.length))
-        text.setAttributes([.font: UIFont.regularBold, .foregroundColor: UIColor.white], range: NSMakeRange(0, text.length - 1))
+        text.setAttributes(
+            [.font: UIFont.extraSmallBold, .foregroundColor: UIColor.white],
+            range: NSMakeRange(0, text.length))
+        text.setAttributes(
+            [.font: UIFont.regularBold, .foregroundColor: UIColor.white],
+            range: NSMakeRange(0, text.length - 1))
         percentageLabel.attributedText = text
         
         userScoreLabel.text = "User Score"
