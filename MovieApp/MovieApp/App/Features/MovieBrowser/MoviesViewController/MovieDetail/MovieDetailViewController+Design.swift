@@ -27,7 +27,7 @@ extension MovieDetailViewController: DesignProtocol {
         let cast: (() -> [CastViewModel]) = { [weak self] in
             guard let self = self else { return [] }
             
-            return self.presenter.getCast(for: self.movieId)
+            return self.presenter.getCast()
         }
         castView = CastView(getCast: cast)
         contentView.addSubview(castView)
@@ -35,7 +35,7 @@ extension MovieDetailViewController: DesignProtocol {
         let getReview: (() -> ReviewViewModel?) = { [weak self] in
             guard let self = self else { return nil }
             
-            return self.presenter.getReview(for: self.movieId)
+            return self.presenter.getReview()
         }
         review = ReviewView(getReviews: getReview)
         contentView.addSubview(review)
@@ -43,7 +43,7 @@ extension MovieDetailViewController: DesignProtocol {
         let recommendations: (() -> [MovieViewModel]) = { [weak self] in
             guard let self = self else { return [] }
             
-            return self.presenter.getRecommendations(for: self.movieId)
+            return self.presenter.getRecommendations()
         }
         recommendationsView = RecommendationsView(getRecommendations: recommendations)
         contentView.addSubview(recommendationsView)
@@ -65,7 +65,7 @@ extension MovieDetailViewController: DesignProtocol {
         overviewTitle.font = .heading1
         overviewTitle.textColor = .primaryBlue
         
-        overview.text = presenter.getOverview(for: movieId)
+        overview.text = presenter.getOverview()
         overview.font = .regularMedium
         overview.textColor = .black
         overview.numberOfLines = 0
