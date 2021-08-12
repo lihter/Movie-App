@@ -27,12 +27,11 @@ extension MovieDetailViewController: DesignProtocol {
         castView = CastView()
         contentView.addSubview(castView)
         
-        let getReview: (() -> ReviewViewModel?) = { [weak self] in
+        review = ReviewView { [weak self] in
             guard let self = self else { return nil }
             
-            return self.presenter.getReview(for: self.movieId)
+            return self.presenter.getReview()
         }
-        review = ReviewView(getReviews: getReview)
         contentView.addSubview(review)
         
         recommendationsView = RecommendationsView()
@@ -67,7 +66,7 @@ extension MovieDetailViewController: DesignProtocol {
         }
         
         contentView.snp.makeConstraints {
-            $0.width.equalTo(UIScreen.main.bounds.width)
+            $0.width.equalTo(view)
             $0.top.equalToSuperview()
             $0.height.equalTo(1550)
         }
@@ -81,6 +80,7 @@ extension MovieDetailViewController: DesignProtocol {
         overviewTitle.snp.makeConstraints {
             $0.top.equalTo(titleView.snp.bottom).offset(5 * offset)
             $0.leading.equalToSuperview().offset(4 * offset)
+            $0.trailing.lessThanOrEqualToSuperview().inset(4 * offset)
         }
         
         overview.snp.makeConstraints {
@@ -104,7 +104,7 @@ extension MovieDetailViewController: DesignProtocol {
         recommendationsView.snp.makeConstraints {
             $0.top.equalTo(review.snp.bottom).offset(8 * offset)
             $0.leading.trailing.equalToSuperview()
-            $0.height.equalTo(RecommendationsView.height)
+            $0.bottom.equalToSuperview().inset(4 * offset)
         }
     }
     

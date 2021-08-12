@@ -69,13 +69,13 @@ extension ReviewView: DesignProtocol {
         socialLabel.snp.makeConstraints {
             $0.top.equalToSuperview()
             $0.leading.equalToSuperview().offset(4 * offset)
+            $0.trailing.lessThanOrEqualToSuperview().inset(4 * offset)
         }
         
         profileImageView.snp.makeConstraints {
             $0.top.equalTo(socialLabel.snp.bottom).offset(5 * offset)
             $0.leading.equalToSuperview().offset(4 * offset)
-            $0.width.equalTo(imageSize.width)
-            $0.height.equalTo(imageSize.height)
+            $0.size.equalTo(imageSize)
         }
         
         titleLabel.snp.makeConstraints {
@@ -94,6 +94,7 @@ extension ReviewView: DesignProtocol {
             $0.top.equalTo(writtenByLabel.snp.bottom).offset(6 * offset)
             $0.leading.equalToSuperview().offset(4 * offset)
             $0.trailing.equalToSuperview().inset(4 * offset)
+            $0.bottom.equalToSuperview()
             $0.height.lessThanOrEqualTo(290)
         }
     }
