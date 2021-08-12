@@ -29,8 +29,9 @@ class SubcategoryView: UIView {
     }
     
     func populate(with subcategories: [LocalSubcategory]?) {
-        guard let subcategories = subcategories,
-              !subcategories.isEmpty
+        guard
+            let subcategories = subcategories,
+            !subcategories.isEmpty
         else {
             return
         }
