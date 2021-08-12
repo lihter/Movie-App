@@ -13,6 +13,7 @@ class DetailTitleView: UIView {
     var releaseDateLabel: UILabel!
     var genresLabel: UILabel!
     var durationLabel: UILabel!
+    var gradientLayer: CAGradientLayer!
     var favouritesButton: FavouriteButton!
     var progressBar: ProgressBarView!
         
@@ -36,6 +37,12 @@ class DetailTitleView: UIView {
         
         progressBar.setPercentage(to: movieDetails.userScore)
         progressBar.progressAnimation(duration: 1.2)
+    }
+    
+    override func layoutSubviews() {
+        super.layoutSubviews()
+        
+        gradientLayer.frame = CGRect(x: 0, y: 0, width: Int(UIScreen.main.bounds.width) + 1, height: DetailTitleView.height)
     }
     
 }
