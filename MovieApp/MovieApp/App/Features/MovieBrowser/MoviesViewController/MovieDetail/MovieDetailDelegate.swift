@@ -6,4 +6,6 @@ protocol MovieDetailDelegate: AnyObject {
     
     func fillCastCV(with cast: [CastViewModel])
     
+    func fillRecommendationsCV(with movies: [MovieViewModel])
+    
 }

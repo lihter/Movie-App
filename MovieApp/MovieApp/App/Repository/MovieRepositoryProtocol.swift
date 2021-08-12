@@ -13,5 +13,7 @@ protocol MovieRepositoryProtocol {
     func fetchMovieDetails(for movieId: Int, completion: @escaping(Result<MovieRepoModel, RequestError>) -> Void)
     
     func fetchCast(for movieId: Int, completion: @escaping(Result<[CastRepoModel], RequestError>) -> Void)
-
+    
+    func fetchRecommendations(for movieId: Int, completion: @escaping(Result<[MovieRepoModel], RequestError>) -> Void)
+    
 }

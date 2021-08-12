@@ -23,6 +23,7 @@ final class MovieDetailPresenter {
         getMovieDetails()
         getOverview()
         getMostPopularCast()
+        getRecommendations()
     }
     
     func getMovieDetails() {
@@ -65,14 +66,18 @@ final class MovieDetailPresenter {
         }
     }
     
-    func getRecommendations() -> [MovieViewModel] {
-        [MovieViewModel(identifier: 1, title: "Bla bla", overview: "-", posterPath: URL(string: "https://image.tmdb.org/t/p/original/qAZ0pzat24kLdO3o8ejmbLxyOac.jpg")),
-         MovieViewModel(identifier: 1, title: "Bla bla", overview: "-", posterPath: URL(string: "https://image.tmdb.org/t/p/original/qAZ0pzat24kLdO3o8ejmbLxyOac.jpg")),
-         MovieViewModel(identifier: 1, title: "Bla bla", overview: "-", posterPath: URL(string: "https://image.tmdb.org/t/p/original/qAZ0pzat24kLdO3o8ejmbLxyOac.jpg")),
-         MovieViewModel(identifier: 1, title: "Bla bla", overview: "-", posterPath: URL(string: "https://image.tmdb.org/t/p/original/qAZ0pzat24kLdO3o8ejmbLxyOac.jpg")),
-         MovieViewModel(identifier: 1, title: "Bla bla", overview: "-", posterPath: URL(string: "https://image.tmdb.org/t/p/original/qAZ0pzat24kLdO3o8ejmbLxyOac.jpg")),
-         MovieViewModel(identifier: 1, title: "Bla bla", overview: "-", posterPath: URL(string: "https://image.tmdb.org/t/p/original/qAZ0pzat24kLdO3o8ejmbLxyOac.jpg")),
-         MovieViewModel(identifier: 1, title: "Bla bla", overview: "-", posterPath: URL(string: "https://image.tmdb.org/t/p/original/qAZ0pzat24kLdO3o8ejmbLxyOac.jpg"))]
+    func getRecommendations() {
+        useCase.getRecommendations(for: movieId) { [weak self] result in
+            guard let self = self else { return }
+            
+            switch result {
+            case .success(let movies):
+                let mappedMovies = movies.map { MovieViewModel(fromModel: $0) }
+                self.delegate?.fillRecommendationsCV(with: mappedMovies)
+            case .failure(let error):
+                print("Loading error: \(error.localizedDescription)")
+            }
+        }
     }
     
     func getReview() -> ReviewViewModel {

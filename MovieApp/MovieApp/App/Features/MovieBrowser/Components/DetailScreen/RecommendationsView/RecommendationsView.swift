@@ -12,10 +12,9 @@ class RecommendationsView: UIView {
     var flowLayout: UICollectionViewFlowLayout!
     var collectionView: UICollectionView!
     
-    init(getRecommendations: (() -> [MovieViewModel])) {
+    init() {
         super.init(frame: .zero)
         
-        recommendations = getRecommendations()
         buildViews()
         setupCollectionView()
     }
@@ -24,10 +23,15 @@ class RecommendationsView: UIView {
         fatalError("init(coder:) has not been implemented")
     }
     
-    func setupCollectionView() {
+    private func setupCollectionView() {
         collectionView.register(RecommendationCell.self, forCellWithReuseIdentifier: RecommendationCell.reuseIdentifier)
         collectionView.dataSource = self
         collectionView.delegate = self
+    }
+    
+    func populate(with movies: [MovieViewModel]) {
+        recommendations = movies
+        collectionView.reloadData()
     }
     
 }

@@ -15,5 +15,7 @@ protocol MoviesUseCaseProtocol {
     func getMovieOverview(for movieId: Int, completion: @escaping(Result<String, RequestError>) -> Void)
     
     func getMostPopularCast(for movieId: Int, completion: @escaping(Result<[CastModel], RequestError>) -> Void)
+    
+    func getRecommendations(for movieId: Int, completion: @escaping(Result<[MovieModel], RequestError>) -> Void)
 
 }

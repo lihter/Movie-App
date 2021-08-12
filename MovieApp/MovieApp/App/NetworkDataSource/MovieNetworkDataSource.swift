@@ -61,6 +61,12 @@ class MovieNetworkDataSource: MovieNetworkDataSourceProtocol {
             }
         }
     }
+    
+    func fetchRecommendations(for movieId: Int, completion: @escaping(Result<[MovieDataModel], RequestError>) -> Void) {
+        movieClient.fetchRecommendations(for: movieId) { [weak self] result in
+            self?.mapResult(result: result, completion: completion)
+        }
+    }
 
 }
 
