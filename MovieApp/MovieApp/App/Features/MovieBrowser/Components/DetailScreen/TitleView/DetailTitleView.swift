@@ -15,6 +15,18 @@ class DetailTitleView: UIView {
     var gradientLayer: CAGradientLayer!
     var favouritesButton: FavouriteButton!
     var progressBar: ProgressBarView!
+    var isFavorite: Bool! {
+        didSet {
+            if isFavorite {
+                favouritesButton.setImage(UIImage(with: .favouriteIconFilled), for: .normal)
+            } else {
+                favouritesButton.setImage(UIImage(with: .favouriteIcon), for: .normal)
+            }
+        }
+    }
+    
+    public var favoritePressed: (() -> ())!
+    public var checkIfFavorite: (() -> Bool)!
         
     init() {
         super.init(frame: .zero)
@@ -37,6 +49,7 @@ class DetailTitleView: UIView {
         releaseDateLabel.text = movieDetails.releaseDate
         genresLabel.text = movieDetails.genres.joined(separator: ", ")
         durationLabel.text = movieDetails.duration
+        isFavorite = movieDetails.isFavorite
         
         progressBar.setPercentage(to: movieDetails.userScore)
         progressBar.progressAnimation(duration: 1.2)
@@ -46,6 +59,14 @@ class DetailTitleView: UIView {
         super.layoutSubviews()
         
         gradientLayer.frame = CGRect(x: 0, y: 0, width: Int(UIScreen.main.bounds.width) + 1, height: DetailTitleView.height)
+    }
+    
+    @objc func favoriteButtonPressed() {
+        favoritePressed()
+    }
+    
+    func reloadData() {
+        isFavorite = checkIfFavorite()
     }
     
 }

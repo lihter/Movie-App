@@ -59,4 +59,8 @@ extension MovieDetailViewController: MovieDetailDelegate {
         self.review.populate(with: review)
     }
     
+    func reloadData() {
+        titleView.reloadData()
+    }
+    
 }

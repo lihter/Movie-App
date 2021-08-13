@@ -16,14 +16,9 @@ final class FavoritesPresenter {
     }
     
     func getFavouriteMovies() {
-        let mockMovie = MovieViewModel(
-            identifier: 550,
-            title: "Fight Club",
-            overview: "A ticking-time-bomb insomniac and a slippery soap salesman channel primal male aggression into a shocking new form of therapy. Their concept catches on, with underground \"fight clubs\" forming in every town, until an eccentric gets in the way and ignites an out-of-control spiral toward oblivion.",
-            posterPath: URL(string: "https://image.tmdb.org/t/p/original/wigZBAmNrIhxp2FNGOROUAeHvdh.jpg"),
-            genreIds: [],
-            isFavorite: true)
-        delegate?.showMovies(Array(repeating: mockMovie, count: 25))
+        let favoriteMovies = useCase.getFavoriteMovies()
+        let mappedMovies = favoriteMovies.map { MovieViewModel(fromModel: $0) }
+        delegate?.showMovies(mappedMovies)
     }
     
     func showDetailScreen(for movieId: Int) {
@@ -32,6 +27,8 @@ final class FavoritesPresenter {
     
     func toggleFavorite(_ movieId: Int) {
         useCase.toggleFavorite(movieId)
+        
+        delegate?.reloadData()
     }
     
 }

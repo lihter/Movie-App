@@ -9,6 +9,7 @@ struct DetailTitleViewModel {
     let duration: String
     let userScore: Int
     let posterPath: URL?
+    let isFavorite: Bool
     
 }
 
@@ -34,7 +35,8 @@ extension DetailTitleViewModel {
             genres: model.genreIds!.map { Genre(rawValue: $0)?.genreName ?? "" },
             duration: "\(hours)h \(minutes)m",
             userScore: Int(model.voteAverage * 10),
-            posterPath: model.posterPath)
+            posterPath: model.posterPath,
+            isFavorite: model.isFavorite)
     }
     
 }

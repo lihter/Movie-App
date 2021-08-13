@@ -10,4 +10,6 @@ protocol MovieDetailDelegate: AnyObject {
     
     func fillReview(with review: ReviewViewModel)
     
+    func reloadData()
+    
 }

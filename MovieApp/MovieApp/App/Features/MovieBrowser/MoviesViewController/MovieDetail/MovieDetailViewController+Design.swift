@@ -16,6 +16,16 @@ extension MovieDetailViewController: DesignProtocol {
         scrollView.addSubview(contentView)
         
         titleView = DetailTitleView()
+        titleView.favoritePressed = { [weak self] in
+            guard let self = self else { return }
+            
+            self.presenter.favoritePressed()
+        }
+        titleView.checkIfFavorite = { [weak self] in
+            guard let self = self else { return false }
+            
+            return self.presenter.checkIfFavorite()
+        }
         contentView.addSubview(titleView)
         
         overviewTitle = UILabel()

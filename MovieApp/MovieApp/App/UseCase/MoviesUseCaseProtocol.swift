@@ -19,5 +19,9 @@ protocol MoviesUseCaseProtocol {
     func toggleFavorite(_ movieId: Int)
     
     func getMovies(for category: LocalCategory, genreId: Int) -> [MovieModel]
+    
+    func getMovie(with movieId: Int) -> MovieModel?
+    
+    func getFavoriteMovies() -> [MovieModel]
 
 }

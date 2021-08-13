@@ -18,4 +18,8 @@ protocol MovieRepositoryProtocol {
     
     func getMovies(for category: LocalCategory, genreId: Int) -> [MovieRepoModel]
     
+    func getMovie(with movieId: Int) -> MovieRepoModel?
+    
+    func getFavoriteMovies() -> [MovieRepoModel]
+    
 }

@@ -24,6 +24,10 @@ class FavoritesViewController: UIViewController {
         fatalError("init(coder:) has not been implemented")
     }
     
+    override func viewWillAppear(_ animated: Bool) {
+        reloadData()
+    }
+    
     private func setupCollectionView() {
         collectionView.register(NewMovieCell.self, forCellWithReuseIdentifier: NewMovieCell.reuseIdentifier)
         collectionView.dataSource = self
@@ -99,6 +103,10 @@ extension FavoritesViewController: FavoriteDelegate {
     func showMovies(_ movies: [MovieViewModel]) {
         self.movies = movies
         collectionView.reloadData()
+    }
+    
+    func reloadData() {
+        presenter.getFavouriteMovies()
     }
     
 }

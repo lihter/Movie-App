@@ -37,6 +37,10 @@ class HomePageTwoViewController: UIViewController {
         presenter.getAllCategories()
     }
     
+    override func viewWillAppear(_ animated: Bool) {
+        reloadData()
+    }
+    
     private func setupTableView() {
         tableView.register(CategoryCell.self, forCellReuseIdentifier: CategoryCell.reuseIdentifier)
         tableView.dataSource = self

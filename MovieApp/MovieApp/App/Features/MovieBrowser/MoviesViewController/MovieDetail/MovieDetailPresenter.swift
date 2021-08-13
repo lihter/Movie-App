@@ -94,4 +94,15 @@ final class MovieDetailPresenter {
         }
     }
     
+    func favoritePressed() {
+        useCase.toggleFavorite(movieId)
+        
+        delegate?.reloadData()
+    }
+    
+    func checkIfFavorite() -> Bool {
+        guard let movie = useCase.getMovie(with: movieId) else { return false }
+        return movie.isFavorite
+    }
+    
 }
