@@ -84,7 +84,12 @@ extension FavoritesViewController: UICollectionViewDelegateFlowLayout {
         layout collectionViewLayout: UICollectionViewLayout,
         sizeForItemAt indexPath: IndexPath
     ) -> CGSize {
-        return NewMovieCell.cellSize
+        let numberOfCellsInRow: CGFloat = 3
+        let margin = 4 * offset
+        let spacing = 4 * offset
+        let oneCellWidth = (view.bounds.width - 2 * margin - (numberOfCellsInRow - 1) * spacing) / numberOfCellsInRow
+        let height = NewMovieCell.cellSize.height / NewMovieCell.cellSize.width * oneCellWidth
+        return CGSize(width: oneCellWidth, height: height)
     }
     
 }

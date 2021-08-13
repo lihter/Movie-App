@@ -1,9 +1,7 @@
 import UIKit
 
 class CastView: UIView {
-    
-    static let height = 260
-    
+        
     let offset: CGFloat = 4
     
     var cast: [CastViewModel]?

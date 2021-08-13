@@ -1,5 +1,5 @@
 protocol CategoryCellDelegate: AnyObject {
     
-    func changeSubcategory(to subcategory: Genre?, resetOffset: Bool)
+    func changeGenre(to genre: Genre?, resetOffset: Bool)
         
 }

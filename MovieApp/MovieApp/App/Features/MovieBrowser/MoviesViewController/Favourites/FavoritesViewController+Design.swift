@@ -38,6 +38,7 @@ extension FavoritesViewController: DesignProtocol {
         favouritesLabel.snp.makeConstraints {
             $0.top.equalToSuperview().offset(9 * offset)
             $0.leading.equalToSuperview().offset(4 * offset)
+            $0.trailing.lessThanOrEqualToSuperview().inset(4 * offset)
         }
         
         collectionView.snp.makeConstraints {

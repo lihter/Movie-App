@@ -6,25 +6,28 @@ final class MovieDetailPresenter {
     private weak var delegate: MovieDetailDelegate?
     private let useCase: MoviesUseCaseProtocol!
     private let router: AppRouter!
-        
-    init (useCase: MoviesUseCaseProtocol, router: AppRouter) {
+    
+    let movieId: Int!
+    
+    init (useCase: MoviesUseCaseProtocol, router: AppRouter, for movieId: Int) {
         self.useCase = useCase
         self.router = router
+        self.movieId = movieId
     }
     
     func setDelegate(delegate: MovieDetailDelegate) {
         self.delegate = delegate
     }
     
-    func fetchAll(for movieId: Int) {
-        getMovieDetails(for: movieId)
-        getOverview(for: movieId)
-        getMostPopularCast(for: movieId)
-        getRecommendations(for: movieId)
-        getReview(for: movieId)
+    func fetchAll() {
+        getMovieDetails()
+        getOverview()
+        getMostPopularCast()
+        getRecommendations()
+        getReview()
     }
     
-    func getMovieDetails(for movieId: Int) {
+    func getMovieDetails() {
         useCase.getMovieDetails(for: movieId) { [weak self] result in
             guard let self = self else { return }
             
@@ -37,7 +40,7 @@ final class MovieDetailPresenter {
         }
     }
     
-    func getOverview(for movieId: Int) {
+    func getOverview() {
         useCase.getMovieOverview(for: movieId) { [weak self] result in
             guard let self = self else { return }
             
@@ -50,7 +53,7 @@ final class MovieDetailPresenter {
         }
     }
     
-    func getMostPopularCast(for movieId: Int) {
+    func getMostPopularCast() {
         useCase.getMostPopularCast(for: movieId) { [weak self] result in
             guard let self = self else { return }
             
@@ -64,7 +67,7 @@ final class MovieDetailPresenter {
         }
     }
     
-    func getRecommendations(for movieId: Int) {
+    func getRecommendations() {
         useCase.getRecommendations(for: movieId) { [weak self] result in
             guard let self = self else { return }
             
@@ -78,7 +81,7 @@ final class MovieDetailPresenter {
         }
     }
     
-    func getReview(for movieId: Int) {
+    func getReview() {
         useCase.getReview(for: movieId) { [weak self] result in
             guard let self = self else { return }
             

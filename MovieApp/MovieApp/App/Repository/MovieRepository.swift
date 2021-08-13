@@ -124,7 +124,7 @@ class MovieRepository: MovieRepositoryProtocol {
     
     func getMovies(for category: LocalCategory, genreId: Int) -> [MovieRepoModel] {
         var movies: [MovieRepoModel]
-        movies = categoryMovies[category]?.filter{
+        movies = categoryMovies[category]?.filter {
             $0.genreIds?.contains(genreId) ?? false
         } ?? []
         return movies
@@ -143,6 +143,7 @@ extension MovieRepository {
             let mappedMovies: [MovieRepoModel] = movies.map {
                 MovieRepoModel(fromModel: $0, isFavorite: userDefaultsDataSource.favorites.contains($0.identifier))
             }
+            categoryMovies[category] = mappedMovies
             completion(.success(mappedMovies))
         case .failure(let error):
             completion(.failure(error))

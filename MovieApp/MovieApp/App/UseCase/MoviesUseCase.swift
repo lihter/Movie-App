@@ -1,7 +1,7 @@
 class MoviesUseCase: MoviesUseCaseProtocol {
     
     static let shared: MoviesUseCaseProtocol = MoviesUseCase()
-
+    
     private let moviesDataRepo: MovieRepositoryProtocol!
     
     init() {
@@ -25,7 +25,6 @@ class MoviesUseCase: MoviesUseCaseProtocol {
             self?.mapResult(result: result, completion: completion)
         }
     }
-
     func getMovieDetails(for movieId: Int, completion: @escaping(Result<MovieModel, RequestError>) -> Void) {
         moviesDataRepo.fetchMovieDetails(for: movieId) { [weak self] result in
             self?.mapMovieDetailResult(result: result, completion: completion)
@@ -68,10 +67,12 @@ class MoviesUseCase: MoviesUseCaseProtocol {
         moviesDataRepo.fetchReviews(for: movieId) { result in
             switch result {
             case .success(let reviews):
-                if reviews.count > 0 {
-                    let mappedReview = ReviewModel(fromModel: reviews[0])
-                    completion(.success(mappedReview))
+                guard reviews.count > 0 else {
+                    completion(.failure(.noData))
+                    return
                 }
+                let mappedReview = ReviewModel(fromModel: reviews[0])
+                completion(.success(mappedReview))
             case .failure(let error):
                 completion(.failure(error))
             }

@@ -1,6 +1,6 @@
 import UIKit
 
-extension SubcategoryView: DesignProtocol {
+extension GenreView: DesignProtocol {
     
     func buildViews() {
         createViews()
@@ -12,17 +12,17 @@ extension SubcategoryView: DesignProtocol {
         scrollView = UIScrollView()
         addSubview(scrollView)
         
-        subcategoriesStack = UIStackView()
-        scrollView.addSubview(subcategoriesStack)
+        genresStack = UIStackView()
+        scrollView.addSubview(genresStack)
     }
     
     func styleViews() {
         scrollView.contentInset = UIEdgeInsets(top: 0, left: 4 * offset, bottom: 0, right: 4 * offset)
         scrollView.showsHorizontalScrollIndicator = false
         
-        subcategoriesStack.alignment = .center
-        subcategoriesStack.spacing = 5 * offset
-        subcategoriesStack.axis = .horizontal
+        genresStack.alignment = .center
+        genresStack.spacing = 5 * offset
+        genresStack.axis = .horizontal
     }
     
     func defineLayoutForViews() {
@@ -30,41 +30,41 @@ extension SubcategoryView: DesignProtocol {
             $0.edges.equalToSuperview()
         }
         
-        subcategoriesStack.snp.makeConstraints {
+        genresStack.snp.makeConstraints {
             $0.edges.equalToSuperview()
         }
     }
     
 }
 
-extension SubcategoryView {
+extension GenreView {
     
     func addButtons() {
-        guard let subcategories = subcategories else { return }
+        guard let genres = genres else { return }
         
-        subcategoriesStack.removeAllArrangedSubviews()
+        genresStack.removeAllArrangedSubviews()
         
-        for subcategory in subcategories {
+        for genre in genres {
             let button = UIButton()
-            button.tag = subcategory.rawValue
-            button.addTarget(self, action: #selector(subcategoryButtonPressed), for: .touchUpInside)
-            subcategoriesStack.addArrangedSubview(button)
+            button.tag = genre.rawValue
+            button.addTarget(self, action: #selector(genreButtonPressed), for: .touchUpInside)
+            genresStack.addArrangedSubview(button)
         }
     }
     
     func styleButtons() {
-        for button in subcategoriesStack.arrangedSubviews {
+        for button in genresStack.arrangedSubviews {
             guard let button = button as? UIButton else { continue }
             
-            if button.tag == selectedSubcategory {
-                styleSelectedSubcategory(button)
+            if button.tag == selectedGenre {
+                styleSelectedGenre(button)
             } else {
-                styleUnselectedSubcategory(button)
+                styleUnselectedGenre(button)
             }
         }
     }
     
-    func styleSelectedSubcategory(_ button: UIButton) {
+    func styleSelectedGenre(_ button: UIButton) {
         button.setAttributedTitle(
             NSAttributedString(
                 string: Genre(rawValue: button.tag)?.genreName ?? "_",
@@ -77,7 +77,7 @@ extension SubcategoryView {
             for: .normal)
     }
     
-    func styleUnselectedSubcategory(_ button: UIButton) {
+    func styleUnselectedGenre(_ button: UIButton) {
         let font = UIFont.regularSemiBold
         button.setAttributedTitle(
             NSAttributedString(
@@ -88,20 +88,20 @@ extension SubcategoryView {
             for: .normal)
     }
     
-    @objc func subcategoryButtonPressed(sender: UIButton) {
+    @objc func genreButtonPressed(sender: UIButton) {
         guard
-            let selected = selectedSubcategory,
-            let button = subcategoriesStack
+            let selected = selectedGenre,
+            let button = genresStack
                 .arrangedSubviews
                 .first(where: { ($0 as? UIButton)?.tag == selected }) as? UIButton
         else {
             return
         }
         
-        styleUnselectedSubcategory(button)
-        styleSelectedSubcategory(sender)
-        selectedSubcategory = sender.tag
-        delegate?.changeSubcategory(to: Genre(rawValue: selectedSubcategory!), resetOffset: true)
+        styleUnselectedGenre(button)
+        styleSelectedGenre(sender)
+        selectedGenre = sender.tag
+        delegate?.changeGenre(to: Genre(rawValue: selectedGenre!), resetOffset: true)
     }
     
 }

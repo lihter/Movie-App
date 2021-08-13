@@ -29,7 +29,7 @@ final class HomePageTwoPresenter {
         router.showDetailScreen(for: movieId)
     }
     
-    func getSubcategories(for category: LocalCategory) -> [Genre] {
+    func getGenres(for category: LocalCategory) -> [Genre] {
         if category == .trending {
             return [.day, .week]
         }
