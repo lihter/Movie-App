@@ -33,7 +33,7 @@ class MovieDetailViewController: UIViewController {
         
         presenter.fetchAll()
     }
-    
+
 }
 
 extension MovieDetailViewController: MovieDetailDelegate {

@@ -1,9 +1,7 @@
 import UIKit
 
 class ReviewView: UIView {
-    
-    static let height: CGFloat = 420
-    
+        
     let offset: CGFloat = 4
     let imageSize: CGSize = CGSize(width: 56, height: 56)
         
