@@ -24,6 +24,7 @@ final class MovieDetailPresenter {
         getOverview()
         getMostPopularCast()
         getRecommendations()
+        getReview()
     }
     
     func getMovieDetails() {
@@ -80,12 +81,17 @@ final class MovieDetailPresenter {
         }
     }
     
-    func getReview() -> ReviewViewModel {
-        ReviewViewModel(
-            author: "The Peruvian Post",
-            createdAt: "February 17, 2020",
-            content: "When director Jon Favreau and Sarah Halley cast Robert Downey Jr, they glimpsed something magnificent: a more-than-skilled actor who faultlessly portrayed the role of Tony Stark. Despite Favreau's initial decision in choosing a fresh face, he ended up delighted due to his charismatic, natural and comfortable attitude. He did not realise it yet, but he was moulding with the right measures a whole superhero cinematic universe which lasted until today and still goes for more. The filmmakers took the proper time to introduce a character whose production was undecided since New Line Pictures argu... read the rest.",
-            profileImagePath: URL(string: "https://secure.gravatar.com/avatar/3593437cbd05cebe0a4ee753965a8ad1.jpg"))
+    func getReview() {
+        useCase.getReview(for: movieId) { [weak self] result in
+            guard let self = self else { return }
+            
+            switch result {
+            case .success(let review):
+                self.delegate?.fillReview(with: ReviewViewModel(fromModel: review))
+            case .failure(let error):
+                print("Loading error: \(error.localizedDescription)")
+            }
+        }
     }
     
 }

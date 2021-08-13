@@ -63,6 +63,18 @@ class MovieRepository: MovieRepositoryProtocol {
             self?.mapResult(result: result, completion: completion)
         }
     }
+    
+    func fetchReviews(for movieId: Int, completion: @escaping(Result<[ReviewRepoModel], RequestError>) -> Void) {
+        networkDataSource.fetchReviews(for: movieId) { result in
+            switch result {
+            case .success(let reviews):
+                let mappedReviews = reviews.map { ReviewRepoModel(fromModel: $0) }
+                completion(.success(mappedReviews))
+            case .failure(let error):
+                completion(.failure(error))
+            }
+        }
+    }
 
 }
 

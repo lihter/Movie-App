@@ -54,4 +54,9 @@ extension MovieDetailViewController: MovieDetailDelegate {
     func fillRecommendationsCV(with movies: [MovieViewModel]) {
         recommendationsView.populate(with: movies)
     }
+    
+    func fillReview(with review: ReviewViewModel) {
+        self.review.populate(with: review)
+    }
+    
 }

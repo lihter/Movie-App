@@ -16,4 +16,6 @@ protocol MovieNetworkDataSourceProtocol {
     
     func fetchRecommendations(for movieId: Int, completion: @escaping(Result<[MovieDataModel], RequestError>) -> Void)
     
+    func fetchReviews(for movieId: Int, completion: @escaping(Result<[ReviewDataModel], RequestError>) -> Void)
+    
 }
