@@ -43,19 +43,22 @@ extension CastView: DesignProtocol {
     
     func defineLayoutForViews() {
         titleLabel.snp.makeConstraints {
-            $0.leading.equalToSuperview().offset(4 * offset)
             $0.top.equalToSuperview()
+            $0.leading.equalToSuperview().offset(4 * offset)
         }
         
         fullCastButton.snp.makeConstraints {
+            $0.top.equalToSuperview()
+            $0.leading.greaterThanOrEqualTo(titleLabel.snp.trailing)
             $0.trailing.equalToSuperview().inset(4 * offset)
             $0.centerY.equalTo(titleLabel.snp.centerY)
         }
         
         collectionView.snp.makeConstraints {
             $0.leading.trailing.equalToSuperview()
-            $0.top.equalTo(titleLabel.snp.bottom).offset(5 * offset)
-            $0.height.equalTo(CastCell.cellSize.height + 40)
+            $0.top.equalTo(titleLabel.snp.bottom).offset(2 * offset)
+            $0.height.equalTo(CastCell.cellSize.height + 20)
+            $0.bottom.equalToSuperview()
         }
     }
     
