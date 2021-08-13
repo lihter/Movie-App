@@ -71,6 +71,7 @@ class MoviesUseCase: MoviesUseCaseProtocol {
                     completion(.failure(.noData))
                     return
                 }
+                
                 let mappedReview = ReviewModel(fromModel: reviews[0])
                 completion(.success(mappedReview))
             case .failure(let error):
@@ -90,6 +91,7 @@ class MoviesUseCase: MoviesUseCaseProtocol {
     
     func getMovie(with movieId: Int) -> MovieModel? {
         guard let repoMovie = moviesDataRepo.getMovie(with: movieId) else { return nil }
+        
         return MovieModel(fromModel: repoMovie)
     }
     

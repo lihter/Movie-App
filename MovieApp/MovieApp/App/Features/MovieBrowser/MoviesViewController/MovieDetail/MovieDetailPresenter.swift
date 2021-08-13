@@ -102,6 +102,7 @@ final class MovieDetailPresenter {
     
     func checkIfFavorite() -> Bool {
         guard let movie = useCase.getMovie(with: movieId) else { return false }
+        
         return movie.isFavorite
     }
     
