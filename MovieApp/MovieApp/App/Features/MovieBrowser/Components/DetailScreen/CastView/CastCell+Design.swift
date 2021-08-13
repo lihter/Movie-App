@@ -48,10 +48,6 @@ extension CastCell: DesignProtocol {
     }
     
     func defineLayoutForViews() {
-        snp.makeConstraints {
-            $0.height.equalTo(CastCell.cellSize.height)
-        }
-        
         portraitImageView.snp.makeConstraints {
             $0.top.leading.trailing.equalToSuperview()
             $0.height.equalTo(136)

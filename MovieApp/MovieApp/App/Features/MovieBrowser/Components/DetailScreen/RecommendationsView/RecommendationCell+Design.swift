@@ -38,7 +38,8 @@ extension RecommendationCell: DesignProtocol {
         }
         
         nameLabel.snp.makeConstraints {
-            $0.leading.bottom.equalToSuperview()
+            $0.top.equalTo(posterImageView.snp.bottom)
+            $0.bottom.leading.trailing.equalToSuperview()
         }
     }
     

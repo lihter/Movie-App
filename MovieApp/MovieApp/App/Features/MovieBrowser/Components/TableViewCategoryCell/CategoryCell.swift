@@ -11,7 +11,7 @@ class CategoryCell: UITableViewCell {
     var movies: [MovieViewModel]?
     
     var categoryLabel: UILabel!
-    var subcategoriesView: SubcategoryView!
+    var genresView: GenreView!
     var flowLayout: UICollectionViewFlowLayout!
     var moviesCollectionView: UICollectionView!
     
@@ -20,8 +20,8 @@ class CategoryCell: UITableViewCell {
         get { moviesCollectionView.contentOffset.x }
     }
     
-    public var getSubcategories: ((LocalCategory) -> [Genre])!
-    public var getSubcategoryMovies: ((LocalCategory, Int) -> [MovieViewModel])!
+    public var getGenres: ((LocalCategory) -> [Genre])!
+    public var getGenreMovies: ((LocalCategory, Int) -> [MovieViewModel])!
     public var showDetailScreen: ((Int) -> ())!
         
     override init(style: UITableViewCell.CellStyle, reuseIdentifier: String?) {
@@ -30,7 +30,7 @@ class CategoryCell: UITableViewCell {
         buildViews()
         setupCollectionView()
         
-        subcategoriesView.setDelegate(delegate: self)
+        genresView.setDelegate(delegate: self)
     }
     
     required init?(coder: NSCoder) {
@@ -49,7 +49,7 @@ class CategoryCell: UITableViewCell {
         
         self.category = category
         categoryLabel.text = category.title
-        subcategoriesView.populate(with: getSubcategories(category))
+        genresView.populate(with: getGenres(category))
     }
 
 }
@@ -98,10 +98,10 @@ extension CategoryCell: UICollectionViewDelegateFlowLayout {
 
 extension CategoryCell: CategoryCellDelegate {
     
-    func changeSubcategory(to subcategory: Genre?, resetOffset: Bool) {
-        guard let subcategory = subcategory else { return }
+    func changeGenre(to genre: Genre?, resetOffset: Bool) {
+        guard let genre = genre else { return }
         
-        movies = getSubcategoryMovies(category, subcategory.rawValue)
+        movies = getGenreMovies(category, genre.rawValue)
         moviesCollectionView.reloadData()
         if resetOffset {
             moviesCollectionView.setContentOffset(CGPoint(x: 0, y: 0), animated: true)
