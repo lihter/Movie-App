@@ -17,7 +17,6 @@ class UserDefaultsDataSource: UserDefaultsDataSourceProtocol {
     func toggleFavorite(_ movieId: Int) {
         guard var favorites = UserDefaults.standard.object(forKey: favoritesUDKey) as? [Int] else {
             UserDefaults.standard.setValue([movieId], forKey: favoritesUDKey)
-            print(movieId)
             return
         }
         
@@ -27,7 +26,6 @@ class UserDefaultsDataSource: UserDefaultsDataSourceProtocol {
             favorites.append(movieId)
         }
         UserDefaults.standard.setValue(favorites, forKey: favoritesUDKey)
-        print(favorites)
     }
     
 }
