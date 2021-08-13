@@ -12,8 +12,8 @@ extension CategoryCell: DesignProtocol {
         categoryLabel = UILabel()
         contentView.addSubview(categoryLabel)
         
-        subcategoriesView = SubcategoryView()
-        contentView.addSubview(subcategoriesView)
+        genresView = GenreView()
+        contentView.addSubview(genresView)
         
         flowLayout = UICollectionViewFlowLayout()
         moviesCollectionView = UICollectionView(
@@ -45,15 +45,15 @@ extension CategoryCell: DesignProtocol {
             $0.top.equalToSuperview()
         }
         
-        subcategoriesView.snp.makeConstraints {
+        genresView.snp.makeConstraints {
             $0.leading.trailing.equalToSuperview()
             $0.top.equalTo(categoryLabel.snp.bottom).offset(3 * offset)
-            $0.height.equalTo(SubcategoryView.height)
+            $0.height.equalTo(GenreView.height)
         }
         
         moviesCollectionView.snp.makeConstraints {
             $0.leading.trailing.equalToSuperview()
-            $0.top.equalTo(subcategoriesView.snp.bottom).offset(3 * offset)
+            $0.top.equalTo(genresView.snp.bottom).offset(3 * offset)
             $0.height.equalTo(NewMovieCell.cellSize.height)
         }
     }

@@ -38,12 +38,13 @@ extension RecommendationsView: DesignProtocol {
         recommendationsLabel.snp.makeConstraints {
             $0.top.equalToSuperview()
             $0.leading.equalToSuperview().offset(4 * offset)
+            $0.trailing.equalToSuperview().inset(4 * offset)
         }
         
         collectionView.snp.makeConstraints {
-            $0.leading.trailing.equalToSuperview()
             $0.top.equalTo(recommendationsLabel.snp.bottom).offset(5 * offset)
             $0.height.equalTo(RecommendationCell.cellSize.height)
+            $0.bottom.leading.trailing.equalToSuperview()
         }
     }
     

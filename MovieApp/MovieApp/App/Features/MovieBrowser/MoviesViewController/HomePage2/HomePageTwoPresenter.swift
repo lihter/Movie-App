@@ -25,7 +25,7 @@ final class HomePageTwoPresenter {
     
     func getMovies(for category: LocalCategory, genreId: Int) -> [MovieViewModel] {
         var movies: [MovieViewModel]
-        movies = categories[category]?.filter{
+        movies = categories[category]?.filter {
             $0.genreIds?.contains(genreId) ?? false
         } ?? []
         return movies
@@ -36,7 +36,7 @@ final class HomePageTwoPresenter {
         router.showDetailScreen(for: movieId)
     }
     
-    func getSubcategories(for category: LocalCategory) -> [Genre] {
+    func getGenres(for category: LocalCategory) -> [Genre] {
         if category == .trending {
             return [.day, .week]
         }

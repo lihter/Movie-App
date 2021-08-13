@@ -7,7 +7,7 @@ class HomePageTwoViewController: UIViewController {
     
     var categories: [LocalCategory]!
     var storedCVOffsets: [Int: CGFloat]!
-    var storedSelectedSubcategories: [Int: Int]!
+    var storedSelectedGenres: [Int: Int]!
     
     var searchBar: MovieSearchBar!
     var tableView: UITableView!
@@ -21,7 +21,7 @@ class HomePageTwoViewController: UIViewController {
         
         categories = []
         storedCVOffsets = [:]
-        storedSelectedSubcategories  = [:]
+        storedSelectedGenres  = [:]
     }
     
     required init?(coder: NSCoder) {
@@ -68,15 +68,15 @@ extension HomePageTwoViewController: UITableViewDataSource {
             return UITableViewCell()
         }
 
-        cell.getSubcategoryMovies = { [weak self] category, genreId in
+        cell.getGenreMovies = { [weak self] category, genreId in
             guard let self = self else { return [] }
             
             return self.presenter.getMovies(for: category, genreId: genreId)
         }
-        cell.getSubcategories = { [weak self] category in
+        cell.getGenres = { [weak self] category in
             guard let self = self else { return [] }
             
-            return self.presenter.getSubcategories(for: category)
+            return self.presenter.getGenres(for: category)
         }
         cell.showDetailScreen = { [weak self] movieId in
             guard let self = self else { return }
@@ -92,14 +92,14 @@ extension HomePageTwoViewController: UITableViewDataSource {
     func tableView(_ tableView: UITableView, willDisplay cell: UITableViewCell, forRowAt indexPath: IndexPath) {
         guard let cell = cell as? CategoryCell else { return }
         
-        cell.subcategoriesView.selectedSubcategory = storedSelectedSubcategories[indexPath.row] ?? cell.subcategoriesView.selectedSubcategory
+        cell.genresView.selectedGenre = storedSelectedGenres[indexPath.row] ?? cell.genresView.selectedGenre
         cell.collectionViewOffset = storedCVOffsets[indexPath.row] ?? 0
     }
     
     func tableView(_ tableView: UITableView, didEndDisplaying cell: UITableViewCell, forRowAt indexPath: IndexPath) {
         guard let cell = cell as? CategoryCell else { return }
         
-        storedSelectedSubcategories[indexPath.row] = cell.subcategoriesView.selectedSubcategory
+        storedSelectedGenres[indexPath.row] = cell.genresView.selectedGenre
         storedCVOffsets[indexPath.row] = cell.collectionViewOffset
     }
     

@@ -3,9 +3,7 @@ import UIKit
 class MovieDetailViewController: UIViewController {
     
     let offset: CGFloat = 4
-    
-    var movieId: Int!
-    
+        
     var presenter: MovieDetailPresenter!
     
     var scrollView: UIScrollView!
@@ -17,12 +15,11 @@ class MovieDetailViewController: UIViewController {
     var review: ReviewView!
     var recommendationsView: RecommendationsView!
     
-    init(presenter: MovieDetailPresenter, withMovieId movieId: Int) {
+    init(presenter: MovieDetailPresenter) {
         super.init(nibName: nil, bundle: nil)
         
         self.presenter = presenter
         self.presenter.setDelegate(delegate: self)
-        self.movieId = movieId
     }
     
     required init?(coder: NSCoder) {
@@ -34,23 +31,9 @@ class MovieDetailViewController: UIViewController {
         
         buildViews()
         
-        presenter.fetchAll(for: movieId)
+        presenter.fetchAll()
     }
 
-    override func viewDidLayoutSubviews() {
-        var height: CGFloat = 0
-        contentView.subviews.forEach {
-            height += $0.frame.height
-        }
-        
-        height += 34 * offset + 30
-        
-        scrollView.contentSize = CGSize(width: UIScreen.main.bounds.width, height: height)
-        contentView.snp.updateConstraints {
-            $0.height.equalTo(height)
-        }
-    }
-    
 }
 
 extension MovieDetailViewController: MovieDetailDelegate {

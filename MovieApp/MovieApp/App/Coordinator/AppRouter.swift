@@ -22,8 +22,8 @@ final class AppRouter {
     }
     
     func showDetailScreen(for movieId: Int) {
-        let movieDetailPresenter = MovieDetailPresenter(useCase: moviesUseCase, router: self)
-        let vc = MovieDetailViewController(presenter: movieDetailPresenter, withMovieId: movieId)
+        let movieDetailPresenter = MovieDetailPresenter(useCase: moviesUseCase, router: self, for: movieId)
+        let vc = MovieDetailViewController(presenter: movieDetailPresenter)
         
         navigationController?.pushViewController(vc, animated: true)
     }
