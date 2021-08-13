@@ -15,15 +15,4 @@ enum LocalCategory {
         }
     }
     
-    var subcategories: [LocalSubcategory] {
-        switch self {
-        case .popular:
-            return [.popularStreaming, .popularFreeToWatch, .popularOnTV, .popularForRent, .popularInTheaters]
-        case .topRated:
-            return [.topRatedTV, .topRatedMovies]
-        case .trending:
-            return [.trendingToday, .trendingThisWeek]
-        }
-    }
-    
 }

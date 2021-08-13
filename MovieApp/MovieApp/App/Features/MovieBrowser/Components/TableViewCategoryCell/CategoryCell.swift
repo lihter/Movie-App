@@ -7,10 +7,11 @@ class CategoryCell: UITableViewCell {
     
     let offset: CGFloat = 4
     
+    var category: LocalCategory!
     var movies: [MovieViewModel]?
     
     var categoryLabel: UILabel!
-    var subcategoriesView: SubcategoryView!
+    var genresView: GenreView!
     var flowLayout: UICollectionViewFlowLayout!
     var moviesCollectionView: UICollectionView!
     
@@ -19,8 +20,8 @@ class CategoryCell: UITableViewCell {
         get { moviesCollectionView.contentOffset.x }
     }
     
-    public var getSubcategories: ((LocalCategory) -> [LocalSubcategory])!
-    public var getSubcategoryMovies: ((LocalSubcategory) -> [MovieViewModel])!
+    public var getGenres: ((LocalCategory) -> [Genre])!
+    public var getGenreMovies: ((LocalCategory, Int) -> [MovieViewModel])!
     public var showDetailScreen: ((Int) -> ())!
         
     override init(style: UITableViewCell.CellStyle, reuseIdentifier: String?) {
@@ -29,7 +30,7 @@ class CategoryCell: UITableViewCell {
         buildViews()
         setupCollectionView()
         
-        subcategoriesView.setDelegate(delegate: self)
+        genresView.setDelegate(delegate: self)
     }
     
     required init?(coder: NSCoder) {
@@ -46,8 +47,9 @@ class CategoryCell: UITableViewCell {
     func populate(with category: LocalCategory?) {
         guard let category = category else { return }
         
+        self.category = category
         categoryLabel.text = category.title
-        subcategoriesView.populate(with: getSubcategories(category))
+        genresView.populate(with: getGenres(category))
     }
 
 }
@@ -96,12 +98,14 @@ extension CategoryCell: UICollectionViewDelegateFlowLayout {
 
 extension CategoryCell: CategoryCellDelegate {
     
-    func changeSubcategory(to subcategory: LocalSubcategory?) {
-        guard let subcategory = subcategory else { return }
+    func changeGenre(to genre: Genre?, resetOffset: Bool) {
+        guard let genre = genre else { return }
         
-        movies = getSubcategoryMovies(subcategory)
+        movies = getGenreMovies(category, genre.rawValue)
         moviesCollectionView.reloadData()
-        moviesCollectionView.setContentOffset(CGPoint(x: 0, y: 0), animated: true)
+        if resetOffset {
+            moviesCollectionView.setContentOffset(CGPoint(x: 0, y: 0), animated: true)
+        }
     }
     
 }

@@ -4,13 +4,13 @@ final class HomePageTwoPresenter {
     private let useCase: MoviesUseCaseProtocol!
     private let router: AppRouter!
     
-    var categories: [CategoryViewModel]!
+    var categories: [LocalCategory: [MovieViewModel]]!
     
     init (useCase: MoviesUseCaseProtocol, router: AppRouter) {
         self.useCase = useCase
         self.router = router
         
-        categories = []
+        categories = [:]
     }
     
     func setDelegate(delegate: HomePageTwoDelegate) {
@@ -23,28 +23,24 @@ final class HomePageTwoPresenter {
         getTopRatedMovies()
     }
     
-    func getMovies(for subcategory: LocalSubcategory) -> [MovieViewModel] {
-        var movies: [MovieViewModel] = []
-        categories.forEach {
-            if $0.subcategoryMovies.keys.contains(subcategory) {
-                movies = $0.subcategoryMovies[subcategory] ?? []
-            }
-        }
+    func getMovies(for category: LocalCategory, genreId: Int) -> [MovieViewModel] {
+        var movies: [MovieViewModel]
+        movies = categories[category]?.filter {
+            $0.genreIds?.contains(genreId) ?? false
+        } ?? []
         return movies
     }
+    
     
     func showDetailScreen(for movieId: Int) {
         router.showDetailScreen(for: movieId)
     }
     
-    func getSubcategories(for category: LocalCategory) -> [LocalSubcategory] {
-        var subcategories: [LocalSubcategory] = []
-        categories.forEach {
-            if $0.categoryKey == category {
-                subcategories = Array($0.subcategoryMovies.keys)
-            }
+    func getGenres(for category: LocalCategory) -> [Genre] {
+        if category == .trending {
+            return [.day, .week]
         }
-        return subcategories
+        return [.action, .animation, .comedy, .scienceFiction, .thriller]
     }
     
     func getPopularMovies() {
@@ -53,9 +49,8 @@ final class HomePageTwoPresenter {
             
             switch result {
             case .success(let movies):
-                guard let categoryVM = self.popularMoviesToCategory(movies) else { return }
-                self.categories.append(categoryVM)
-                self.delegate?.addToTableView(category: categoryVM.categoryKey)
+                self.categories[.popular] = movies.map { MovieViewModel(fromModel: $0) }
+                self.delegate?.addToTableView(category: .popular)
             case .failure(let error):
                 print("Loading error: \(error.localizedDescription)")
             }
@@ -63,19 +58,21 @@ final class HomePageTwoPresenter {
     }
     
     func getTrendingMovies() {
-        var dayMovies: [MovieModel] = []
-        var weekMovies: [MovieModel] = []
+        var dayMovies: Bool = false
+        var weekMovies: Bool = false
+        
+        categories[.trending] = []
         
         useCase.getTrendingMoviesToday { [weak self] result in
             guard let self = self else { return }
             
             switch result {
             case .success(let movies):
-                dayMovies = movies
-                if !weekMovies.isEmpty, !dayMovies.isEmpty {
-                    guard let categoryVM = self.trendingMoviesToCategory(dayMovies: dayMovies, weekMovies: weekMovies) else { return }
-                    self.categories.append(categoryVM)
-                    self.delegate?.addToTableView(category: categoryVM.categoryKey)
+                dayMovies = true
+                self.categories[.trending]?
+                    .append(contentsOf: movies.map { MovieViewModel(fromModel: $0, withGenre: Genre.day.rawValue) } )
+                if weekMovies, dayMovies {
+                    self.delegate?.addToTableView(category: .trending)
                 }
             case .failure(let error):
                 print("Loading error: \(error.localizedDescription)")
@@ -87,11 +84,11 @@ final class HomePageTwoPresenter {
             
             switch result {
             case .success(let movies):
-                weekMovies = movies
-                if !weekMovies.isEmpty, !dayMovies.isEmpty {
-                    guard let categoryVM = self.trendingMoviesToCategory(dayMovies: dayMovies, weekMovies: weekMovies) else { return }
-                    self.categories.append(categoryVM)
-                    self.delegate?.addToTableView(category: categoryVM.categoryKey)
+                weekMovies = true
+                self.categories[.trending]?
+                    .append(contentsOf: movies.map { MovieViewModel(fromModel: $0, withGenre: Genre.week.rawValue) } )
+                if weekMovies, dayMovies {
+                    self.delegate?.addToTableView(category: .trending)
                 }
             case .failure(let error):
                 print("Loading error: \(error.localizedDescription)")
@@ -100,36 +97,13 @@ final class HomePageTwoPresenter {
     }
     
     func getTopRatedMovies() {
-        var moviesTopRated: [MovieModel] = []
-        var tvTopRated: [MovieModel] = []
-        
         useCase.getTopRatedMovies { [weak self] result in
             guard let self = self else { return }
             
             switch result {
-            case .success(let result):
-                moviesTopRated = result
-                if !moviesTopRated.isEmpty, !tvTopRated.isEmpty {
-                    guard let categoryVM = self.topRatedMoviesToCategory(tvShows: tvTopRated, movies: moviesTopRated) else { return }
-                    self.categories.append(categoryVM)
-                    self.delegate?.addToTableView(category: categoryVM.categoryKey)
-                }
-            case .failure(let error):
-                print("Loading error: \(error.localizedDescription)")
-            }
-        }
-        
-        useCase.getTopRatedTV { [weak self] result in
-            guard let self = self else { return }
-            
-            switch result {
-            case .success(let result):
-                tvTopRated = result
-                if !moviesTopRated.isEmpty, !tvTopRated.isEmpty {
-                    guard let categoryVM = self.topRatedMoviesToCategory(tvShows: tvTopRated, movies: moviesTopRated) else { return }
-                    self.categories.append(categoryVM)
-                    self.delegate?.addToTableView(category: categoryVM.categoryKey)
-                }
+            case .success(let movies):
+                self.categories[.topRated] = movies.map { MovieViewModel(fromModel: $0) }
+                self.delegate?.addToTableView(category: .topRated)
             case .failure(let error):
                 print("Loading error: \(error.localizedDescription)")
             }
@@ -138,95 +112,6 @@ final class HomePageTwoPresenter {
     
     func selectedMovie(withId movieId: Int) {
         router.showDetailScreen(for: movieId)
-    }
-    
-}
-
-//MARK: - Filtering functions
-
-extension HomePageTwoPresenter {
-    
-    private func topRatedMoviesToCategory(tvShows: [MovieModel]?, movies: [MovieModel]?) -> CategoryViewModel? {
-        guard
-            let tvShows = tvShows,
-            let movies = movies
-        else {
-            return nil
-        }
-        
-        let moviesVM = movies.map { MovieViewModel(fromModel: $0) }
-        let tvShowsVM = tvShows.map { MovieViewModel(fromModel: $0) }
-        
-        var dictionary = emptyDictionary(for: .topRated)
-        
-        dictionary[.topRatedTV] = tvShowsVM
-        dictionary[.topRatedMovies] = moviesVM
-        
-        let category = CategoryViewModel(
-            categoryKey: .topRated,
-            subcategoryMovies: dictionary)
-        return category
-    }
-    
-    private func trendingMoviesToCategory(dayMovies: [MovieModel]?, weekMovies: [MovieModel]?) -> CategoryViewModel? {
-        guard
-            let dayMovies = dayMovies,
-            let weekMovies = weekMovies
-        else {
-            return nil
-        }
-        
-        let dayMoviesVM = dayMovies.map { MovieViewModel(fromModel: $0) }
-        let weekMoviesVM = weekMovies.map { MovieViewModel(fromModel: $0) }
-        
-        var dictionary = emptyDictionary(for: .trending)
-                
-        dictionary[.trendingToday] = dayMoviesVM
-        dictionary[.trendingThisWeek] = weekMoviesVM
-        
-        let category = CategoryViewModel(
-            categoryKey: .trending,
-            subcategoryMovies: dictionary)
-        return category
-    }
-    
-    private func popularMoviesToCategory(_ movies: [MovieModel]?) -> CategoryViewModel? {
-        guard let movies = movies else { return nil }
-        
-        let moviesVM = movies.map { MovieViewModel(fromModel: $0) }
-        
-        var dictionary = emptyDictionary(for: .popular)
-        
-        for movieVM in moviesVM {
-            let firstLetter = movieVM.title.prefix(1).lowercased()
-            switch firstLetter {
-            case _ where firstLetter <= "d":
-                dictionary[.popularStreaming]?.append(movieVM)
-            case _ where firstLetter <= "l":
-                dictionary[.popularOnTV]?.append(movieVM)
-            case _ where firstLetter <= "p":
-                dictionary[.popularForRent]?.append(movieVM)
-            case _ where firstLetter <= "t":
-                dictionary[.popularFreeToWatch]?.append(movieVM)
-            default:
-                dictionary[.popularInTheaters]?.append(movieVM)
-            }
-        }
-        
-        let category = CategoryViewModel(
-            categoryKey: .popular,
-            subcategoryMovies: dictionary)
-        return category
-    }
-    
-    private func emptyDictionary(for category: LocalCategory) -> [LocalSubcategory: [MovieViewModel]] {
-        var dictionary: [LocalSubcategory: [MovieViewModel]] = [:]
-        
-        for subcategory in category.subcategories {
-            dictionary[subcategory] = []
-        }
-        
-        return dictionary
     }
     
 }

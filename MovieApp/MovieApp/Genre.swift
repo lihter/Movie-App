@@ -27,9 +27,15 @@ enum Genre: Int {
     case soap = 10766
     case talk = 10767
     case warPolitics = 10768
+    case day = 998
+    case week = 999
     
     var genreName: String {
         switch self {
+        case .day:
+            return "Day"
+        case .week:
+            return "Week"
         case .sciFiFantasy:
             return "Sci-Fi & Fantasy"
         case .soap:
