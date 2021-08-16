@@ -1,23 +1,22 @@
 import UIKit
 import Kingfisher
 
-class MovieCell: UICollectionViewCell {
+class MovieCell: UITableViewCell {
     
     static let reuseIdentifier = String(describing: MovieCell.self)
     
-    let descriptionFontSize: CGFloat = 14
+    var movieId: Int!
+    
     let offset: CGFloat = 8
     let movieImageWidth: CGFloat = 97
-    let movieTitleViewHeight: CGFloat = 20
     
     var movieTitle: UILabel!
     var movieDescription: UILabel!
     var movieImageView: UIImageView!
-    var contentContainer: UIView!
-    
-    override init(frame: CGRect) {
-        super.init(frame: frame)
         
+    override init(style: UITableViewCell.CellStyle, reuseIdentifier: String?) {
+        super.init(style: style, reuseIdentifier: reuseIdentifier)
+
         buildViews()
     }
     
@@ -25,10 +24,12 @@ class MovieCell: UICollectionViewCell {
         fatalError("init(coder:) has not been implemented")
     }
     
-    func populate(withMovie movie: MovieViewModel) {
+    func populate(with movie: MovieViewModel) {
+        movieId = movie.identifier
+        
         movieTitle.text = movie.title
         movieDescription.text = movie.overview
         movieImageView.kf.setImage(with: movie.posterPath)
     }
-
+    
 }

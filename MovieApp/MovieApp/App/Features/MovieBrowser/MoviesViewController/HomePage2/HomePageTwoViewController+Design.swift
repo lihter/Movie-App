@@ -13,17 +13,18 @@ extension HomePageTwoViewController: DesignProtocol {
         searchBar = MovieSearchBar()
         view.addSubview(searchBar)
         
-        tableView = UITableView(frame: .zero, style: .grouped)
-        view.addSubview(tableView)
+        categoriesViewController = CategoriesViewController(presenter: categoriesPresenter)
+        addChild(categoriesViewController)
+        view.addSubview(categoriesViewController.view)
+        
+        searchViewController = SearchViewController(presenter: searchPresenter)
+        searchViewController.view.isHidden = true
+        addChild(searchViewController)
+        view.addSubview(searchViewController.view)
     }
     
     func styleViews() {
         view.backgroundColor = .white
-        
-        tableView.rowHeight = CategoryCell.height + tableRowOffset
-        tableView.separatorColor = .clear
-        tableView.backgroundColor = .clear
-        tableView.showsVerticalScrollIndicator = false
     }
     
     func defineLayoutForViews() {
@@ -32,7 +33,12 @@ extension HomePageTwoViewController: DesignProtocol {
             $0.top.equalTo(view.safeAreaLayoutGuide).offset(5 * offset)
         }
         
-        tableView.snp.makeConstraints {
+        categoriesViewController.view.snp.makeConstraints {
+            $0.top.equalTo(searchBar.snp.bottom).offset(2 * offset)
+            $0.leading.trailing.bottom.equalToSuperview()
+        }
+        
+        searchViewController.view.snp.makeConstraints {
             $0.top.equalTo(searchBar.snp.bottom).offset(2 * offset)
             $0.leading.trailing.bottom.equalToSuperview()
         }

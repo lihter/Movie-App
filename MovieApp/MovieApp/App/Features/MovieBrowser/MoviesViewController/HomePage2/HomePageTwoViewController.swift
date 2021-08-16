@@ -3,25 +3,24 @@ import UIKit
 class HomePageTwoViewController: UIViewController {
     
     let offset: CGFloat = 4
-    let tableRowOffset: CGFloat = 40
-    
-    var categories: [LocalCategory]!
-    var storedCVOffsets: [Int: CGFloat]!
-    var storedSelectedGenres: [Int: Int]!
-    
+
     var searchBar: MovieSearchBar!
-    var tableView: UITableView!
+    var categoriesPresenter: CategoriesPresenter!
+    var categoriesViewController: CategoriesViewController!
+    var searchPresenter: SearchPresenter!
+    var searchViewController: SearchViewController!
     var presenter: HomePageTwoPresenter!
     
-    init(presenter: HomePageTwoPresenter) {
+    init(
+        presenter: HomePageTwoPresenter,
+        categoriesPresenter: CategoriesPresenter,
+        searchPresenter: SearchPresenter
+    ) {
         super.init(nibName: nil, bundle: nil)
         
         self.presenter = presenter
-        self.presenter.setDelegate(delegate: self)
-        
-        categories = []
-        storedCVOffsets = [:]
-        storedSelectedGenres  = [:]
+        self.categoriesPresenter = categoriesPresenter
+        self.searchPresenter = searchPresenter
     }
     
     required init?(coder: NSCoder) {
@@ -32,104 +31,8 @@ class HomePageTwoViewController: UIViewController {
         super.viewDidLoad()
         
         buildViews()
-        setupTableView()
-        
-        presenter.getAllCategories()
+
         searchBar.setDelegate(delegate: self)
-    }
-    
-    override func viewWillAppear(_ animated: Bool) {
-        reloadData()
-    }
-    
-    private func setupTableView() {
-        tableView.register(CategoryCell.self, forCellReuseIdentifier: CategoryCell.reuseIdentifier)
-        tableView.dataSource = self
-        tableView.delegate = self
-    }
-    
-}
-
-extension HomePageTwoViewController: UITableViewDelegate {
-
-    func numberOfSections(in collectionView: UICollectionView) -> Int {
-        1
-    }
-
-}
-
-extension HomePageTwoViewController: UITableViewDataSource {
-    
-    func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        categories.count
-    }
-    
-    func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        guard
-            let cell = tableView.dequeueReusableCell(
-                withIdentifier: CategoryCell.reuseIdentifier,
-                for: indexPath) as? CategoryCell
-        else {
-            return UITableViewCell()
-        }
-
-        cell.getGenreMovies = { [weak self] category, genreId in
-            guard let self = self else { return [] }
-            
-            return self.presenter.getMovies(for: category, genreId: genreId)
-        }
-        cell.getGenres = { [weak self] category in
-            guard let self = self else { return [] }
-            
-            return self.presenter.getGenres(for: category)
-        }
-        cell.showDetailScreen = { [weak self] movieId in
-            guard let self = self else { return }
-            
-            self.presenter.showDetailScreen(for: movieId)
-        }
-        cell.favoritePressed = { [weak self] movieId in
-            guard let self = self else { return }
-            
-            self.presenter.toggleFavorite(movieId)
-        }
-        
-        cell.populate(with: categories[indexPath.row])
-        cell.selectionStyle = .none
-        return cell
-    }
-    
-    func tableView(_ tableView: UITableView, willDisplay cell: UITableViewCell, forRowAt indexPath: IndexPath) {
-        guard let cell = cell as? CategoryCell else { return }
-        
-        cell.genresView.selectedGenre = storedSelectedGenres[indexPath.row] ?? cell.genresView.selectedGenre
-        cell.collectionViewOffset = storedCVOffsets[indexPath.row] ?? 0
-    }
-    
-    func tableView(_ tableView: UITableView, didEndDisplaying cell: UITableViewCell, forRowAt indexPath: IndexPath) {
-        guard let cell = cell as? CategoryCell else { return }
-        
-        storedSelectedGenres[indexPath.row] = cell.genresView.selectedGenre
-        storedCVOffsets[indexPath.row] = cell.collectionViewOffset
-    }
-    
-}
-
-extension HomePageTwoViewController: HomePageTwoDelegate {
-    
-    func addToTableView(category: LocalCategory?) {
-        guard let category = category else { return }
-        
-        categories.append(category)
-        tableView.reloadData()
-    }
-    
-    func reloadData() {
-        tableView.reloadData()
-    }
-    
-    func showSearchedMovies(_ movies: [MovieViewModel]) {
-        print("Show \(movies)")
     }
     
 }
@@ -138,8 +41,18 @@ extension HomePageTwoViewController: MovieSearchBarDelegate {
     
     func textDidChange(to text: String) {
         if text.lengthOfBytes(using: .utf8) > 2 {
-            presenter.getSearchedMovies(searchQuery: text)
+            searchPresenter.getSearchedMovies(searchQuery: text)
         }
+    }
+    
+    func editingEnded() {
+        categoriesViewController.view.isHidden = false
+        searchViewController.view.isHidden = true
+    }
+    
+    func editingStarted() {
+        categoriesViewController.view.isHidden = true
+        searchViewController.view.isHidden = false
     }
     
 }

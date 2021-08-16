@@ -45,7 +45,12 @@ extension AppRouter {
         let tabBarController = UITabBarController()
         
         let homePagePresenter = HomePageTwoPresenter(useCase: moviesUseCase, router: self)
-        let homePageVC = HomePageTwoViewController(presenter: homePagePresenter)
+        let categoriesPresenter = CategoriesPresenter(useCase: moviesUseCase, router: self)
+        let searchPresenter = SearchPresenter(useCase: moviesUseCase, router: self)
+        let homePageVC = HomePageTwoViewController(
+            presenter: homePagePresenter,
+            categoriesPresenter: categoriesPresenter,
+            searchPresenter: searchPresenter)
         let favoritesPresenter = FavoritesPresenter(router: self, useCase: moviesUseCase)
         let favoritesVC = FavoritesViewController(presenter: favoritesPresenter)
         

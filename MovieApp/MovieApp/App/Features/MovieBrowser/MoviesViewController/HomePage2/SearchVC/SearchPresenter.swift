@@ -1,28 +1,26 @@
-import Foundation
-
-final class HomePagePresenter {
+final class SearchPresenter {
     
-    private weak var delegate: HomePageDelegate?
+    private weak var delegate: SearchDelegate?
     private let useCase: MoviesUseCaseProtocol!
     private let router: AppRouter!
-    
+        
     init (useCase: MoviesUseCaseProtocol, router: AppRouter) {
         self.useCase = useCase
         self.router = router
     }
     
-    func setDelegate(delegate: HomePageDelegate) {
+    func setDelegate(delegate: SearchDelegate) {
         self.delegate = delegate
     }
     
-    func getPopularMovies() {
-        useCase.getPopularMovies { [weak self] result in
+    func getSearchedMovies(searchQuery: String) {
+        useCase.getSearchedMovies(searchQuery: searchQuery) { [weak self] result in
             guard let self = self else { return }
             
             switch result {
             case .success(let movies):
-                let moviesViewModel: [MovieViewModel]? = movies.map { MovieViewModel(fromModel: $0) }
-                self.delegate?.reloadCollectionView(with: moviesViewModel)
+                let mappedMovies = movies.map { MovieViewModel(fromModel: $0) }
+                self.delegate?.showSearchedMovies(mappedMovies)
             case .failure(let error):
                 print("Loading error: \(error.localizedDescription)")
             }

@@ -125,11 +125,11 @@ extension MovieSearchBar: DesignProtocol {
 extension MovieSearchBar: UITextFieldDelegate {
     
     func textFieldDidBeginEditing(_ textField: UITextField) {
-        changeCancelButtonVisibility()
-    }
-    
-    func textFieldDidEndEditing(_ textField: UITextField) {
-        changeCancelButtonVisibility()
+        if cancelButton.isHidden {
+            changeCancelButtonVisibility()
+        }
+        
+        delegate?.editingStarted()
     }
     
     func textFieldDidChangeSelection(_ textField: UITextField) {
@@ -139,12 +139,15 @@ extension MovieSearchBar: UITextFieldDelegate {
     }
         
     @objc func cancelPressed(sender: UIButton!) {
-        endEditing(true)
         searchTextField.text = ""
+        changeCancelButtonVisibility()
+        delegate?.editingEnded()
+        endEditing(true)
     }
     
     @objc func deleteTextFieldEntry(sender: UIButton!) {
         searchTextField.text = ""
+        endEditing(true)
     }
         
 }
