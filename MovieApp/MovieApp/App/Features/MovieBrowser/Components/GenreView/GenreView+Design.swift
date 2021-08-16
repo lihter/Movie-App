@@ -45,7 +45,7 @@ extension GenreView {
         genresStack.removeAllArrangedSubviews()
         
         for genre in genres {
-            let button = UIButton()
+            let button = GenreButton(title: genre.genreName)
             button.tag = genre.rawValue
             button.addTarget(self, action: #selector(genreButtonPressed), for: .touchUpInside)
             genresStack.addArrangedSubview(button)
@@ -54,53 +54,37 @@ extension GenreView {
     
     func styleButtons() {
         for button in genresStack.arrangedSubviews {
-            guard let button = button as? UIButton else { continue }
-            
+            guard let button = button as? GenreButton else { continue }
+
             if button.tag == selectedGenre {
-                styleSelectedGenre(button)
+                button.styleSelectedGenre()
             } else {
-                styleUnselectedGenre(button)
+                button.styleUnselectedGenre()
             }
         }
     }
     
-    func styleSelectedGenre(_ button: UIButton) {
-        button.setAttributedTitle(
-            NSAttributedString(
-                string: Genre(rawValue: button.tag)?.genreName ?? "_",
-                attributes: [
-                    .font: UIFont.regularBold,
-                    .underlineStyle: NSUnderlineStyle.thick.rawValue,
-                    .underlineColor: UIColor.black,
-                    .foregroundColor: UIColor.black
-                ]),
-            for: .normal)
-    }
-    
-    func styleUnselectedGenre(_ button: UIButton) {
-        let font = UIFont.regularSemiBold
-        button.setAttributedTitle(
-            NSAttributedString(
-                string: Genre(rawValue: button.tag)?.genreName ?? "_",
-                attributes: [
-                    .font: font,
-                    .foregroundColor: UIColor.secondaryGray]),
-            for: .normal)
-    }
-    
     @objc func genreButtonPressed(sender: UIButton) {
+        let view = genresStack
+            .arrangedSubviews
+            .first(where: { view in
+                guard let genresButton = view as? GenreButton else { return false }
+                return genresButton.button == sender
+            })
+        
         guard
             let selected = selectedGenre,
-            let button = genresStack
+            let oldButton = genresStack
                 .arrangedSubviews
-                .first(where: { ($0 as? UIButton)?.tag == selected }) as? UIButton
+                .first(where: { ($0 as? GenreButton)?.tag == selected }) as? GenreButton,
+            let newButton = view as? GenreButton
         else {
             return
         }
         
-        styleUnselectedGenre(button)
-        styleSelectedGenre(sender)
-        selectedGenre = sender.tag
+        oldButton.styleUnselectedGenre()
+        newButton.styleSelectedGenre()
+        selectedGenre = newButton.tag
         delegate?.changeGenre(to: Genre(rawValue: selectedGenre!), resetOffset: true)
     }
     
