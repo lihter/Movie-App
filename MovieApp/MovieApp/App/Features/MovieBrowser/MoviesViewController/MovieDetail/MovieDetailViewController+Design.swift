@@ -24,7 +24,7 @@ extension MovieDetailViewController: DesignProtocol {
         titleView.checkIfFavorite = { [weak self] in
             guard let self = self else { return false }
             
-            return self.presenter.checkIfFavorite()
+            return self.presenter.isFavorite
         }
         contentView.addSubview(titleView)
         
