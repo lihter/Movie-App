@@ -4,4 +4,6 @@ protocol UserDefaultsDataSourceProtocol {
     
     func toggleFavorite(_ movieId: Int)
     
+    func isFavorite(movieId: Int) -> Bool 
+    
 }
