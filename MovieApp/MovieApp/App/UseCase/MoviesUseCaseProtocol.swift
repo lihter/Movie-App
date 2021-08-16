@@ -24,6 +24,8 @@ protocol MoviesUseCaseProtocol {
     
     func getMovie(with movieId: Int) -> MovieModel?
     
-    func getFavoriteMovies() -> [MovieModel]
+    func getFavoriteMovies(completion: @escaping(Result<[MovieModel], RequestError>) -> Void)
+
+    func checkIfFavorite(for movieId: Int) -> Bool
 
 }

@@ -89,7 +89,7 @@ final class MovieDetailPresenter {
             case .success(let review):
                 self.delegate?.fillReview(with: ReviewViewModel(fromModel: review))
             case .failure(let error):
-                print("Loading error: \(error.localizedDescription)")
+                print("Loading error: \(error.localizedDescription). No review.")
             }
         }
     }
@@ -101,9 +101,7 @@ final class MovieDetailPresenter {
     }
     
     func checkIfFavorite() -> Bool {
-        guard let movie = useCase.getMovie(with: movieId) else { return false }
-        
-        return movie.isFavorite
+        useCase.checkIfFavorite(for: movieId)
     }
     
 }

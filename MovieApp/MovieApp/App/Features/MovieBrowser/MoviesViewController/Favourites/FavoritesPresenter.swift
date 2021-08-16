@@ -16,9 +16,17 @@ final class FavoritesPresenter {
     }
     
     func getFavouriteMovies() {
-        let favoriteMovies = useCase.getFavoriteMovies()
-        let mappedMovies = favoriteMovies.map { MovieViewModel(fromModel: $0) }
-        delegate?.showMovies(mappedMovies)
+        useCase.getFavoriteMovies { [weak self] result in
+            guard let self = self else { return }
+            
+            switch result {
+            case .success(let movies):
+                let mappedMovies = movies.map { MovieViewModel(fromModel: $0) }
+                self.delegate?.showMovies(mappedMovies)
+            case .failure(let error):
+                print("Loading error: \(error.localizedDescription)")
+            }
+        }
     }
     
     func showDetailScreen(for movieId: Int) {

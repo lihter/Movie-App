@@ -1,14 +1,14 @@
 import Foundation
 
 class MovieRepository: MovieRepositoryProtocol {
-
+    
     static let shared: MovieRepositoryProtocol = MovieRepository()
     
     private let networkDataSource: MovieNetworkDataSourceProtocol!
     private let userDefaultsDataSource: UserDefaultsDataSourceProtocol!
     
     var categoryMovies: [LocalCategory: [MovieRepoModel]]!
-        
+    
     init() {
         self.networkDataSource = MovieNetworkDataSource.shared
         self.userDefaultsDataSource = UserDefaultsDataSource.shared
@@ -149,12 +149,40 @@ class MovieRepository: MovieRepositoryProtocol {
             .first(where: { $0.identifier == movieId })
     }
     
-    func getFavoriteMovies() -> [MovieRepoModel] {
-        userDefaultsDataSource
-                .favorites
-                .compactMap { getMovie(with: $0) }
+    func getFavoriteMovies(completion: @escaping(Result<[MovieRepoModel], RequestError>) -> Void) {
+        var movies: [MovieRepoModel] = []
+        var counter: Int = 0
+        
+        let completionHandler: (Result<MovieDataModel, RequestError>) -> Void = { [weak self] result in
+            guard let self = self else { return }
+            
+            switch result {
+            case .success(let movie):
+                let mappedMovie = MovieRepoModel(
+                    fromModel: movie,
+                    isFavorite: self.userDefaultsDataSource.favorites.contains(movie.identifier))
+                counter += 1
+                movies.append(mappedMovie)
+            case .failure(let error):
+                print("Error fetching favorites. \(error.localizedDescription)")
+            }
+                        
+            if counter == self.userDefaultsDataSource.favorites.count {
+                completion(.success(movies))
+            }
+        }
+        
+        userDefaultsDataSource.favorites.forEach { movieId in
+            networkDataSource.fetchMovieDetails(for: movieId, completion: completionHandler)
+        }
     }
-
+    
+    func checkIfFavorite(for movieId: Int) -> Bool {
+        userDefaultsDataSource
+            .favorites
+            .contains(movieId)
+    }
+    
 }
 
 extension MovieRepository {

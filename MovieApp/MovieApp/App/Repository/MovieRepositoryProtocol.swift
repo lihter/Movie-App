@@ -22,6 +22,8 @@ protocol MovieRepositoryProtocol {
     
     func getMovie(with movieId: Int) -> MovieRepoModel?
     
-    func getFavoriteMovies() -> [MovieRepoModel]
+    func getFavoriteMovies(completion: @escaping(Result<[MovieRepoModel], RequestError>) -> Void)
+    
+    func checkIfFavorite(for movieId: Int) -> Bool
     
 }
