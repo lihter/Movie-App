@@ -80,6 +80,12 @@ class MoviesUseCase: MoviesUseCaseProtocol {
         }
     }
     
+    func getSearchedMovies(searchQuery: String, completion: @escaping(Result<[MovieModel], RequestError>) -> Void) {
+        moviesDataRepo.fetchMovies(searchQuery: searchQuery) { [weak self] result in
+            self?.mapResult(result: result, completion: completion)
+        }
+    }
+    
     func toggleFavorite(_ movieId: Int) {
         moviesDataRepo.toggleFavorite(movieId)
     }

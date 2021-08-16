@@ -14,6 +14,8 @@ protocol MovieRepositoryProtocol {
     
     func fetchReviews(for movieId: Int, completion: @escaping(Result<[ReviewRepoModel], RequestError>) -> Void)
     
+    func fetchMovies(searchQuery: String, completion: @escaping(Result<[MovieRepoModel], RequestError>) -> Void)
+    
     func toggleFavorite(_ movieId: Int)
     
     func getMovies(for category: LocalCategory, genreId: Int) -> [MovieRepoModel]

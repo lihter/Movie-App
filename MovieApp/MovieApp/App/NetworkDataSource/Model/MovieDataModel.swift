@@ -21,7 +21,7 @@ extension MovieDataModel {
             identifier: model.identifier,
             title: model.title,
             backdropPath: model.backdropPath,
-            posterPath: model.posterPath,
+            posterPath: model.posterPath ?? "",
             overview: model.overview,
             voteAverage: model.voteAverage,
             voteCount: model.voteCount,

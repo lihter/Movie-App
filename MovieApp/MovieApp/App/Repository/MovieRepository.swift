@@ -116,6 +116,18 @@ class MovieRepository: MovieRepositoryProtocol {
         }
     }
     
+    func fetchMovies(searchQuery: String, completion: @escaping(Result<[MovieRepoModel], RequestError>) -> Void) {
+        networkDataSource.fetchMovies(searchQuery: searchQuery) { result in
+            switch result {
+            case .success(let movies):
+                let mappedMovies = movies.map { MovieRepoModel(fromModel: $0) }
+                completion(.success(mappedMovies))
+            case .failure(let error):
+                completion(.failure(error))
+            }
+        }
+    }
+    
     func toggleFavorite(_ movieId: Int) {
         userDefaultsDataSource.toggleFavorite(movieId)
         
