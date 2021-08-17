@@ -1,6 +1,6 @@
 import UIKit
 
-extension CrewView: DesignProtocol {
+extension CrewCell: DesignProtocol {
     
     func buildViews() {
         createViews()
