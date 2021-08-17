@@ -13,7 +13,7 @@ struct MovieModel {
     let genreIds: [Int]?
     let budget: Int?
     let runtime: Int?
-    var isFavorite: Bool
+    let isFavorite: Bool
     
 }
 
