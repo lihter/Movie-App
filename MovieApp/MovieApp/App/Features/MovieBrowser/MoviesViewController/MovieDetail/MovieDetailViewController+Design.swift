@@ -34,6 +34,9 @@ extension MovieDetailViewController: DesignProtocol {
         overview = UILabel()
         contentView.addSubview(overview)
         
+        crewStackView = CrewStackView()
+        contentView.addSubview(crewStackView)
+        
         castView = CastView()
         contentView.addSubview(castView)
         
@@ -93,8 +96,14 @@ extension MovieDetailViewController: DesignProtocol {
             $0.trailing.equalToSuperview().inset(4 * offset)
         }
         
-        castView.snp.makeConstraints {
+        crewStackView.snp.makeConstraints {
             $0.top.equalTo(overview.snp.bottom).offset(8 * offset)
+            $0.leading.equalToSuperview().offset(4 * offset)
+            $0.trailing.equalToSuperview().inset(4 * offset)
+        }
+        
+        castView.snp.makeConstraints {
+            $0.top.equalTo(crewStackView.snp.bottom).offset(8 * offset)
             $0.leading.trailing.equalToSuperview()
         }
         

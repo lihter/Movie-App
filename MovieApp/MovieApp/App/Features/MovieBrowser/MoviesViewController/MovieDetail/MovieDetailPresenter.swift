@@ -23,6 +23,7 @@ final class MovieDetailPresenter {
         getMovieDetails()
         getOverview()
         getMostPopularCast()
+        getCrew()
         getRecommendations()
         getReview()
     }
@@ -61,6 +62,20 @@ final class MovieDetailPresenter {
             case .success(let cast):
                 let mappedCast = cast.map { CastViewModel(fromModel: $0) }
                 self.delegate?.fillCastCV(with: mappedCast)
+            case .failure(let error):
+                print("Loading error: \(error.localizedDescription)")
+            }
+        }
+    }
+    
+    func getCrew() {
+        useCase.getCrew(for: movieId) { [weak self] result in
+            guard let self = self else { return }
+            
+            switch result {
+            case .success(let crew):
+                let mappedCrew = crew.map { CrewViewModel(fromModel: $0) }
+                self.delegate?.fillCrew(with: mappedCrew)
             case .failure(let error):
                 print("Loading error: \(error.localizedDescription)")
             }

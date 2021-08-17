@@ -47,6 +47,12 @@ class MovieClient: MovieClientProtocol {
         }
     }
     
+    func fetchCrew(for movieId: Int, completion: @escaping(Result<[CrewResponse], RequestError>) -> Void) {
+        fetch(forUrl: "movie/\(movieId)/credits") { (result: Result<CrewWrapperResponse, RequestError>) in
+            completion(result.map { $0.crew ?? [] })
+        }
+    }
+    
     func fetchRecommendations(for movieId: Int, completion: @escaping(Result<[MovieResponse], RequestError>) -> Void) {
         fetch(forUrl: "movie/\(movieId)/recommendations") { (result: Result<MoviesWrapperResponse, RequestError>) in
             completion(result.map { $0.movies ?? [] })
