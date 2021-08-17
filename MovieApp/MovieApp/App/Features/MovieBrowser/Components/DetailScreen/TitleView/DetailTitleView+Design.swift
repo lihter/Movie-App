@@ -31,6 +31,7 @@ extension DetailTitleView: DesignProtocol {
         addSubview(durationLabel)
         
         favouritesButton = FavouriteButton()
+        favouritesButton.addTarget(self, action: #selector(favoriteButtonPressed), for: .touchUpInside)
         addSubview(favouritesButton)
         
         progressBar = ProgressBarView()

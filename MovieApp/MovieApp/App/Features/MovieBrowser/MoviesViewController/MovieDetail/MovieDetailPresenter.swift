@@ -9,6 +9,12 @@ final class MovieDetailPresenter {
     
     let movieId: Int!
     
+    var isFavorite: Bool {
+        guard let movie = useCase.getMovie(with: movieId) else { return false }
+        
+        return movie.isFavorite
+    }
+    
     init (useCase: MoviesUseCaseProtocol, router: AppRouter, for movieId: Int) {
         self.useCase = useCase
         self.router = router
@@ -92,6 +98,12 @@ final class MovieDetailPresenter {
                 print("Loading error: \(error.localizedDescription)")
             }
         }
+    }
+    
+    func favoritePressed() {
+        useCase.toggleFavorite(movieId)
+        
+        delegate?.reloadData()
     }
     
 }

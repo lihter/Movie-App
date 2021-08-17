@@ -131,6 +131,19 @@ class MovieRepository: MovieRepositoryProtocol {
         } ?? []
         return movies
     }
+    
+    func getMovie(with movieId: Int) -> MovieRepoModel? {
+        categoryMovies
+            .values
+            .flatMap { $0 }
+            .first(where: { $0.identifier == movieId })
+    }
+    
+    func getFavoriteMovies() -> [MovieRepoModel] {
+        userDefaultsDataSource
+                .favorites
+                .compactMap { getMovie(with: $0) }
+    }
 
 }
 
@@ -153,10 +166,15 @@ extension MovieRepository {
         }
     }
     
-    private func mapMovieDetailResult(result: Result<MovieDataModel, RequestError>, completion: @escaping(Result<MovieRepoModel, RequestError>) -> Void) {
+    private func mapMovieDetailResult(
+        result: Result<MovieDataModel, RequestError>,
+        completion: @escaping(Result<MovieRepoModel, RequestError>) -> Void
+    ) {
         switch result {
         case .success(let movie):
-            let mappedMovie = MovieRepoModel(fromModel: movie)
+            let mappedMovie = MovieRepoModel(
+                fromModel: movie,
+                isFavorite: userDefaultsDataSource.favorites.contains(movie.identifier))
             completion(.success(mappedMovie))
         case .failure(let error):
             completion(.failure(error))
