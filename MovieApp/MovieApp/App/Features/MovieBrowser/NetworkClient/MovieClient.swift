@@ -36,26 +36,37 @@ class MovieClient: MovieClientProtocol {
     }
     
     func fetchMovieDetails(for movieId: Int, completion: @escaping(Result<MovieDetailResponse, RequestError>) -> Void) {
-        fetch(forUrl: "/movie/\(movieId)") { (result: Result<MovieDetailResponse, RequestError>) in
+        fetch(forUrl: "movie/\(movieId)") { (result: Result<MovieDetailResponse, RequestError>) in
             completion(result)
         }
     }
     
     func fetchCast(for movieId: Int, completion: @escaping(Result<[CastResponse], RequestError>) -> Void) {
-        fetch(forUrl: "/movie/\(movieId)/credits") { (result: Result<CastWrapperResponse, RequestError>) in
+        fetch(forUrl: "movie/\(movieId)/credits") { (result: Result<CastWrapperResponse, RequestError>) in
             completion(result.map { $0.cast ?? [] })
         }
     }
     
     func fetchRecommendations(for movieId: Int, completion: @escaping(Result<[MovieResponse], RequestError>) -> Void) {
-        fetch(forUrl: "/movie/\(movieId)/recommendations") { (result: Result<MoviesWrapperResponse, RequestError>) in
+        fetch(forUrl: "movie/\(movieId)/recommendations") { (result: Result<MoviesWrapperResponse, RequestError>) in
             completion(result.map { $0.movies ?? [] })
         }
     }
     
     func fetchReviews(for movieId: Int, completion: @escaping(Result<[ReviewResponse], RequestError>) -> Void) {
-        fetch(forUrl: "/movie/\(movieId)/reviews") { (result: Result<ReviewWrapperResponse, RequestError>) in
+        fetch(forUrl: "movie/\(movieId)/reviews") { (result: Result<ReviewWrapperResponse, RequestError>) in
             completion(result.map { $0.reviews ?? [] })
+        }
+    }
+    
+    func fetchMovies(searchQuery: String, completion: @escaping(Result<[MovieResponse], RequestError>) -> Void) {
+        let parameters: Parameters = [
+            "query": searchQuery,
+            "include_adult": "false",
+        ]
+        
+        fetch(forUrl: "search/movie", additionalParameters: parameters) { (result: Result<MoviesWrapperResponse, RequestError>) in
+            completion(result.map { $0.movies ?? [] })
         }
     }
     
@@ -63,17 +74,25 @@ class MovieClient: MovieClientProtocol {
 
 extension MovieClient {
     
-    func fetch<T: Decodable>(forUrl urlPath: String, completion: @escaping (Result<T, RequestError>) -> Void) {
+    func fetch<T: Decodable>(
+        forUrl urlPath: String,
+        additionalParameters: Parameters? = nil,
+        completion: @escaping (Result<T, RequestError>) -> Void
+    ) {
         guard let apiKey = Bundle.main.infoDictionary?["API_KEY"] else {
             completion(.failure(.general))
             return
         }
         
-        let parameters: Parameters = [
+        var parameters: Parameters = [
             "api_key": apiKey,
             "language": "en-US",
             "page": 1
         ]
+        
+        if let additionalParameters = additionalParameters {
+            parameters = parameters.merging(additionalParameters, uniquingKeysWith: { (_, last) in last })
+        }
         
         NetworkClient.shared.executeUrlRequest(urlPath, method: .get, parameters: parameters) { (result: Result<T, RequestError>) in
             switch result {

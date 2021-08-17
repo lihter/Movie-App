@@ -4,4 +4,6 @@ protocol HomePageTwoDelegate: AnyObject {
     
     func reloadData()
     
+    func showSearchedMovies(_ movies: [MovieViewModel])
+    
 }

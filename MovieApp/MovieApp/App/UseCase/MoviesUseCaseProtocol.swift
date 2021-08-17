@@ -16,6 +16,8 @@ protocol MoviesUseCaseProtocol {
     
     func getReview(for movieId: Int, completion: @escaping(Result<ReviewModel, RequestError>) -> Void)
     
+    func getSearchedMovies(searchQuery: String, completion: @escaping(Result<[MovieModel], RequestError>) -> Void)
+    
     func toggleFavorite(_ movieId: Int)
     
     func getMovies(for category: LocalCategory, genreId: Int) -> [MovieModel]

@@ -17,5 +17,7 @@ protocol MovieClientProtocol {
     func fetchRecommendations(for movieId: Int, completion: @escaping(Result<[MovieResponse], RequestError>) -> Void)
     
     func fetchReviews(for movieId: Int, completion: @escaping(Result<[ReviewResponse], RequestError>) -> Void)
+    
+    func fetchMovies(searchQuery: String, completion: @escaping(Result<[MovieResponse], RequestError>) -> Void)
 
 }

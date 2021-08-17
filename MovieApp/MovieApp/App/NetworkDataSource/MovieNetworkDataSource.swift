@@ -79,6 +79,12 @@ class MovieNetworkDataSource: MovieNetworkDataSourceProtocol {
             }
         }
     }
+    
+    func fetchMovies(searchQuery: String, completion: @escaping(Result<[MovieDataModel], RequestError>) -> Void) {
+        movieClient.fetchMovies(searchQuery: searchQuery) { [weak self] result in
+            self?.mapResult(result: result, completion: completion)
+        }
+    }
 
 }
 

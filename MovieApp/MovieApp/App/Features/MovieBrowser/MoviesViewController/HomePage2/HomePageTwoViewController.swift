@@ -35,6 +35,7 @@ class HomePageTwoViewController: UIViewController {
         setupTableView()
         
         presenter.getAllCategories()
+        searchBar.setDelegate(delegate: self)
     }
     
     override func viewWillAppear(_ animated: Bool) {
@@ -127,4 +128,19 @@ extension HomePageTwoViewController: HomePageTwoDelegate {
         tableView.reloadData()
     }
     
+    func showSearchedMovies(_ movies: [MovieViewModel]) {
+        print("Show \(movies)")
+    }
+    
 }
+
+extension HomePageTwoViewController: MovieSearchBarDelegate {
+    
+    func textDidChange(to text: String) {
+        if text.lengthOfBytes(using: .utf8) > 2 {
+            presenter.getSearchedMovies(searchQuery: text)
+        }
+    }
+    
+}
+

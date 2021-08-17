@@ -131,13 +131,20 @@ extension MovieSearchBar: UITextFieldDelegate {
     func textFieldDidEndEditing(_ textField: UITextField) {
         changeCancelButtonVisibility()
     }
+    
+    func textFieldDidChangeSelection(_ textField: UITextField) {
+        guard let text = textField.text else { return }
+        
+        delegate?.textDidChange(to: text)
+    }
         
     @objc func cancelPressed(sender: UIButton!) {
         endEditing(true)
+        searchTextField.text = ""
     }
     
     @objc func deleteTextFieldEntry(sender: UIButton!) {
         searchTextField.text = ""
     }
-    
+        
 }
