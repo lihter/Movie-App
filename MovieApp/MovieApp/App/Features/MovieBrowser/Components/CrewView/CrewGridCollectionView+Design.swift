@@ -20,7 +20,6 @@ extension CrewGridCollectionView: DesignProtocol {
         backgroundColor = .clear
         
         layout.minimumInteritemSpacing = spacing
-        layout.scrollDirection = .vertical
         collectionView.backgroundColor = .clear
     }
     
