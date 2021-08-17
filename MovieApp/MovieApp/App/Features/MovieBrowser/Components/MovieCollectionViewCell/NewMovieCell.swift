@@ -12,9 +12,16 @@ class NewMovieCell: UICollectionViewCell {
     
     var movieImageView: UIImageView!
     var favouriteButton: FavouriteButton!
+    var isFavorite: Bool! {
+        didSet {
+            let icon: BundleImage = isFavorite ? .favouriteIconFilled : .favouriteIcon
+            favouriteButton.setImage(UIImage(with: icon), for: .normal)
+        }
+    }
     
     public var showDetailScreen: ((Int) -> ())!
-    
+    public var favoritePressed: ((Int) -> ())!
+
     override init(frame: CGRect) {
         super.init(frame: frame)
         
@@ -28,9 +35,12 @@ class NewMovieCell: UICollectionViewCell {
     func populate(withMovie movie: MovieViewModel) {
         movieId = movie.identifier
         movieImageView.kf.setImage(with: movie.posterPath)
+        isFavorite = movie.isFavorite
     }
     
-    @objc func addToFavourites() { }
+    @objc func favoriteButtonPressed() {
+        favoritePressed(movieId)
+    }
     
     @objc func imageTapped() {        
         showDetailScreen(movieId)

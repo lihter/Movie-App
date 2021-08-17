@@ -11,8 +11,6 @@ class FavoritesViewController: UIViewController {
     var collectionView: UICollectionView!
     var presenter: FavoritesPresenter!
     
-    public var showDetailScreen: ((Int) -> ())!
-    
     init(presenter: FavoritesPresenter) {
         super.init(nibName: nil, bundle: nil)
         
@@ -67,6 +65,11 @@ extension FavoritesViewController: UICollectionViewDataSource {
             guard let self = self else { return }
             
             self.presenter.showDetailScreen(for: movieId)
+        }
+        cell.favoritePressed = { [weak self] movieId in
+            guard let self = self else { return }
+            
+            self.presenter.toggleFavorite(movieId)
         }
         cell.populate(withMovie: movie)
         return cell

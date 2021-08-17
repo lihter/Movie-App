@@ -14,14 +14,8 @@ class MoviesUseCase: MoviesUseCaseProtocol {
         }
     }
     
-    func getTrendingMoviesToday(completion: @escaping (Result<[MovieModel], RequestError>) -> Void) {
-        moviesDataRepo.fetchTrendingToday { [weak self] result in
-            self?.mapResult(result: result, completion: completion)
-        }
-    }
-    
-    func getTrendingMoviesThisWeek(completion: @escaping (Result<[MovieModel], RequestError>) -> Void) {
-        moviesDataRepo.fetchTrendingThisWeek { [weak self] result in
+    func getTrendingMovies(completion: @escaping (Result<[MovieModel], RequestError>) -> Void) {
+        moviesDataRepo.fetchTrending { [weak self] result in
             self?.mapResult(result: result, completion: completion)
         }
     }
@@ -31,13 +25,6 @@ class MoviesUseCase: MoviesUseCaseProtocol {
             self?.mapResult(result: result, completion: completion)
         }
     }
-    
-    func getTopRatedTV(completion: @escaping (Result<[MovieModel], RequestError>) -> Void) {
-        moviesDataRepo.fetchTopRatedTV { [weak self] result in
-            self?.mapResult(result: result, completion: completion)
-        }
-    }
-    
     func getMovieDetails(for movieId: Int, completion: @escaping(Result<MovieModel, RequestError>) -> Void) {
         moviesDataRepo.fetchMovieDetails(for: movieId) { [weak self] result in
             self?.mapMovieDetailResult(result: result, completion: completion)
@@ -92,6 +79,15 @@ class MoviesUseCase: MoviesUseCaseProtocol {
         }
     }
     
+    func toggleFavorite(_ movieId: Int) {
+        moviesDataRepo.toggleFavorite(movieId)
+    }
+    
+    func getMovies(for category: LocalCategory, genreId: Int) -> [MovieModel] {
+        let repoMovies = moviesDataRepo.getMovies(for: category, genreId: genreId)
+        return repoMovies.map { MovieModel(fromModel: $0) }
+    }
+
 }
 
 extension MoviesUseCase {

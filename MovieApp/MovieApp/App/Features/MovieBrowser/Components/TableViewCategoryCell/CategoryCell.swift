@@ -23,6 +23,7 @@ class CategoryCell: UITableViewCell {
     public var getGenres: ((LocalCategory) -> [Genre])!
     public var getGenreMovies: ((LocalCategory, Int) -> [MovieViewModel])!
     public var showDetailScreen: ((Int) -> ())!
+    public var favoritePressed: ((Int) -> ())!
         
     override init(style: UITableViewCell.CellStyle, reuseIdentifier: String?) {
         super.init(style: style, reuseIdentifier: reuseIdentifier)
@@ -77,6 +78,11 @@ extension CategoryCell: UICollectionViewDataSource {
             guard let self = self else { return }
             
             self.showDetailScreen(movieId)
+        }
+        cell.favoritePressed = { [weak self] movieId in
+            guard let self = self else { return }
+            
+            self.favoritePressed(movieId)
         }
         cell.populate(withMovie: movie)
         return cell

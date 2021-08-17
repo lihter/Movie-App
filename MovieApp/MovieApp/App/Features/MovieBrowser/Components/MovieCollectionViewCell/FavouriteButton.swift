@@ -28,7 +28,7 @@ extension FavouriteButton: DesignProtocol {
     func createViews() {}
     
     func styleViews() {
-        setImage(UIImage(with: .favouriteIcon), for: .normal)
+        imageView?.contentMode = .scaleAspectFit
         setBackgroundImage(UIImage(with: .favButtonBackground), for: .normal)
     }
     
