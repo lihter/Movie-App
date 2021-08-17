@@ -9,6 +9,10 @@ final class MovieDetailPresenter {
     
     let movieId: Int!
     
+    var isFavorite: Bool {
+        useCase.checkIfFavorite(for: movieId)
+    }
+    
     init (useCase: MoviesUseCaseProtocol, router: AppRouter, for movieId: Int) {
         self.useCase = useCase
         self.router = router
@@ -98,10 +102,6 @@ final class MovieDetailPresenter {
         useCase.toggleFavorite(movieId)
         
         delegate?.reloadData()
-    }
-    
-    func checkIfFavorite() -> Bool {
-        useCase.checkIfFavorite(for: movieId)
     }
     
 }
