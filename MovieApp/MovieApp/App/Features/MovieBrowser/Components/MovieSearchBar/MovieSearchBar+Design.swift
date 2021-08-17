@@ -60,8 +60,7 @@ extension MovieSearchBar: DesignProtocol {
         }
         
         searchGrayFieldView.snp.makeConstraints {
-            $0.leading.equalToSuperview().offset(4 * offset)
-            $0.trailing.equalToSuperview().inset(4 * offset)
+            $0.leading.trailing.equalToSuperview().inset(4 * offset)
             $0.top.bottom.equalToSuperview()
         }
         
@@ -143,6 +142,7 @@ extension MovieSearchBar: UITextFieldDelegate {
         changeCancelButtonVisibility()
         delegate?.editingEnded()
         endEditing(true)
+        searchTextField.text = ""
     }
     
     @objc func deleteTextFieldEntry(sender: UIButton!) {

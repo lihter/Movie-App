@@ -78,8 +78,7 @@ extension ReviewView: DesignProtocol {
         
         reviewLabel.snp.makeConstraints {
             $0.top.equalTo(writtenByLabel.snp.bottom).offset(6 * offset)
-            $0.leading.equalToSuperview().offset(4 * offset)
-            $0.trailing.equalToSuperview().inset(4 * offset)
+            $0.leading.trailing.equalToSuperview().inset(4 * offset)
             $0.bottom.equalToSuperview()
             $0.height.lessThanOrEqualTo(290)
         }

@@ -1,7 +1,7 @@
 import UIKit
 import SnapKit
 
-extension HomePageTwoViewController: DesignProtocol {
+extension HomePageViewController: DesignProtocol {
     
     func buildViews() {
         createViews()

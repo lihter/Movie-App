@@ -7,7 +7,7 @@ struct MovieViewModel {
     let overview: String
     let posterPath: URL?
     let genreIds: [Int]?
-    var isFavorite: Bool
+    let isFavorite: Bool
 
 }
 

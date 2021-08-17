@@ -4,9 +4,7 @@ import Kingfisher
 class MovieCell: UITableViewCell {
     
     static let reuseIdentifier = String(describing: MovieCell.self)
-    
-    var movieId: Int!
-    
+        
     let offset: CGFloat = 8
     let movieImageWidth: CGFloat = 97
     
@@ -24,9 +22,7 @@ class MovieCell: UITableViewCell {
         fatalError("init(coder:) has not been implemented")
     }
     
-    func populate(with movie: MovieViewModel) {
-        movieId = movie.identifier
-        
+    func populate(with movie: MovieViewModel) {        
         movieTitle.text = movie.title
         movieDescription.text = movie.overview
         movieImageView.kf.setImage(with: movie.posterPath)

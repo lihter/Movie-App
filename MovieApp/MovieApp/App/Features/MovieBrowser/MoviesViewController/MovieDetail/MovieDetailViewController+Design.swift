@@ -24,7 +24,7 @@ extension MovieDetailViewController: DesignProtocol {
         titleView.checkIfFavorite = { [weak self] in
             guard let self = self else { return false }
             
-            return self.presenter.checkIfFavorite()
+            return self.presenter.isFavorite
         }
         contentView.addSubview(titleView)
         
@@ -89,8 +89,7 @@ extension MovieDetailViewController: DesignProtocol {
         
         overview.snp.makeConstraints {
             $0.top.equalTo(overviewTitle.snp.bottom).offset(3 * offset)
-            $0.leading.equalToSuperview().offset(4 * offset)
-            $0.trailing.equalToSuperview().inset(4 * offset)
+            $0.leading.trailing.equalToSuperview().inset(4 * offset)
         }
         
         castView.snp.makeConstraints {
