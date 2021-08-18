@@ -14,11 +14,8 @@ class NewMovieCell: UICollectionViewCell {
     var favouriteButton: FavouriteButton!
     var isFavorite: Bool! {
         didSet {
-            if isFavorite {
-                favouriteButton.setImage(UIImage(with: .favouriteIconFilled), for: .normal)
-            } else {
-                favouriteButton.setImage(UIImage(with: .favouriteIcon), for: .normal)
-            }
+            let icon: BundleImage = isFavorite ? .favouriteIconFilled : .favouriteIcon
+            favouriteButton.setImage(UIImage(with: icon), for: .normal)
         }
     }
     

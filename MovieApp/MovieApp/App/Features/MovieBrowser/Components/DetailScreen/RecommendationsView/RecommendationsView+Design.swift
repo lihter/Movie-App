@@ -37,8 +37,7 @@ extension RecommendationsView: DesignProtocol {
     func defineLayoutForViews() {
         recommendationsLabel.snp.makeConstraints {
             $0.top.equalToSuperview()
-            $0.leading.equalToSuperview().offset(4 * offset)
-            $0.trailing.equalToSuperview().inset(4 * offset)
+            $0.leading.trailing.equalToSuperview().inset(4 * offset)
         }
         
         collectionView.snp.makeConstraints {

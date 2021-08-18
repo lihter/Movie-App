@@ -20,12 +20,16 @@ class UserDefaultsDataSource: UserDefaultsDataSourceProtocol {
             return
         }
         
-        if favorites.contains(movieId) {
+        if isFavorite(movieId: movieId) {
             favorites.removeAll { $0 == movieId }
         } else {
             favorites.append(movieId)
         }
         UserDefaults.standard.setValue(favorites, forKey: favoritesUDKey)
+    }
+    
+    func isFavorite(movieId: Int) -> Bool {
+        favorites.contains(movieId)
     }
     
 }
