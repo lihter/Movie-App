@@ -90,6 +90,7 @@ extension DetailTitleView: DesignProtocol {
         }
         
         durationLabel.snp.makeConstraints {
+            $0.top.equalTo(releaseDateLabel.snp.bottom).offset(2 * offset)
             $0.bottom.equalTo(genresLabel.snp.bottom)
             $0.leading.equalTo(genresLabel.snp.trailing).offset(2 * offset)
             $0.trailing.lessThanOrEqualToSuperview().inset(4 * offset)

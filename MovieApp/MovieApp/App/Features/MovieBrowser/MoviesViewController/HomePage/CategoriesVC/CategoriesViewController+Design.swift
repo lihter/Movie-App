@@ -1,7 +1,7 @@
 import UIKit
 import SnapKit
 
-extension HomePageTwoViewController: DesignProtocol {
+extension CategoriesViewController: DesignProtocol {
     
     func buildViews() {
         createViews()
@@ -10,9 +10,6 @@ extension HomePageTwoViewController: DesignProtocol {
     }
     
     func createViews() {
-        searchBar = MovieSearchBar()
-        view.addSubview(searchBar)
-        
         tableView = UITableView(frame: .zero, style: .grouped)
         view.addSubview(tableView)
     }
@@ -27,14 +24,8 @@ extension HomePageTwoViewController: DesignProtocol {
     }
     
     func defineLayoutForViews() {
-        searchBar.snp.makeConstraints {
-            $0.leading.trailing.equalToSuperview()
-            $0.top.equalTo(view.safeAreaLayoutGuide).offset(5 * offset)
-        }
-        
         tableView.snp.makeConstraints {
-            $0.top.equalTo(searchBar.snp.bottom).offset(2 * offset)
-            $0.leading.trailing.bottom.equalToSuperview()
+            $0.edges.equalToSuperview()
         }
     }
         

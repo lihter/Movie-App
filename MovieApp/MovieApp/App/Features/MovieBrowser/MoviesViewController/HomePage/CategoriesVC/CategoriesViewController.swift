@@ -1,6 +1,6 @@
 import UIKit
 
-class HomePageTwoViewController: UIViewController {
+class CategoriesViewController: UIViewController {
     
     let offset: CGFloat = 4
     let tableRowOffset: CGFloat = 40
@@ -9,11 +9,10 @@ class HomePageTwoViewController: UIViewController {
     var storedCVOffsets: [Int: CGFloat]!
     var storedSelectedGenres: [Int: Int]!
     
-    var searchBar: MovieSearchBar!
     var tableView: UITableView!
-    var presenter: HomePageTwoPresenter!
+    var presenter: CategoriesPresenter!
     
-    init(presenter: HomePageTwoPresenter) {
+    init(presenter: CategoriesPresenter) {
         super.init(nibName: nil, bundle: nil)
         
         self.presenter = presenter
@@ -35,7 +34,6 @@ class HomePageTwoViewController: UIViewController {
         setupTableView()
         
         presenter.getAllCategories()
-        searchBar.setDelegate(delegate: self)
     }
     
     override func viewWillAppear(_ animated: Bool) {
@@ -50,7 +48,7 @@ class HomePageTwoViewController: UIViewController {
     
 }
 
-extension HomePageTwoViewController: UITableViewDelegate {
+extension CategoriesViewController: UITableViewDelegate {
 
     func numberOfSections(in collectionView: UICollectionView) -> Int {
         1
@@ -58,7 +56,7 @@ extension HomePageTwoViewController: UITableViewDelegate {
 
 }
 
-extension HomePageTwoViewController: UITableViewDataSource {
+extension CategoriesViewController: UITableViewDataSource {
     
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         categories.count
@@ -86,7 +84,7 @@ extension HomePageTwoViewController: UITableViewDataSource {
         cell.showDetailScreen = { [weak self] movieId in
             guard let self = self else { return }
             
-            self.presenter.showDetailScreen(for: movieId)
+            self.presenter.selectedMovie(withId: movieId)
         }
         cell.favoritePressed = { [weak self] movieId in
             guard let self = self else { return }
@@ -115,7 +113,7 @@ extension HomePageTwoViewController: UITableViewDataSource {
     
 }
 
-extension HomePageTwoViewController: HomePageTwoDelegate {
+extension CategoriesViewController: CategoriesDelegate {
     
     func addToTableView(category: LocalCategory?) {
         guard let category = category else { return }
@@ -128,19 +126,4 @@ extension HomePageTwoViewController: HomePageTwoDelegate {
         tableView.reloadData()
     }
     
-    func showSearchedMovies(_ movies: [MovieViewModel]) {
-        print("Show \(movies)")
-    }
-    
 }
-
-extension HomePageTwoViewController: MovieSearchBarDelegate {
-    
-    func textDidChange(to text: String) {
-        if text.lengthOfBytes(using: .utf8) > 2 {
-            presenter.getSearchedMovies(searchQuery: text)
-        }
-    }
-    
-}
-

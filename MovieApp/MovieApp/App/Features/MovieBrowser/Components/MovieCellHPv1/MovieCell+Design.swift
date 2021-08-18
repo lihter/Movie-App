@@ -11,17 +11,14 @@ extension MovieCell: DesignProtocol {
     }
     
     func createViews() {
-        contentContainer = UIView()
-        addSubview(contentContainer)
-
         movieTitle = UILabel()
-        contentContainer.addSubview(movieTitle)
+        contentView.addSubview(movieTitle)
     
         movieDescription = UILabel()
-        contentContainer.addSubview(movieDescription)
+        contentView.addSubview(movieDescription)
         
         movieImageView = UIImageView()
-        contentContainer.addSubview(movieImageView)
+        contentView.addSubview(movieImageView)
     }
     
     func styleViews() {
@@ -33,10 +30,9 @@ extension MovieCell: DesignProtocol {
         layer.shadowRadius = 20
         layer.shadowPath = UIBezierPath(rect: bounds).cgPath
 
-        contentContainer.frame = bounds
-        contentContainer.backgroundColor = .white
-        contentContainer.layer.cornerRadius = 10
-        contentContainer.layer.masksToBounds = true
+        contentView.backgroundColor = .white
+        contentView.layer.cornerRadius = 10
+        contentView.layer.masksToBounds = true
         
         movieTitle.textColor = .black
         movieTitle.adjustsFontSizeToFitWidth = true
@@ -54,24 +50,29 @@ extension MovieCell: DesignProtocol {
     }
     
     func defineLayoutForViews() {
-        movieImageView.snp.makeConstraints {
-            $0.leading.equalToSuperview()
+        contentView.snp.makeConstraints {
             $0.top.equalToSuperview()
-            $0.height.equalToSuperview()
+            $0.bottom.equalToSuperview().inset(12)
+            $0.leading.trailing.equalToSuperview().inset(18)
+        }
+        
+        movieImageView.snp.makeConstraints {
+            $0.top.bottom.leading.equalToSuperview()
             $0.width.equalTo(movieImageWidth)
         }
         
         movieTitle.snp.makeConstraints {
-            $0.leading.equalTo(movieImageView.snp.trailing).offset(2 * offset)
-            $0.trailing.equalToSuperview().inset(1.5 * offset)
             $0.top.equalToSuperview().offset(2 * offset)
-            $0.height.equalTo(movieTitleViewHeight)
+            $0.leading.equalTo(movieImageView.snp.trailing).offset(2 * offset)
+            $0.trailing.equalToSuperview().inset(offset)
         }
         
         movieDescription.snp.makeConstraints {
+            $0.top.equalTo(movieTitle.snp.bottom).offset(offset)
             $0.leading.equalTo(movieImageView.snp.trailing).offset(2 * offset)
             $0.trailing.bottom.equalToSuperview().inset(2 * offset)
-            $0.top.equalTo(movieTitle.snp.bottom).offset(offset)
+            $0.bottom.greaterThanOrEqualToSuperview().inset(2 * offset)
+            $0.height.lessThanOrEqualTo(85)
         }
     }
 

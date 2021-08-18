@@ -1,6 +1,6 @@
-final class HomePageTwoPresenter {
+final class CategoriesPresenter {
     
-    private weak var delegate: HomePageTwoDelegate?
+    private weak var delegate: CategoriesDelegate?
     private let useCase: MoviesUseCaseProtocol!
     private let router: AppRouter!
         
@@ -9,7 +9,7 @@ final class HomePageTwoPresenter {
         self.router = router
     }
     
-    func setDelegate(delegate: HomePageTwoDelegate) {
+    func setDelegate(delegate: CategoriesDelegate) {
         self.delegate = delegate
     }
     
@@ -22,11 +22,6 @@ final class HomePageTwoPresenter {
     func getMovies(for category: LocalCategory, genreId: Int) -> [MovieViewModel] {
         let ucMovies = useCase.getMovies(for: category, genreId: genreId)
         return ucMovies.map { MovieViewModel(fromModel: $0) }
-    }
-    
-    
-    func showDetailScreen(for movieId: Int) {
-        router.showDetailScreen(for: movieId)
     }
     
     func getGenres(for category: LocalCategory) -> [Genre] {
@@ -75,20 +70,6 @@ final class HomePageTwoPresenter {
                 if addToTableView {
                     self.delegate?.addToTableView(category: .topRated)
                 }
-            case .failure(let error):
-                print("Loading error: \(error.localizedDescription)")
-            }
-        }
-    }
-    
-    func getSearchedMovies(searchQuery: String) {
-        useCase.getSearchedMovies(searchQuery: searchQuery) { [weak self] result in
-            guard let self = self else { return }
-            
-            switch result {
-            case .success(let movies):
-                let mappedMovies = movies.map { MovieViewModel(fromModel: $0) }
-                self.delegate?.showSearchedMovies(mappedMovies)
             case .failure(let error):
                 print("Loading error: \(error.localizedDescription)")
             }

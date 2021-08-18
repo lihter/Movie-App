@@ -55,14 +55,12 @@ extension CastCell: DesignProtocol {
         
         nameLabel.snp.makeConstraints {
             $0.top.equalTo(portraitImageView.snp.bottom).offset(2 * offset)
-            $0.leading.equalToSuperview().offset(2 * offset)
-            $0.trailing.equalToSuperview().inset(2 * offset)
+            $0.leading.trailing.equalToSuperview().inset(2 * offset)
         }
         
         characterNameLabel.snp.makeConstraints {
             $0.top.equalTo(nameLabel.snp.bottom).offset(2 * offset)
-            $0.leading.equalToSuperview().offset(2 * offset)
-            $0.trailing.equalToSuperview().inset(2 * offset)
+            $0.leading.trailing.equalToSuperview().inset(2 * offset)
         }
     }
     

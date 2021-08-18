@@ -19,7 +19,7 @@ extension DetailTitleViewModel {
         var dateString = ""
         var year = ""
         
-        if let date = model.releaseDate {
+        if let date = model.releaseDate, !date.isEmpty {
             let dateSplitted = date.split(separator: "-")
             dateString = "\(dateSplitted[1])/\(dateSplitted[2])/\(dateSplitted[0])"
             year = String(dateSplitted[0])
