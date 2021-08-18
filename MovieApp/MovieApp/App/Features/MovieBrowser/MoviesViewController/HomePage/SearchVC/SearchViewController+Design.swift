@@ -17,7 +17,7 @@ extension SearchViewController: DesignProtocol {
     func styleViews() {
         view.backgroundColor = .white
         
-        tableView.rowHeight = 142 + 12
+        tableView.rowHeight = 154
         tableView.separatorColor = .clear
         tableView.backgroundColor = .clear
         tableView.showsVerticalScrollIndicator = false

@@ -65,9 +65,9 @@ extension SearchViewController: UITableViewDataSource {
     }
     
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-        guard let cell = tableView.cellForRow(at: indexPath) as? MovieCell else { return }
+        guard let id = movies?[indexPath.row].identifier else { return }
         
-        presenter.selectedMovie(withId: cell.movieId)
+        presenter.selectedMovie(withId: id)
     }
     
 }

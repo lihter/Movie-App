@@ -44,10 +44,10 @@ extension AppRouter {
     private func createTabBarController() -> UITabBarController {
         let tabBarController = UITabBarController()
         
-        let homePagePresenter = HomePageTwoPresenter(useCase: moviesUseCase, router: self)
+        let homePagePresenter = HomePagePresenter(useCase: moviesUseCase, router: self)
         let categoriesPresenter = CategoriesPresenter(useCase: moviesUseCase, router: self)
         let searchPresenter = SearchPresenter(useCase: moviesUseCase, router: self)
-        let homePageVC = HomePageTwoViewController(
+        let homePageVC = HomePageViewController(
             presenter: homePagePresenter,
             categoriesPresenter: categoriesPresenter,
             searchPresenter: searchPresenter)

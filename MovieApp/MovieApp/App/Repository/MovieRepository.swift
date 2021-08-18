@@ -1,14 +1,14 @@
 import Foundation
 
 class MovieRepository: MovieRepositoryProtocol {
-    
+
     static let shared: MovieRepositoryProtocol = MovieRepository()
     
     private let networkDataSource: MovieNetworkDataSourceProtocol!
     private let userDefaultsDataSource: UserDefaultsDataSourceProtocol!
     
     var categoryMovies: [LocalCategory: [MovieRepoModel]]!
-    
+        
     init() {
         self.networkDataSource = MovieNetworkDataSource.shared
         self.userDefaultsDataSource = UserDefaultsDataSource.shared
@@ -26,20 +26,22 @@ class MovieRepository: MovieRepositoryProtocol {
         var today = false
         var week = false
         networkDataSource.fetchTrendingToday { [weak self] result in
+            guard let self = self else { return }
+            
             today = true
             switch result {
             case .success(let movies):
                 let mappedMovies: [MovieRepoModel] = movies.map {
                     MovieRepoModel(
                         fromModel: $0,
-                        isFavorite: self?.userDefaultsDataSource.favorites.contains($0.identifier) ?? false,
+                        isFavorite: self.userDefaultsDataSource.isFavorite(movieId: $0.identifier),
                         withGenre: Genre.day.rawValue)
                 }
                 if today, week {
-                    self?.categoryMovies[.trending]?.append(contentsOf: mappedMovies)
-                    completion(.success(self?.categoryMovies[.trending] ?? []))
+                    self.categoryMovies[.trending]?.append(contentsOf: mappedMovies)
+                    completion(.success(self.categoryMovies[.trending] ?? []))
                 } else {
-                    self?.categoryMovies[.trending] = mappedMovies
+                    self.categoryMovies[.trending] = mappedMovies
                 }
             case .failure(let error):
                 completion(.failure(error))
@@ -53,7 +55,7 @@ class MovieRepository: MovieRepositoryProtocol {
                 let mappedMovies: [MovieRepoModel] = movies.map {
                     MovieRepoModel(
                         fromModel: $0,
-                        isFavorite: self?.userDefaultsDataSource.favorites.contains($0.identifier) ?? false,
+                        isFavorite: self?.userDefaultsDataSource.isFavorite(movieId: $0.identifier) ?? false,
                         withGenre: Genre.week.rawValue)
                 }
                 if today, week {
@@ -199,14 +201,15 @@ class MovieRepository: MovieRepositoryProtocol {
 
 extension MovieRepository {
     
-    private func mapResult(result: Result<[MovieDataModel], RequestError>,
-                           category: LocalCategory,
-                           completion: @escaping(Result<[MovieRepoModel], RequestError>) -> Void
+    private func mapResult(
+        result: Result<[MovieDataModel], RequestError>,
+        category: LocalCategory,
+        completion: @escaping(Result<[MovieRepoModel], RequestError>) -> Void
     ) {
         switch result {
         case .success(let movies):
             let mappedMovies: [MovieRepoModel] = movies.map {
-                MovieRepoModel(fromModel: $0, isFavorite: userDefaultsDataSource.favorites.contains($0.identifier))
+                MovieRepoModel(fromModel: $0, isFavorite: userDefaultsDataSource.isFavorite(movieId: $0.identifier))
             }
             categoryMovies[category] = mappedMovies
             completion(.success(mappedMovies))
@@ -231,16 +234,11 @@ extension MovieRepository {
     }
     
     func updateCategoryMovies() {
-        let tempDict: [LocalCategory: [MovieRepoModel]] = categoryMovies.mapValues {
-            var movies: [MovieRepoModel] = []
-            for movie in $0 {
-                var x = movie
-                x.isFavorite = userDefaultsDataSource.favorites.contains(movie.identifier)
-                movies.append(x)
+        categoryMovies = categoryMovies
+            .mapValues { categoryMovies in
+                categoryMovies
+                    .map { $0.copy(isFavorite: userDefaultsDataSource.favorites.contains($0.identifier)) }
             }
-            return movies
-        }
-        categoryMovies = tempDict
     }
     
 }

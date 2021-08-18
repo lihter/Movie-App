@@ -1,4 +1,4 @@
-final class HomePageTwoPresenter {
+final class HomePagePresenter {
     
     private let useCase: MoviesUseCaseProtocol!
     private let router: AppRouter!

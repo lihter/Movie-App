@@ -49,11 +49,11 @@ class CategoriesViewController: UIViewController {
 }
 
 extension CategoriesViewController: UITableViewDelegate {
-
+    
     func numberOfSections(in collectionView: UICollectionView) -> Int {
         1
     }
-
+    
 }
 
 extension CategoriesViewController: UITableViewDataSource {
