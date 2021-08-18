@@ -863,7 +863,6 @@
 				634F13E826AE983700DE6C7B /* UIImage+initWithBundleImage.swift in Sources */,
 				630CDD5F26B3F47D0052D290 /* DetailTitleView.swift in Sources */,
 				63312C3626A168E3004DB7B4 /* Genre.swift in Sources */,
-				6357C0CB26CB96D0009F02F6 /* CrewStackView.swift in Sources */,
 				630CDD6C26B4350D0052D290 /* CastView.swift in Sources */,
 				63DAA5D8269C7E210004F235 /* SceneDelegate.swift in Sources */,
 				630CDD6126B3F4B00052D290 /* DetailTitleView+Design.swift in Sources */,
