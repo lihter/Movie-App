@@ -94,6 +94,18 @@ class MovieRepository: MovieRepositoryProtocol {
         }
     }
     
+    func fetchCrew(for movieId: Int, completion: @escaping(Result<[CrewRepoModel], RequestError>) -> Void) {
+        networkDataSource.fetchCrew(for: movieId) { result in
+            switch result {
+            case .success(let crew):
+                let mappedCrew = crew.map { CrewRepoModel(fromModel: $0) }
+                completion(.success(mappedCrew))
+            case .failure(let error):
+                completion(.failure(error))
+            }
+        }
+    }
+    
     func fetchRecommendations(for movieId: Int, completion: @escaping(Result<[MovieRepoModel], RequestError>) -> Void) {
         networkDataSource.fetchRecommendations(for: movieId) { result in
             switch result {

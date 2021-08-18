@@ -62,6 +62,18 @@ class MovieNetworkDataSource: MovieNetworkDataSourceProtocol {
         }
     }
     
+    func fetchCrew(for movieId: Int, completion: @escaping(Result<[CrewDataModel], RequestError>) -> Void) {
+        movieClient.fetchCrew(for: movieId) { result in
+            switch result {
+            case .success(let crew):
+                let mappedCrew = crew.map { CrewDataModel(fromModel: $0) }
+                completion(.success(mappedCrew))
+            case .failure(let error):
+                completion(.failure(error))
+            }
+        }
+    }
+    
     func fetchRecommendations(for movieId: Int, completion: @escaping(Result<[MovieDataModel], RequestError>) -> Void) {
         movieClient.fetchRecommendations(for: movieId) { [weak self] result in
             self?.mapResult(result: result, completion: completion)

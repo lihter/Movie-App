@@ -57,6 +57,22 @@ class MoviesUseCase: MoviesUseCaseProtocol {
         }
     }
     
+    func getCrew(for movieId: Int, completion: @escaping(Result<[CrewModel], RequestError>) -> Void) {
+        moviesDataRepo.fetchCrew(for: movieId) { result in
+            switch result {
+            case .failure(let error):
+                completion(.failure(error))
+            case .success(let crew):
+                let mappedCrew = crew
+                    .filter { !$0.job.isEmpty }
+                    .prefix(6)
+                    .map { CrewModel(fromModel: $0) }
+                completion(.success(mappedCrew))
+            }
+        }
+    }
+
+    
     func getRecommendations(for movieId: Int, completion: @escaping(Result<[MovieModel], RequestError>) -> Void) {
         moviesDataRepo.fetchRecommendations(for: movieId) { [weak self] result in
             self?.mapResult(result: result, completion: completion)
