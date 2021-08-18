@@ -14,7 +14,7 @@ class MovieDetailViewController: UIViewController {
     var castView: CastView!
     var review: ReviewView!
     var recommendationsView: RecommendationsView!
-    var crewStackView: CrewStackView!
+    var crewGridCollectionView: CrewGridCollectionView!
     
     init(presenter: MovieDetailPresenter) {
         super.init(nibName: nil, bundle: nil)
@@ -65,7 +65,7 @@ extension MovieDetailViewController: MovieDetailDelegate {
     }
     
     func fillCrew(with crew: [CrewViewModel]) {
-        crewStackView.populate(crew: crew)
+        crewGridCollectionView.populate(with: crew)
     }
     
 }

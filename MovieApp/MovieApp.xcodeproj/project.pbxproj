@@ -79,8 +79,6 @@
 		633E7EA526A96D140091322D /* FavouriteButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = 633E7EA426A96D140091322D /* FavouriteButton.swift */; };
 		634F13E826AE983700DE6C7B /* UIImage+initWithBundleImage.swift in Sources */ = {isa = PBXBuildFile; fileRef = 634F13E726AE983700DE6C7B /* UIImage+initWithBundleImage.swift */; };
 		634F13EA26AEA0C600DE6C7B /* UIFont+customFonts.swift in Sources */ = {isa = PBXBuildFile; fileRef = 634F13E926AEA0C600DE6C7B /* UIFont+customFonts.swift */; };
-		6357C0CB26CB96D0009F02F6 /* CrewStackView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6357C0CA26CB96D0009F02F6 /* CrewStackView.swift */; };
-		6357C0CD26CB96FE009F02F6 /* CrewStackView+Design.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6357C0CC26CB96FE009F02F6 /* CrewStackView+Design.swift */; };
 		6357C0CF26CB9E04009F02F6 /* CrewViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6357C0CE26CB9E04009F02F6 /* CrewViewModel.swift */; };
 		6357C0D126CBAA6C009F02F6 /* CrewResponse.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6357C0D026CBAA6C009F02F6 /* CrewResponse.swift */; };
 		6357C0D326CBAACA009F02F6 /* CrewDataModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6357C0D226CBAACA009F02F6 /* CrewDataModel.swift */; };
@@ -99,6 +97,8 @@
 		638BAF28269ED21B00E8E75F /* ProximaNova-Medium.otf in Resources */ = {isa = PBXBuildFile; fileRef = 638BAF25269ED21B00E8E75F /* ProximaNova-Medium.otf */; };
 		638BAF29269ED21B00E8E75F /* ProximaNova-Semibold.otf in Resources */ = {isa = PBXBuildFile; fileRef = 638BAF26269ED21B00E8E75F /* ProximaNova-Semibold.otf */; };
 		638BAF33269EE12F00E8E75F /* MovieResponse.swift in Sources */ = {isa = PBXBuildFile; fileRef = 638BAF32269EE12F00E8E75F /* MovieResponse.swift */; };
+		63A8E41126CBE4F000783D31 /* CrewGridCollectionView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 63A8E41026CBE4F000783D31 /* CrewGridCollectionView.swift */; };
+		63A8E41326CBE50100783D31 /* CrewGridCollectionView+Design.swift in Sources */ = {isa = PBXBuildFile; fileRef = 63A8E41226CBE50100783D31 /* CrewGridCollectionView+Design.swift */; };
 		63BD081026A1C30900AF366A /* NetworkClient.swift in Sources */ = {isa = PBXBuildFile; fileRef = 63BD080F26A1C30900AF366A /* NetworkClient.swift */; };
 		63BD081226A1C31700AF366A /* NetworkClientProtocol.swift in Sources */ = {isa = PBXBuildFile; fileRef = 63BD081126A1C31700AF366A /* NetworkClientProtocol.swift */; };
 		63BD081526A4A52B00AF366A /* Kingfisher in Frameworks */ = {isa = PBXBuildFile; productRef = 63BD081426A4A52B00AF366A /* Kingfisher */; };
@@ -114,8 +114,8 @@
 		63CC487A269E448200AE3DDB /* MovieCell+Design.swift in Sources */ = {isa = PBXBuildFile; fileRef = 63CC4879269E448200AE3DDB /* MovieCell+Design.swift */; };
 		63CEFAB026CAA0F9001657E1 /* GenreButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = 63CEFAAF26CAA0F9001657E1 /* GenreButton.swift */; };
 		63CEFAB226CAA1D7001657E1 /* GenreButton+Design.swift in Sources */ = {isa = PBXBuildFile; fileRef = 63CEFAB126CAA1D7001657E1 /* GenreButton+Design.swift */; };
-		63CEFAB426CAB0C0001657E1 /* CrewView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 63CEFAB326CAB0C0001657E1 /* CrewView.swift */; };
-		63CEFAB726CAB19E001657E1 /* CrewView+Design.swift in Sources */ = {isa = PBXBuildFile; fileRef = 63CEFAB626CAB19E001657E1 /* CrewView+Design.swift */; };
+		63CEFAB426CAB0C0001657E1 /* CrewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 63CEFAB326CAB0C0001657E1 /* CrewCell.swift */; };
+		63CEFAB726CAB19E001657E1 /* CrewCell+Design.swift in Sources */ = {isa = PBXBuildFile; fileRef = 63CEFAB626CAB19E001657E1 /* CrewCell+Design.swift */; };
 		63DAA5D6269C7E210004F235 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 63DAA5D5269C7E210004F235 /* AppDelegate.swift */; };
 		63DAA5D8269C7E210004F235 /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 63DAA5D7269C7E210004F235 /* SceneDelegate.swift */; };
 		63DAA5E0269C7E210004F235 /* MovieApp.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = 63DAA5DE269C7E210004F235 /* MovieApp.xcdatamodeld */; };
@@ -196,8 +196,6 @@
 		633E7EA426A96D140091322D /* FavouriteButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FavouriteButton.swift; sourceTree = "<group>"; };
 		634F13E726AE983700DE6C7B /* UIImage+initWithBundleImage.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIImage+initWithBundleImage.swift"; sourceTree = "<group>"; };
 		634F13E926AEA0C600DE6C7B /* UIFont+customFonts.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIFont+customFonts.swift"; sourceTree = "<group>"; };
-		6357C0CA26CB96D0009F02F6 /* CrewStackView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CrewStackView.swift; sourceTree = "<group>"; };
-		6357C0CC26CB96FE009F02F6 /* CrewStackView+Design.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "CrewStackView+Design.swift"; sourceTree = "<group>"; };
 		6357C0CE26CB9E04009F02F6 /* CrewViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CrewViewModel.swift; sourceTree = "<group>"; };
 		6357C0D026CBAA6C009F02F6 /* CrewResponse.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CrewResponse.swift; sourceTree = "<group>"; };
 		6357C0D226CBAACA009F02F6 /* CrewDataModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CrewDataModel.swift; sourceTree = "<group>"; };
@@ -216,6 +214,8 @@
 		638BAF25269ED21B00E8E75F /* ProximaNova-Medium.otf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "ProximaNova-Medium.otf"; sourceTree = "<group>"; };
 		638BAF26269ED21B00E8E75F /* ProximaNova-Semibold.otf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "ProximaNova-Semibold.otf"; sourceTree = "<group>"; };
 		638BAF32269EE12F00E8E75F /* MovieResponse.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MovieResponse.swift; sourceTree = "<group>"; };
+		63A8E41026CBE4F000783D31 /* CrewGridCollectionView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CrewGridCollectionView.swift; sourceTree = "<group>"; };
+		63A8E41226CBE50100783D31 /* CrewGridCollectionView+Design.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "CrewGridCollectionView+Design.swift"; sourceTree = "<group>"; };
 		63BD080F26A1C30900AF366A /* NetworkClient.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NetworkClient.swift; sourceTree = "<group>"; };
 		63BD081126A1C31700AF366A /* NetworkClientProtocol.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NetworkClientProtocol.swift; sourceTree = "<group>"; };
 		63BD081626A4AFA500AF366A /* MovieViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MovieViewModel.swift; sourceTree = "<group>"; };
@@ -229,8 +229,8 @@
 		63CC4879269E448200AE3DDB /* MovieCell+Design.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "MovieCell+Design.swift"; sourceTree = "<group>"; };
 		63CEFAAF26CAA0F9001657E1 /* GenreButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GenreButton.swift; sourceTree = "<group>"; };
 		63CEFAB126CAA1D7001657E1 /* GenreButton+Design.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "GenreButton+Design.swift"; sourceTree = "<group>"; };
-		63CEFAB326CAB0C0001657E1 /* CrewView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CrewView.swift; sourceTree = "<group>"; };
-		63CEFAB626CAB19E001657E1 /* CrewView+Design.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "CrewView+Design.swift"; sourceTree = "<group>"; };
+		63CEFAB326CAB0C0001657E1 /* CrewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CrewCell.swift; sourceTree = "<group>"; };
+		63CEFAB626CAB19E001657E1 /* CrewCell+Design.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "CrewCell+Design.swift"; sourceTree = "<group>"; };
 		63DAA5D2269C7E210004F235 /* MovieApp.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = MovieApp.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		63DAA5D5269C7E210004F235 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		63DAA5D7269C7E210004F235 /* SceneDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneDelegate.swift; sourceTree = "<group>"; };
@@ -649,10 +649,10 @@
 		63CEFAB526CAB0C6001657E1 /* CrewView */ = {
 			isa = PBXGroup;
 			children = (
-				63CEFAB326CAB0C0001657E1 /* CrewView.swift */,
-				63CEFAB626CAB19E001657E1 /* CrewView+Design.swift */,
-				6357C0CA26CB96D0009F02F6 /* CrewStackView.swift */,
-				6357C0CC26CB96FE009F02F6 /* CrewStackView+Design.swift */,
+				63CEFAB326CAB0C0001657E1 /* CrewCell.swift */,
+				63CEFAB626CAB19E001657E1 /* CrewCell+Design.swift */,
+				63A8E41026CBE4F000783D31 /* CrewGridCollectionView.swift */,
+				63A8E41226CBE50100783D31 /* CrewGridCollectionView+Design.swift */,
 			);
 			path = CrewView;
 			sourceTree = "<group>";
@@ -818,6 +818,7 @@
 				630CDD9626BA5E1B0052D290 /* CastDataModel.swift in Sources */,
 				630CDD8C26B93B120052D290 /* MovieDetailDelegate.swift in Sources */,
 				633E7E6626A6A55F0091322D /* MovieRepoModel.swift in Sources */,
+				63A8E41326CBE50100783D31 /* CrewGridCollectionView+Design.swift in Sources */,
 				63BD081726A4AFA500AF366A /* MovieViewModel.swift in Sources */,
 				630CDD6526B40B3B0052D290 /* MovieDetailPresenter.swift in Sources */,
 				631628BD26C173DB009299C5 /* FavoritesViewController+Design.swift in Sources */,
@@ -837,7 +838,6 @@
 				630CDD7F26B7D4B30052D290 /* ProgressBarView.swift in Sources */,
 				630CDD9026B95FD50052D290 /* GenreResponse.swift in Sources */,
 				633E7EA126A96A0D0091322D /* NewMovieCell.swift in Sources */,
-				6357C0CD26CB96FE009F02F6 /* CrewStackView+Design.swift in Sources */,
 				6357C0D526CBAB3B009F02F6 /* CrewRepoModel.swift in Sources */,
 				63BD081B26A54CE900AF366A /* MovieDetailViewController.swift in Sources */,
 				63BD081026A1C30900AF366A /* NetworkClient.swift in Sources */,
@@ -848,7 +848,7 @@
 				63DD737426A9A38E004A6D8C /* CategoryCell.swift in Sources */,
 				630CDDA626BA8C480052D290 /* AuthorRepoModel.swift in Sources */,
 				6389257626CA74CB0053A3CF /* CategoriesViewController.swift in Sources */,
-				63CEFAB426CAB0C0001657E1 /* CrewView.swift in Sources */,
+				63CEFAB426CAB0C0001657E1 /* CrewCell.swift in Sources */,
 				630CDD7026B43B500052D290 /* CastCell.swift in Sources */,
 				631628C626C26390009299C5 /* UserDefaultsDataSourceProtocol.swift in Sources */,
 				633E7E9A26A942CD0091322D /* GenreView.swift in Sources */,
@@ -859,10 +859,10 @@
 				63DAA5E0269C7E210004F235 /* MovieApp.xcdatamodeld in Sources */,
 				63CC4868269DA89400AE3DDB /* DesignProtocol.swift in Sources */,
 				63019A2426B1245A00584356 /* LocalCategory.swift in Sources */,
+				63A8E41126CBE4F000783D31 /* CrewGridCollectionView.swift in Sources */,
 				634F13E826AE983700DE6C7B /* UIImage+initWithBundleImage.swift in Sources */,
 				630CDD5F26B3F47D0052D290 /* DetailTitleView.swift in Sources */,
 				63312C3626A168E3004DB7B4 /* Genre.swift in Sources */,
-				6357C0CB26CB96D0009F02F6 /* CrewStackView.swift in Sources */,
 				630CDD6C26B4350D0052D290 /* CastView.swift in Sources */,
 				63DAA5D8269C7E210004F235 /* SceneDelegate.swift in Sources */,
 				630CDD6126B3F4B00052D290 /* DetailTitleView+Design.swift in Sources */,
@@ -874,7 +874,7 @@
 				630CDD8E26B95B9E0052D290 /* MovieDetailResponse.swift in Sources */,
 				630CDD6926B4330E0052D290 /* UILabel+setLineSpacing.swift in Sources */,
 				630CDD8426B8226C0052D290 /* ReviewView.swift in Sources */,
-				63CEFAB726CAB19E001657E1 /* CrewView+Design.swift in Sources */,
+				63CEFAB726CAB19E001657E1 /* CrewCell+Design.swift in Sources */,
 				63312C3826A1711D004DB7B4 /* RequestError.swift in Sources */,
 				631628C326C25EAA009299C5 /* UserDefaultsDataSource.swift in Sources */,
 				6389256A26CA4E900053A3CF /* SearchViewController.swift in Sources */,
