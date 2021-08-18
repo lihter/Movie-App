@@ -10,9 +10,7 @@ final class MovieDetailPresenter {
     let movieId: Int!
     
     var isFavorite: Bool {
-        guard let movie = useCase.getMovie(with: movieId) else { return false }
-        
-        return movie.isFavorite
+        useCase.checkIfFavorite(for: movieId)
     }
     
     init (useCase: MoviesUseCaseProtocol, router: AppRouter, for movieId: Int) {
@@ -95,7 +93,7 @@ final class MovieDetailPresenter {
             case .success(let review):
                 self.delegate?.fillReview(with: ReviewViewModel(fromModel: review))
             case .failure(let error):
-                print("Loading error: \(error.localizedDescription)")
+                print("Loading error: \(error.localizedDescription). No review.")
             }
         }
     }

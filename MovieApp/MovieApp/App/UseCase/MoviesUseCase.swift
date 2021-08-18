@@ -101,9 +101,14 @@ class MoviesUseCase: MoviesUseCaseProtocol {
         return MovieModel(fromModel: repoMovie)
     }
     
-    func getFavoriteMovies() -> [MovieModel] {
-        let repoMovies = moviesDataRepo.getFavoriteMovies()
-        return repoMovies.map { MovieModel(fromModel: $0) }
+    func getFavoriteMovies(completion: @escaping(Result<[MovieModel], RequestError>) -> Void) {
+        moviesDataRepo.getFavoriteMovies { [weak self] result in
+            self?.mapResult(result: result, completion: completion)
+        }
+    }
+    
+    func checkIfFavorite(for movieId: Int) -> Bool {
+        moviesDataRepo.checkIfFavorite(for: movieId)
     }
 
 }
