@@ -53,8 +53,7 @@ extension MovieCell: DesignProtocol {
         contentView.snp.makeConstraints {
             $0.top.equalToSuperview()
             $0.bottom.equalToSuperview().inset(12)
-            $0.leading.equalToSuperview().offset(18)
-            $0.trailing.equalToSuperview().inset(18)
+            $0.leading.trailing.equalToSuperview().inset(18)
         }
         
         movieImageView.snp.makeConstraints {
