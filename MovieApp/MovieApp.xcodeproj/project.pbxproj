@@ -97,6 +97,17 @@
 		638BAF28269ED21B00E8E75F /* ProximaNova-Medium.otf in Resources */ = {isa = PBXBuildFile; fileRef = 638BAF25269ED21B00E8E75F /* ProximaNova-Medium.otf */; };
 		638BAF29269ED21B00E8E75F /* ProximaNova-Semibold.otf in Resources */ = {isa = PBXBuildFile; fileRef = 638BAF26269ED21B00E8E75F /* ProximaNova-Semibold.otf */; };
 		638BAF33269EE12F00E8E75F /* MovieResponse.swift in Sources */ = {isa = PBXBuildFile; fileRef = 638BAF32269EE12F00E8E75F /* MovieResponse.swift */; };
+		6397421426CD3ECF00A2D0B1 /* Publisher+Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6397420926CD3ECE00A2D0B1 /* Publisher+Extensions.swift */; };
+		6397421526CD3ECF00A2D0B1 /* UIControlPublisher.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6397420B26CD3ECE00A2D0B1 /* UIControlPublisher.swift */; };
+		6397421626CD3ECF00A2D0B1 /* UIControlSubscription.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6397420C26CD3ECE00A2D0B1 /* UIControlSubscription.swift */; };
+		6397421726CD3ECF00A2D0B1 /* BarItemGestureSubscription.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6397420F26CD3ECE00A2D0B1 /* BarItemGestureSubscription.swift */; };
+		6397421826CD3ECF00A2D0B1 /* BarItemGesturePublisher.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6397421026CD3ECE00A2D0B1 /* BarItemGesturePublisher.swift */; };
+		6397421926CD3ECF00A2D0B1 /* GestureSubscription.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6397421126CD3ECE00A2D0B1 /* GestureSubscription.swift */; };
+		6397421A26CD3ECF00A2D0B1 /* GestureType.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6397421226CD3ECE00A2D0B1 /* GestureType.swift */; };
+		6397421B26CD3ECF00A2D0B1 /* GesturePublisher.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6397421326CD3ECE00A2D0B1 /* GesturePublisher.swift */; };
+		6397421D26CD3EF900A2D0B1 /* UIControl+Combine.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6397421C26CD3EF900A2D0B1 /* UIControl+Combine.swift */; };
+		6397421F26CD3EFF00A2D0B1 /* UIView+Combine.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6397421E26CD3EFF00A2D0B1 /* UIView+Combine.swift */; };
+		6397422126CD3F4000A2D0B1 /* UIBarButtonItem+Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6397422026CD3F4000A2D0B1 /* UIBarButtonItem+Extensions.swift */; };
 		63A8E41126CBE4F000783D31 /* CrewGridCollectionView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 63A8E41026CBE4F000783D31 /* CrewGridCollectionView.swift */; };
 		63A8E41326CBE50100783D31 /* CrewGridCollectionView+Design.swift in Sources */ = {isa = PBXBuildFile; fileRef = 63A8E41226CBE50100783D31 /* CrewGridCollectionView+Design.swift */; };
 		63BD081026A1C30900AF366A /* NetworkClient.swift in Sources */ = {isa = PBXBuildFile; fileRef = 63BD080F26A1C30900AF366A /* NetworkClient.swift */; };
@@ -214,6 +225,17 @@
 		638BAF25269ED21B00E8E75F /* ProximaNova-Medium.otf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "ProximaNova-Medium.otf"; sourceTree = "<group>"; };
 		638BAF26269ED21B00E8E75F /* ProximaNova-Semibold.otf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "ProximaNova-Semibold.otf"; sourceTree = "<group>"; };
 		638BAF32269EE12F00E8E75F /* MovieResponse.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MovieResponse.swift; sourceTree = "<group>"; };
+		6397420926CD3ECE00A2D0B1 /* Publisher+Extensions.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "Publisher+Extensions.swift"; sourceTree = "<group>"; };
+		6397420B26CD3ECE00A2D0B1 /* UIControlPublisher.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = UIControlPublisher.swift; sourceTree = "<group>"; };
+		6397420C26CD3ECE00A2D0B1 /* UIControlSubscription.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = UIControlSubscription.swift; sourceTree = "<group>"; };
+		6397420F26CD3ECE00A2D0B1 /* BarItemGestureSubscription.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = BarItemGestureSubscription.swift; sourceTree = "<group>"; };
+		6397421026CD3ECE00A2D0B1 /* BarItemGesturePublisher.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = BarItemGesturePublisher.swift; sourceTree = "<group>"; };
+		6397421126CD3ECE00A2D0B1 /* GestureSubscription.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = GestureSubscription.swift; sourceTree = "<group>"; };
+		6397421226CD3ECE00A2D0B1 /* GestureType.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = GestureType.swift; sourceTree = "<group>"; };
+		6397421326CD3ECE00A2D0B1 /* GesturePublisher.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = GesturePublisher.swift; sourceTree = "<group>"; };
+		6397421C26CD3EF900A2D0B1 /* UIControl+Combine.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "UIControl+Combine.swift"; sourceTree = "<group>"; };
+		6397421E26CD3EFF00A2D0B1 /* UIView+Combine.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "UIView+Combine.swift"; sourceTree = "<group>"; };
+		6397422026CD3F4000A2D0B1 /* UIBarButtonItem+Extensions.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "UIBarButtonItem+Extensions.swift"; sourceTree = "<group>"; };
 		63A8E41026CBE4F000783D31 /* CrewGridCollectionView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CrewGridCollectionView.swift; sourceTree = "<group>"; };
 		63A8E41226CBE50100783D31 /* CrewGridCollectionView+Design.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "CrewGridCollectionView+Design.swift"; sourceTree = "<group>"; };
 		63BD080F26A1C30900AF366A /* NetworkClient.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NetworkClient.swift; sourceTree = "<group>"; };
@@ -368,6 +390,7 @@
 		633E7E6C26A6B4810091322D /* Core */ = {
 			isa = PBXGroup;
 			children = (
+				6397420826CD3ECE00A2D0B1 /* Combine */,
 				63CC4867269DA89400AE3DDB /* DesignProtocol.swift */,
 				63019A2326B1245A00584356 /* LocalCategory.swift */,
 			);
@@ -395,10 +418,13 @@
 		633E7E6F26A6B52C0091322D /* Extensions */ = {
 			isa = PBXGroup;
 			children = (
+				6397421E26CD3EFF00A2D0B1 /* UIView+Combine.swift */,
+				6397421C26CD3EF900A2D0B1 /* UIControl+Combine.swift */,
 				63CC4875269DB82100AE3DDB /* UIColor+CustomColors.swift */,
 				633E7E8526A6DCBF0091322D /* UITabBarController+styleMovieTabBar.swift */,
 				634F13E726AE983700DE6C7B /* UIImage+initWithBundleImage.swift */,
 				634F13E926AEA0C600DE6C7B /* UIFont+customFonts.swift */,
+				6397422026CD3F4000A2D0B1 /* UIBarButtonItem+Extensions.swift */,
 				63019A2926B17AC200584356 /* UIStackView.swift */,
 				630CDD6826B4330E0052D290 /* UILabel+setLineSpacing.swift */,
 			);
@@ -637,6 +663,45 @@
 			path = Fonts;
 			sourceTree = "<group>";
 		};
+		6397420826CD3ECE00A2D0B1 /* Combine */ = {
+			isa = PBXGroup;
+			children = (
+				6397420926CD3ECE00A2D0B1 /* Publisher+Extensions.swift */,
+				6397420A26CD3ECE00A2D0B1 /* UIControl */,
+				6397420D26CD3ECE00A2D0B1 /* Gesture */,
+			);
+			path = Combine;
+			sourceTree = "<group>";
+		};
+		6397420A26CD3ECE00A2D0B1 /* UIControl */ = {
+			isa = PBXGroup;
+			children = (
+				6397420B26CD3ECE00A2D0B1 /* UIControlPublisher.swift */,
+				6397420C26CD3ECE00A2D0B1 /* UIControlSubscription.swift */,
+			);
+			path = UIControl;
+			sourceTree = "<group>";
+		};
+		6397420D26CD3ECE00A2D0B1 /* Gesture */ = {
+			isa = PBXGroup;
+			children = (
+				6397420E26CD3ECE00A2D0B1 /* BarItem */,
+				6397421126CD3ECE00A2D0B1 /* GestureSubscription.swift */,
+				6397421226CD3ECE00A2D0B1 /* GestureType.swift */,
+				6397421326CD3ECE00A2D0B1 /* GesturePublisher.swift */,
+			);
+			path = Gesture;
+			sourceTree = "<group>";
+		};
+		6397420E26CD3ECE00A2D0B1 /* BarItem */ = {
+			isa = PBXGroup;
+			children = (
+				6397420F26CD3ECE00A2D0B1 /* BarItemGestureSubscription.swift */,
+				6397421026CD3ECE00A2D0B1 /* BarItemGesturePublisher.swift */,
+			);
+			path = BarItem;
+			sourceTree = "<group>";
+		};
 		63CEFAAE26CAA0E6001657E1 /* GenreButton */ = {
 			isa = PBXGroup;
 			children = (
@@ -777,7 +842,9 @@
 			buildActionMask = 2147483647;
 			files = (
 				633E7E8226A6BD9E0091322D /* FavoritesViewController.swift in Sources */,
+				6397422126CD3F4000A2D0B1 /* UIBarButtonItem+Extensions.swift in Sources */,
 				630CDD7226B43C280052D290 /* CastViewModel.swift in Sources */,
+				6397421826CD3ECF00A2D0B1 /* BarItemGesturePublisher.swift in Sources */,
 				63019A2C26B1854C00584356 /* TVShowResponse.swift in Sources */,
 				63DD737626A9A39E004A6D8C /* CategoryCell+Design.swift in Sources */,
 				630CDD7D26B71A5F0052D290 /* RecommendationCell+Design.swift in Sources */,
@@ -789,16 +856,18 @@
 				631628C126C175B7009299C5 /* FavoriteDelegate.swift in Sources */,
 				633E7E9826A942770091322D /* GenreView+Design.swift in Sources */,
 				6357C0D126CBAA6C009F02F6 /* CrewResponse.swift in Sources */,
+				6397421B26CD3ECF00A2D0B1 /* GesturePublisher.swift in Sources */,
 				638BAF33269EE12F00E8E75F /* MovieResponse.swift in Sources */,
 				630CDD9226BA5D6B0052D290 /* CastModel.swift in Sources */,
 				6389256826CA47E50053A3CF /* CategoriesViewController+Design.swift in Sources */,
+				6397421626CD3ECF00A2D0B1 /* UIControlSubscription.swift in Sources */,
 				63312C3C26A1748A004DB7B4 /* MovieClientProtocol.swift in Sources */,
 				63CC487A269E448200AE3DDB /* MovieCell+Design.swift in Sources */,
 				633E7E5526A598B00091322D /* MoviesUseCase.swift in Sources */,
-				6389257426CA747D0053A3CF /* CategoriesPresenter.swift in Sources */,
 				63312C3A26A1740A004DB7B4 /* MovieClient.swift in Sources */,
 				633E7E6426A6A3970091322D /* MovieDataModel.swift in Sources */,
 				633E7E9226A8123E0091322D /* MovieSearchBar+Design.swift in Sources */,
+				6397421526CD3ECF00A2D0B1 /* UIControlPublisher.swift in Sources */,
 				634F13EA26AEA0C600DE6C7B /* UIFont+customFonts.swift in Sources */,
 				633E7E8426A6BF190091322D /* BundleImage.swift in Sources */,
 				633E7E5326A592DB0091322D /* MovieRepositoryProtocol.swift in Sources */,
@@ -809,6 +878,7 @@
 				630CDD6326B3F6A70052D290 /* DetailTitleViewModel.swift in Sources */,
 				6389257826CA74D70053A3CF /* CategoriesPresenter.swift in Sources */,
 				63DAA5D6269C7E210004F235 /* AppDelegate.swift in Sources */,
+				6397421F26CD3EFF00A2D0B1 /* UIView+Combine.swift in Sources */,
 				63CC4878269E397D00AE3DDB /* MovieCell.swift in Sources */,
 				630CDDA026BA87EA0052D290 /* ReviewModel.swift in Sources */,
 				63C4380826B028B500C08E51 /* HomePagePresenter.swift in Sources */,
@@ -829,6 +899,7 @@
 				630CDD7926B717CE0052D290 /* RecommendationsView+Design.swift in Sources */,
 				633E7E8A26A70C090091322D /* HomePageViewController+Design.swift in Sources */,
 				6389256026C6B9120053A3CF /* MovieSearchBarDelegate.swift in Sources */,
+				6397421726CD3ECF00A2D0B1 /* BarItemGestureSubscription.swift in Sources */,
 				630CDD7726B716290052D290 /* RecommendationsView.swift in Sources */,
 				630CDDA826BA8C670052D290 /* AuthorModel.swift in Sources */,
 				6357C0CF26CB9E04009F02F6 /* CrewViewModel.swift in Sources */,
@@ -836,6 +907,7 @@
 				6389256426CA47750053A3CF /* CategoriesDelegate.swift in Sources */,
 				63BD081D26A5677C00AF366A /* RequestError+localizedDescription.swift in Sources */,
 				630CDD7F26B7D4B30052D290 /* ProgressBarView.swift in Sources */,
+				6397421A26CD3ECF00A2D0B1 /* GestureType.swift in Sources */,
 				630CDD9026B95FD50052D290 /* GenreResponse.swift in Sources */,
 				633E7EA126A96A0D0091322D /* NewMovieCell.swift in Sources */,
 				6357C0D526CBAB3B009F02F6 /* CrewRepoModel.swift in Sources */,
@@ -853,13 +925,16 @@
 				631628C626C26390009299C5 /* UserDefaultsDataSourceProtocol.swift in Sources */,
 				633E7E9A26A942CD0091322D /* GenreView.swift in Sources */,
 				630CDD9A26BA84170052D290 /* ReviewResponse.swift in Sources */,
+				6397421D26CD3EF900A2D0B1 /* UIControl+Combine.swift in Sources */,
 				630CDD8826B824FF0052D290 /* ReviewViewModel.swift in Sources */,
 				633E7EA526A96D140091322D /* FavouriteButton.swift in Sources */,
 				633E7E5126A592C50091322D /* MovieRepository.swift in Sources */,
 				63DAA5E0269C7E210004F235 /* MovieApp.xcdatamodeld in Sources */,
+				6397421926CD3ECF00A2D0B1 /* GestureSubscription.swift in Sources */,
 				63CC4868269DA89400AE3DDB /* DesignProtocol.swift in Sources */,
 				63019A2426B1245A00584356 /* LocalCategory.swift in Sources */,
 				63A8E41126CBE4F000783D31 /* CrewGridCollectionView.swift in Sources */,
+				6397421426CD3ECF00A2D0B1 /* Publisher+Extensions.swift in Sources */,
 				634F13E826AE983700DE6C7B /* UIImage+initWithBundleImage.swift in Sources */,
 				630CDD5F26B3F47D0052D290 /* DetailTitleView.swift in Sources */,
 				63312C3626A168E3004DB7B4 /* Genre.swift in Sources */,
