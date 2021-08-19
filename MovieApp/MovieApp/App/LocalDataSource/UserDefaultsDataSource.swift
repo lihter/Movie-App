@@ -19,7 +19,7 @@ class UserDefaultsDataSource: UserDefaultsDataSourceProtocol {
         UserDefaults
             .standard
             .publisher(for: \.favorites)
-            .receiveOnBackground()
+            .eraseToAnyPublisher()
     }
     
     func toggleFavorite(_ movieId: Int) {
