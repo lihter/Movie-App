@@ -11,7 +11,5 @@ protocol MovieDetailDelegate: AnyObject {
     func fillReview(with review: ReviewViewModel)
     
     func fillCrew(with crew: [CrewViewModel])
-    
-    func reloadData()
-    
+        
 }

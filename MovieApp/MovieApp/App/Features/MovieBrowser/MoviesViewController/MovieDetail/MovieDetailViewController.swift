@@ -79,10 +79,6 @@ extension MovieDetailViewController: MovieDetailDelegate {
         self.review.populate(with: review)
     }
     
-    func reloadData() {
-        //titleView.reloadData()
-    }
-    
     func fillCrew(with crew: [CrewViewModel]) {
         crewGridCollectionView.populate(with: crew)
     }

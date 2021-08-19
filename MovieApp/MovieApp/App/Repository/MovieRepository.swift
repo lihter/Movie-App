@@ -35,7 +35,7 @@ class MovieRepository: MovieRepositoryProtocol {
                 let mappedMovies: [MovieRepoModel] = movies.map {
                     MovieRepoModel(
                         fromModel: $0,
-                        isFavorite: false,//self.userDefaultsDataSource.isFavorite(movieId: $0.identifier),
+                        isFavorite: false,
                         withGenre: Genre.day.rawValue)
                 }
                 if today, week {
@@ -56,7 +56,7 @@ class MovieRepository: MovieRepositoryProtocol {
                 let mappedMovies: [MovieRepoModel] = movies.map {
                     MovieRepoModel(
                         fromModel: $0,
-                        isFavorite: false,//self?.userDefaultsDataSource.isFavorite(movieId: $0.identifier) ?? false,
+                        isFavorite: false,
                         withGenre: Genre.week.rawValue)
                 }
                 if today, week {
@@ -76,12 +76,6 @@ class MovieRepository: MovieRepositoryProtocol {
             self?.mapResult(result: result, category: .topRated, completion: completion)
         }
     }
-    
-//    func fetchMovieDetails(for movieId: Int, completion: @escaping(Result<MovieRepoModel, RequestError>) -> Void) {
-//        networkDataSource.fetchMovieDetails(for: movieId) { [weak self] result in
-//            self?.mapMovieDetailResult(result: result, completion: completion)
-//        }
-//    }
     
     func fetchMovieDetails(for movieId: Int) -> AnyPublisher<MovieRepoModel, Never> {
         let userDefaultsPublisher = userDefaultsDataSource
@@ -179,35 +173,6 @@ class MovieRepository: MovieRepositoryProtocol {
             .first(where: { $0.identifier == movieId })
     }
     
-//    func getFavoriteMovies(completion: @escaping(Result<[MovieRepoModel], RequestError>) -> Void) {
-//        var movies: [MovieRepoModel] = []
-//        var counter: Int = 0
-//
-//        let completionHandler: (Result<MovieDataModel, RequestError>) -> Void = { [weak self] result in
-//            guard let self = self else { return }
-//
-//            switch result {
-//            case .success(let movie):
-//                let mappedMovie = MovieRepoModel(
-//                    fromModel: movie,
-//                    isFavorite: self.userDefaultsDataSource.favorites.contains(movie.identifier))
-//                counter += 1
-//                movies.append(mappedMovie)
-//            case .failure(let error):
-//                print("Error fetching favorites. \(error.localizedDescription)")
-//            }
-//
-//            if counter == self.userDefaultsDataSource.favorites.count {
-//                completion(.success(movies))
-//            }
-//        }
-//
-//        userDefaultsDataSource.favorites.forEach { movieId in
-//            networkDataSource.fetchMovieDetails(for: movieId, completion: completionHandler)
-//        }
-//        completion(.failure(.general))
-//    }
-//
     var favoriteMovies: AnyPublisher<[MovieRepoModel], Never> {
         userDefaultsDataSource
             .favorites
@@ -238,7 +203,7 @@ extension MovieRepository {
         switch result {
         case .success(let movies):
             let mappedMovies: [MovieRepoModel] = movies.map {
-                MovieRepoModel(fromModel: $0, isFavorite: false)//userDefaultsDataSource.isFavorite(movieId: $0.identifier))
+                MovieRepoModel(fromModel: $0, isFavorite: false)
             }
             categoryMovies[category] = mappedMovies
             completion(.success(mappedMovies))
@@ -255,7 +220,7 @@ extension MovieRepository {
         case .success(let movie):
             let mappedMovie = MovieRepoModel(
                 fromModel: movie,
-                isFavorite: false)//userDefaultsDataSource.favorites.contains(movie.identifier))
+                isFavorite: false)
             completion(.success(mappedMovie))
         case .failure(let error):
             completion(.failure(error))
@@ -266,7 +231,7 @@ extension MovieRepository {
         categoryMovies = categoryMovies
             .mapValues { categoryMovies in
                 categoryMovies
-                    .map { $0.copy(isFavorite: false) }//userDefaultsDataSource.favorites.contains($0.identifier)) }
+                    .map { $0.copy(isFavorite: false) }
             }
     }
     

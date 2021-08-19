@@ -4,9 +4,7 @@ import UIKit
 class FavoritesViewController: UIViewController {
     
     let offset: CGFloat = 4
-    
-//    var movies: [MovieViewModel]!
-    
+        
     var disposables = Set<AnyCancellable>()
     typealias DataSource = UICollectionViewDiffableDataSource<FavoritesSection, MovieViewModel>
     typealias Snapshot = NSDiffableDataSourceSnapshot<FavoritesSection, MovieViewModel>
@@ -21,22 +19,14 @@ class FavoritesViewController: UIViewController {
         super.init(nibName: nil, bundle: nil)
         
         self.presenter = presenter
-        self.presenter.setDelegate(delegate: self)
-        
-//        movies = []
     }
     
     required init?(coder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
     
-    override func viewWillAppear(_ animated: Bool) {
-        reloadData()
-    }
-    
     private func setupCollectionView() {
         collectionView.register(NewMovieCell.self, forCellWithReuseIdentifier: NewMovieCell.reuseIdentifier)
-//        collectionView.dataSource = self
         collectionView.delegate = self
         collectionView.setContentOffset(collectionView.contentOffset, animated: true)
     }
@@ -96,41 +86,6 @@ class FavoritesViewController: UIViewController {
     
 }
 
-//extension FavoritesViewController: UICollectionViewDataSource {
-//
-//    func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
-//        movies.count
-//    }
-//
-//    func collectionView(
-//        _ collectionView: UICollectionView,
-//        cellForItemAt indexPath: IndexPath
-//    ) -> UICollectionViewCell {
-//        guard
-//            let cell = collectionView.dequeueReusableCell(
-//                withReuseIdentifier: NewMovieCell.reuseIdentifier,
-//                for: indexPath) as? NewMovieCell,
-//            let movie = movies?[indexPath.item]
-//        else {
-//            return UICollectionViewCell()
-//        }
-//
-//        cell.showDetailScreen = { [weak self] movieId in
-//            guard let self = self else { return }
-//
-//            self.presenter.showDetailScreen(for: movieId)
-//        }
-//        cell.favoritePressed = { [weak self] movieId in
-//            guard let self = self else { return }
-//
-//            self.presenter.toggleFavorite(movieId)
-//        }
-//        cell.populate(withMovie: movie)
-//        return cell
-//    }
-//
-//}
-
 extension FavoritesViewController: UICollectionViewDelegateFlowLayout {
     
     func collectionView(
@@ -144,19 +99,6 @@ extension FavoritesViewController: UICollectionViewDelegateFlowLayout {
         let oneCellWidth = (view.bounds.width - 2 * margin - (numberOfCellsInRow - 1) * spacing) / numberOfCellsInRow
         let height = NewMovieCell.cellSize.height / NewMovieCell.cellSize.width * oneCellWidth
         return CGSize(width: oneCellWidth, height: height)
-    }
-    
-}
-
-extension FavoritesViewController: FavoriteDelegate {
-    
-    func showMovies(_ movies: [MovieViewModel]) {
-//        self.movies = movies
-//        collectionView.reloadData()
-    }
-    
-    func reloadData() {
-        //presenter.getFavouriteMovies()
     }
     
 }
