@@ -37,27 +37,21 @@ class MovieDetailViewController: UIViewController {
         
         presenter.fetchAll()
         
+        bindViews()
+    }
+    
+    private func bindViews() {
         presenter
             .movieDetails
-            .sink(
-                receiveCompletion: { print("Ended with ", $0)},
-                receiveValue: { movie in
-                    DispatchQueue.main.async {
-                        self.titleView.populate(with: movie)
-                    }
-                })
+            .sink { [weak self] in
+                self?.setData($0)
+            }
             .store(in: &disposables)
-        
-        presenter
-            .overview
-            .sink(
-                receiveCompletion: { print("Ended with ", $0)},
-                receiveValue: { text in
-                    DispatchQueue.main.async {
-                        self.overview.text = text
-                    }
-                })
-            .store(in: &disposables)
+    }
+    
+    private func setData(_ data: DetailTitleViewModel) {
+        titleView.populate(with: data)
+        overview.text = data.overview
     }
 
 }
@@ -86,7 +80,7 @@ extension MovieDetailViewController: MovieDetailDelegate {
     }
     
     func reloadData() {
-        titleView.reloadData()
+        //titleView.reloadData()
     }
     
     func fillCrew(with crew: [CrewViewModel]) {

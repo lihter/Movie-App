@@ -33,7 +33,7 @@ class MoviesUseCase: MoviesUseCaseProtocol {
 //            self?.mapMovieDetailResult(result: result, completion: completion)
 //        }
 //    }
-    func getMovieDetails(for movieId: Int) -> AnyPublisher<MovieModel, RequestError> {
+    func getMovieDetails(for movieId: Int) -> AnyPublisher<MovieModel, Never> {
         moviesDataRepo
             .fetchMovieDetails(for: movieId)
             .map { MovieModel(fromModel: $0) }
@@ -50,12 +50,6 @@ class MoviesUseCase: MoviesUseCaseProtocol {
 //            }
 //        }
 //    }
-    func getMovieOverview(for movieId: Int) -> AnyPublisher<String, RequestError> {
-        moviesDataRepo
-            .fetchMovieDetails(for: movieId)
-            .map { $0.overview }
-            .eraseToAnyPublisher()
-    }
     
     func getMostPopularCast(for movieId: Int, completion: @escaping(Result<[CastModel], RequestError>) -> Void) {
         moviesDataRepo.fetchCast(for: movieId) { result in
@@ -136,10 +130,6 @@ class MoviesUseCase: MoviesUseCaseProtocol {
         moviesDataRepo.getFavoriteMovies { [weak self] result in
             self?.mapResult(result: result, completion: completion)
         }
-    }
-    
-    func checkIfFavorite(for movieId: Int) -> Bool {
-        moviesDataRepo.checkIfFavorite(for: movieId)
     }
 
 }

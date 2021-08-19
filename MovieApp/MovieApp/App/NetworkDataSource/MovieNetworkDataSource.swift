@@ -52,10 +52,12 @@ class MovieNetworkDataSource: MovieNetworkDataSourceProtocol {
 //        }
 //    }
     
-    func fetchMovieDetails(for movieId: Int) -> AnyPublisher<MovieDataModel, RequestError> {
+    func fetchMovieDetails(for movieId: Int) -> AnyPublisher<MovieDataModel, Never> {
         movieClient
             .fetchMovieDetails(for: movieId)
-            .map { MovieDataModel(fromModel: $0) }
+            .map {
+                print("Network DS -> ", $0)
+                return MovieDataModel(fromModel: $0) }
             .eraseToAnyPublisher()
     }
     

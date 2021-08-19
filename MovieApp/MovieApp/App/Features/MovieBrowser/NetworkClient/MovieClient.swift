@@ -42,16 +42,17 @@ class MovieClient: MovieClientProtocol {
 //        }
 //    }
     
-    func fetchMovieDetails(for movieId: Int) -> AnyPublisher<MovieDetailResponse, RequestError> {
+    func fetchMovieDetails(for movieId: Int) -> AnyPublisher<MovieDetailResponse, Never> {
         guard let url = URL(string: "https://api.themoviedb.org/3/movie/\(movieId)?api_key=ca4ebd2878172f71e1cfb5b5f748f928&language=en-US")
         else {
-            return Fail(error: RequestError.invalidEndpoint).eraseToAnyPublisher()
+            return .empty()
         }
         
         return URLSession.shared.dataTaskPublisher(for: url)
             .map { $0.data }
             .decode(type: MovieDetailResponse.self, decoder: JSONDecoder())
-            .mapError { self.mapError($0) }
+            .assertNoFailure()
+            .print()
             .eraseToAnyPublisher()
     }
     

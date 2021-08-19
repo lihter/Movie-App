@@ -35,7 +35,7 @@ class MovieRepository: MovieRepositoryProtocol {
                 let mappedMovies: [MovieRepoModel] = movies.map {
                     MovieRepoModel(
                         fromModel: $0,
-                        isFavorite: self.userDefaultsDataSource.isFavorite(movieId: $0.identifier),
+                        isFavorite: false,//self.userDefaultsDataSource.isFavorite(movieId: $0.identifier),
                         withGenre: Genre.day.rawValue)
                 }
                 if today, week {
@@ -56,7 +56,7 @@ class MovieRepository: MovieRepositoryProtocol {
                 let mappedMovies: [MovieRepoModel] = movies.map {
                     MovieRepoModel(
                         fromModel: $0,
-                        isFavorite: self?.userDefaultsDataSource.isFavorite(movieId: $0.identifier) ?? false,
+                        isFavorite: false,//self?.userDefaultsDataSource.isFavorite(movieId: $0.identifier) ?? false,
                         withGenre: Genre.week.rawValue)
                 }
                 if today, week {
@@ -83,10 +83,20 @@ class MovieRepository: MovieRepositoryProtocol {
 //        }
 //    }
     
-    func fetchMovieDetails(for movieId: Int) -> AnyPublisher<MovieRepoModel, RequestError> {
-        networkDataSource
+    func fetchMovieDetails(for movieId: Int) -> AnyPublisher<MovieRepoModel, Never> {
+        let userDefaultsPublisher = userDefaultsDataSource
+            .favorites
+            .print()
+            .eraseToAnyPublisher()
+        
+        return networkDataSource
             .fetchMovieDetails(for: movieId)
-            .map { MovieRepoModel(fromModel: $0) }
+            .combineLatest(userDefaultsPublisher)
+            .map { movie, favoriteArray -> MovieRepoModel in
+                let isFavorite = favoriteArray.contains(movie.identifier)
+                print("Repo -> ", movie)
+                return MovieRepoModel(fromModel: movie, isFavorite: isFavorite)
+            }
             .eraseToAnyPublisher()
     }
     
@@ -199,16 +209,10 @@ class MovieRepository: MovieRepositoryProtocol {
 //        }
         completion(.failure(.general))
     }
-    
+//
 //    var favoriteMovies: AnyPublisher<[MovieRepoModel], Never> {
 //
 //    }
-    
-    func checkIfFavorite(for movieId: Int) -> Bool {
-        userDefaultsDataSource
-            .favorites
-            .contains(movieId)
-    }
     
 }
 
@@ -222,7 +226,7 @@ extension MovieRepository {
         switch result {
         case .success(let movies):
             let mappedMovies: [MovieRepoModel] = movies.map {
-                MovieRepoModel(fromModel: $0, isFavorite: userDefaultsDataSource.isFavorite(movieId: $0.identifier))
+                MovieRepoModel(fromModel: $0, isFavorite: false)//userDefaultsDataSource.isFavorite(movieId: $0.identifier))
             }
             categoryMovies[category] = mappedMovies
             completion(.success(mappedMovies))
@@ -239,7 +243,7 @@ extension MovieRepository {
         case .success(let movie):
             let mappedMovie = MovieRepoModel(
                 fromModel: movie,
-                isFavorite: userDefaultsDataSource.favorites.contains(movie.identifier))
+                isFavorite: false)//userDefaultsDataSource.favorites.contains(movie.identifier))
             completion(.success(mappedMovie))
         case .failure(let error):
             completion(.failure(error))
@@ -250,7 +254,7 @@ extension MovieRepository {
         categoryMovies = categoryMovies
             .mapValues { categoryMovies in
                 categoryMovies
-                    .map { $0.copy(isFavorite: userDefaultsDataSource.favorites.contains($0.identifier)) }
+                    .map { $0.copy(isFavorite: false) }//userDefaultsDataSource.favorites.contains($0.identifier)) }
             }
     }
     

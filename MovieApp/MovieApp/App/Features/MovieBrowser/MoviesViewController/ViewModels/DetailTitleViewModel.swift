@@ -3,6 +3,7 @@ import Foundation
 struct DetailTitleViewModel {
     
     let title: String
+    let overview: String
     let year: String
     let releaseDate: String
     let genres: [String]
@@ -30,6 +31,7 @@ extension DetailTitleViewModel {
         
         self.init(
             title: model.title,
+            overview: model.overview,
             year: year,
             releaseDate: dateString,
             genres: model.genreIds!.map { Genre(rawValue: $0)?.genreName ?? "" },

@@ -10,10 +10,6 @@ final class MovieDetailPresenter {
     
     let movieId: Int!
     
-    var isFavorite: Bool {
-        useCase.checkIfFavorite(for: movieId)
-    }
-    
     init (useCase: MoviesUseCaseProtocol, router: AppRouter, for movieId: Int) {
         self.useCase = useCase
         self.router = router
@@ -45,11 +41,11 @@ final class MovieDetailPresenter {
 //            }
 //        }
 //    }
-    var movieDetails: AnyPublisher<DetailTitleViewModel, RequestError> {
+    var movieDetails: AnyPublisher<DetailTitleViewModel, Never> {
         useCase
             .getMovieDetails(for: movieId)
             .map { DetailTitleViewModel(fromModel: $0) }
-            .eraseToAnyPublisher()
+            .receiveOnMain()
     }
     
 //    func getOverview() {
@@ -64,10 +60,6 @@ final class MovieDetailPresenter {
 //            }
 //        }
 //    }
-    var overview: AnyPublisher<String, RequestError> {
-        useCase
-            .getMovieOverview(for: movieId)
-    }
 
     
     func getMostPopularCast() {

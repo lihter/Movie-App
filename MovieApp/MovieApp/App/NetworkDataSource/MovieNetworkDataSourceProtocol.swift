@@ -13,7 +13,7 @@ protocol MovieNetworkDataSourceProtocol {
     func fetchTopRatedTV(completion: @escaping(Result<[MovieDataModel], RequestError>) -> Void)
     
     //func fetchMovieDetails(for movieId: Int, completion: @escaping(Result<MovieDataModel, RequestError>) -> Void)
-    func fetchMovieDetails(for movieId: Int) -> AnyPublisher<MovieDataModel, RequestError>
+    func fetchMovieDetails(for movieId: Int) -> AnyPublisher<MovieDataModel, Never>
     
     func fetchCast(for movieId: Int, completion: @escaping(Result<[CastDataModel], RequestError>) -> Void)
     

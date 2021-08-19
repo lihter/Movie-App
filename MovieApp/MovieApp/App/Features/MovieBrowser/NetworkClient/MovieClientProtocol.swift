@@ -13,7 +13,7 @@ protocol MovieClientProtocol {
     func fetchTopRatedTV(completion: @escaping(Result<[TVShowResponse], RequestError>) -> Void)
     
     //func fetchMovieDetails(for movieId: Int, completion: @escaping(Result<MovieDetailResponse, RequestError>) -> Void)
-    func fetchMovieDetails(for movieId: Int) -> AnyPublisher<MovieDetailResponse, RequestError>
+    func fetchMovieDetails(for movieId: Int) -> AnyPublisher<MovieDetailResponse, Never>
     
     func fetchCast(for movieId: Int, completion: @escaping(Result<[CastResponse], RequestError>) -> Void)
     
