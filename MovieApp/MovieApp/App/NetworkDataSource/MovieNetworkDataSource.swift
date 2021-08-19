@@ -1,3 +1,5 @@
+import Combine
+
 class MovieNetworkDataSource: MovieNetworkDataSourceProtocol {
     
     static let shared: MovieNetworkDataSourceProtocol = MovieNetworkDataSource()
@@ -44,10 +46,17 @@ class MovieNetworkDataSource: MovieNetworkDataSourceProtocol {
         }
     }
     
-    func fetchMovieDetails(for movieId: Int, completion: @escaping(Result<MovieDataModel, RequestError>) -> Void) {
-        movieClient.fetchMovieDetails(for: movieId) { [weak self] result in
-            self?.mapMovieDetailResult(result: result, completion: completion)
-        }
+//    func fetchMovieDetails(for movieId: Int, completion: @escaping(Result<MovieDataModel, RequestError>) -> Void) {
+//        movieClient.fetchMovieDetails(for: movieId) { [weak self] result in
+//            self?.mapMovieDetailResult(result: result, completion: completion)
+//        }
+//    }
+    
+    func fetchMovieDetails(for movieId: Int) -> AnyPublisher<MovieDataModel, RequestError> {
+        movieClient
+            .fetchMovieDetails(for: movieId)
+            .map { MovieDataModel(fromModel: $0) }
+            .eraseToAnyPublisher()
     }
     
     func fetchCast(for movieId: Int, completion: @escaping(Result<[CastDataModel], RequestError>) -> Void) {

@@ -1,3 +1,4 @@
+import Combine
 import Foundation
 
 class MovieRepository: MovieRepositoryProtocol {
@@ -76,10 +77,17 @@ class MovieRepository: MovieRepositoryProtocol {
         }
     }
     
-    func fetchMovieDetails(for movieId: Int, completion: @escaping(Result<MovieRepoModel, RequestError>) -> Void) {
-        networkDataSource.fetchMovieDetails(for: movieId) { [weak self] result in
-            self?.mapMovieDetailResult(result: result, completion: completion)
-        }
+//    func fetchMovieDetails(for movieId: Int, completion: @escaping(Result<MovieRepoModel, RequestError>) -> Void) {
+//        networkDataSource.fetchMovieDetails(for: movieId) { [weak self] result in
+//            self?.mapMovieDetailResult(result: result, completion: completion)
+//        }
+//    }
+    
+    func fetchMovieDetails(for movieId: Int) -> AnyPublisher<MovieRepoModel, RequestError> {
+        networkDataSource
+            .fetchMovieDetails(for: movieId)
+            .map { MovieRepoModel(fromModel: $0) }
+            .eraseToAnyPublisher()
     }
     
     func fetchCast(for movieId: Int, completion: @escaping(Result<[CastRepoModel], RequestError>) -> Void) {
@@ -164,32 +172,37 @@ class MovieRepository: MovieRepositoryProtocol {
     }
     
     func getFavoriteMovies(completion: @escaping(Result<[MovieRepoModel], RequestError>) -> Void) {
-        var movies: [MovieRepoModel] = []
-        var counter: Int = 0
-        
-        let completionHandler: (Result<MovieDataModel, RequestError>) -> Void = { [weak self] result in
-            guard let self = self else { return }
-            
-            switch result {
-            case .success(let movie):
-                let mappedMovie = MovieRepoModel(
-                    fromModel: movie,
-                    isFavorite: self.userDefaultsDataSource.favorites.contains(movie.identifier))
-                counter += 1
-                movies.append(mappedMovie)
-            case .failure(let error):
-                print("Error fetching favorites. \(error.localizedDescription)")
-            }
-                        
-            if counter == self.userDefaultsDataSource.favorites.count {
-                completion(.success(movies))
-            }
-        }
-        
-        userDefaultsDataSource.favorites.forEach { movieId in
-            networkDataSource.fetchMovieDetails(for: movieId, completion: completionHandler)
-        }
+//        var movies: [MovieRepoModel] = []
+//        var counter: Int = 0
+//
+//        let completionHandler: (Result<MovieDataModel, RequestError>) -> Void = { [weak self] result in
+//            guard let self = self else { return }
+//
+//            switch result {
+//            case .success(let movie):
+//                let mappedMovie = MovieRepoModel(
+//                    fromModel: movie,
+//                    isFavorite: self.userDefaultsDataSource.favorites.contains(movie.identifier))
+//                counter += 1
+//                movies.append(mappedMovie)
+//            case .failure(let error):
+//                print("Error fetching favorites. \(error.localizedDescription)")
+//            }
+//
+//            if counter == self.userDefaultsDataSource.favorites.count {
+//                completion(.success(movies))
+//            }
+//        }
+//
+//        userDefaultsDataSource.favorites.forEach { movieId in
+//            networkDataSource.fetchMovieDetails(for: movieId, completion: completionHandler)
+//        }
+        completion(.failure(.general))
     }
+    
+//    var favoriteMovies: AnyPublisher<[MovieRepoModel], Never> {
+//
+//    }
     
     func checkIfFavorite(for movieId: Int) -> Bool {
         userDefaultsDataSource

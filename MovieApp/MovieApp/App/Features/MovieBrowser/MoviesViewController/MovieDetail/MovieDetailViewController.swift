@@ -1,3 +1,4 @@
+import Combine
 import UIKit
 
 class MovieDetailViewController: UIViewController {
@@ -5,6 +6,8 @@ class MovieDetailViewController: UIViewController {
     let offset: CGFloat = 4
         
     var presenter: MovieDetailPresenter!
+    
+    var disposables = Set<AnyCancellable>()
     
     var scrollView: UIScrollView!
     var contentView: UIView!
@@ -33,6 +36,28 @@ class MovieDetailViewController: UIViewController {
         buildViews()
         
         presenter.fetchAll()
+        
+        presenter
+            .movieDetails
+            .sink(
+                receiveCompletion: { print("Ended with ", $0)},
+                receiveValue: { movie in
+                    DispatchQueue.main.async {
+                        self.titleView.populate(with: movie)
+                    }
+                })
+            .store(in: &disposables)
+        
+        presenter
+            .overview
+            .sink(
+                receiveCompletion: { print("Ended with ", $0)},
+                receiveValue: { text in
+                    DispatchQueue.main.async {
+                        self.overview.text = text
+                    }
+                })
+            .store(in: &disposables)
     }
 
 }

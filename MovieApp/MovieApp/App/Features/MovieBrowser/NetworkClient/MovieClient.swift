@@ -1,3 +1,4 @@
+import Combine
 import Foundation
 import Alamofire
 
@@ -35,10 +36,23 @@ class MovieClient: MovieClientProtocol {
         }
     }
     
-    func fetchMovieDetails(for movieId: Int, completion: @escaping(Result<MovieDetailResponse, RequestError>) -> Void) {
-        fetch(forUrl: "movie/\(movieId)") { (result: Result<MovieDetailResponse, RequestError>) in
-            completion(result)
+//    func fetchMovieDetails(for movieId: Int, completion: @escaping(Result<MovieDetailResponse, RequestError>) -> Void) {
+//        fetch(forUrl: "movie/\(movieId)") { (result: Result<MovieDetailResponse, RequestError>) in
+//            completion(result)
+//        }
+//    }
+    
+    func fetchMovieDetails(for movieId: Int) -> AnyPublisher<MovieDetailResponse, RequestError> {
+        guard let url = URL(string: "https://api.themoviedb.org/3/movie/\(movieId)?api_key=ca4ebd2878172f71e1cfb5b5f748f928&language=en-US")
+        else {
+            return Fail(error: RequestError.invalidEndpoint).eraseToAnyPublisher()
         }
+        
+        return URLSession.shared.dataTaskPublisher(for: url)
+            .map { $0.data }
+            .decode(type: MovieDetailResponse.self, decoder: JSONDecoder())
+            .mapError { self.mapError($0) }
+            .eraseToAnyPublisher()
     }
     
     func fetchCast(for movieId: Int, completion: @escaping(Result<[CastResponse], RequestError>) -> Void) {
@@ -108,6 +122,34 @@ extension MovieClient {
                 completion(.success(value))
             }
         }
+    }
+    
+}
+
+extension MovieClient {
+    
+    private func mapError(_ error: AFError) -> RequestError {
+        switch error {
+        case .createURLRequestFailed(error: _),
+             .urlRequestValidationFailed(reason: _):
+            return .invalidRequest
+        case .invalidURL(url: _):
+            return .invalidEndpoint
+        case .responseValidationFailed(reason: _),
+             .responseSerializationFailed(reason: _):
+            return .invalidResponse
+        case .serverTrustEvaluationFailed(reason: _),
+             .sessionDeinitialized,
+             .sessionInvalidated(error: _),
+             .sessionTaskFailed(error: _):
+            return .apiError
+        default:
+            return .general
+        }
+    }
+    
+    private func mapError(_ error: Error) -> RequestError {
+        .invalidRequest
     }
     
 }
