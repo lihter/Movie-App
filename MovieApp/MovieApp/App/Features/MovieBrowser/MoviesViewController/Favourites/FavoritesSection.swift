@@ -1,3 +1,5 @@
 enum FavoritesSection {
+    
     case mainSection
+    
 }
