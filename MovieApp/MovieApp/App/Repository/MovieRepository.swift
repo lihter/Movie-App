@@ -179,7 +179,7 @@ class MovieRepository: MovieRepositoryProtocol {
             .first(where: { $0.identifier == movieId })
     }
     
-    func getFavoriteMovies(completion: @escaping(Result<[MovieRepoModel], RequestError>) -> Void) {
+//    func getFavoriteMovies(completion: @escaping(Result<[MovieRepoModel], RequestError>) -> Void) {
 //        var movies: [MovieRepoModel] = []
 //        var counter: Int = 0
 //
@@ -205,13 +205,26 @@ class MovieRepository: MovieRepositoryProtocol {
 //        userDefaultsDataSource.favorites.forEach { movieId in
 //            networkDataSource.fetchMovieDetails(for: movieId, completion: completionHandler)
 //        }
-        completion(.failure(.general))
-    }
-//
-//    var favoriteMovies: AnyPublisher<[MovieRepoModel], Never> {
-//
+//        completion(.failure(.general))
 //    }
-    
+//
+    var favoriteMovies: AnyPublisher<[MovieRepoModel], Never> {
+        userDefaultsDataSource
+            .favorites
+            .flatMap { [weak self] favoriteMovieIds -> AnyPublisher<[MovieDataModel], Never> in
+                guard let self = self else { return .empty() }
+                
+                let movieDataModelPublishers = favoriteMovieIds.map {
+                    self.networkDataSource.fetchMovieDetails(for: $0)
+                }
+                return Publishers
+                    .MergeMany(movieDataModelPublishers)
+                    .collect()
+                    .eraseToAnyPublisher()
+            }
+            .map { $0.map { MovieRepoModel(fromModel: $0, isFavorite: true) } }
+            .eraseToAnyPublisher()
+    }
 }
 
 extension MovieRepository {

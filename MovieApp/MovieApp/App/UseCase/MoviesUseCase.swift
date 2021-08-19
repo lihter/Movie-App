@@ -126,10 +126,16 @@ class MoviesUseCase: MoviesUseCaseProtocol {
         return MovieModel(fromModel: repoMovie)
     }
     
-    func getFavoriteMovies(completion: @escaping(Result<[MovieModel], RequestError>) -> Void) {
-        moviesDataRepo.getFavoriteMovies { [weak self] result in
-            self?.mapResult(result: result, completion: completion)
-        }
+//    func getFavoriteMovies(completion: @escaping(Result<[MovieModel], RequestError>) -> Void) {
+//        moviesDataRepo.getFavoriteMovies { [weak self] result in
+//            self?.mapResult(result: result, completion: completion)
+//        }
+//    }
+    var favoriteMovies: AnyPublisher<[MovieModel], Never> {
+        moviesDataRepo
+            .favoriteMovies
+            .map { $0.map { MovieModel(fromModel: $0) } }
+            .eraseToAnyPublisher()
     }
 
 }

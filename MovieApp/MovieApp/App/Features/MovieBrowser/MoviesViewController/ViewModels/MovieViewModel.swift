@@ -11,6 +11,18 @@ struct MovieViewModel {
 
 }
 
+extension MovieViewModel: Hashable {
+    
+    func hash(into hasher: inout Hasher) {
+        hasher.combine(identifier)
+    }
+    
+    static func == (lhs: MovieViewModel, rhs: MovieViewModel) -> Bool {
+        lhs.identifier == rhs.identifier
+    }
+    
+}
+
 extension MovieViewModel {
     
     init(fromModel model: MovieModel) {

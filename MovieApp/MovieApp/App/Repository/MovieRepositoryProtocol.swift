@@ -27,6 +27,7 @@ protocol MovieRepositoryProtocol {
     
     func getMovie(with movieId: Int) -> MovieRepoModel?
     
-    func getFavoriteMovies(completion: @escaping(Result<[MovieRepoModel], RequestError>) -> Void)
+//    func getFavoriteMovies(completion: @escaping(Result<[MovieRepoModel], RequestError>) -> Void)
+    var favoriteMovies: AnyPublisher<[MovieRepoModel], Never> { get }
         
 }

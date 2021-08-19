@@ -1,3 +1,4 @@
+import Combine
 import Foundation
 
 final class FavoritesPresenter {
@@ -15,18 +16,24 @@ final class FavoritesPresenter {
         self.delegate = delegate
     }
     
-    func getFavouriteMovies() {
-        useCase.getFavoriteMovies { [weak self] result in
-            guard let self = self else { return }
-            
-            switch result {
-            case .success(let movies):
-                let mappedMovies = movies.map { MovieViewModel(fromModel: $0) }
-                self.delegate?.showMovies(mappedMovies)
-            case .failure(let error):
-                print("Loading error: \(error.localizedDescription)")
-            }
-        }
+//    func getFavouriteMovies() {
+//        useCase.getFavoriteMovies { [weak self] result in
+//            guard let self = self else { return }
+//
+//            switch result {
+//            case .success(let movies):
+//                let mappedMovies = movies.map { MovieViewModel(fromModel: $0) }
+//                self.delegate?.showMovies(mappedMovies)
+//            case .failure(let error):
+//                print("Loading error: \(error.localizedDescription)")
+//            }
+//        }
+//    }
+    var favoriteMovies: AnyPublisher<[MovieViewModel], Never> {
+        useCase
+            .favoriteMovies
+            .map { $0.map { MovieViewModel(fromModel: $0) } }
+            .receiveOnMain()
     }
     
     func showDetailScreen(for movieId: Int) {
