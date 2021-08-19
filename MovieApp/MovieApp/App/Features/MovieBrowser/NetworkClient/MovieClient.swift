@@ -52,8 +52,7 @@ class MovieClient: MovieClientProtocol {
             .map { $0.data }
             .decode(type: MovieDetailResponse.self, decoder: JSONDecoder())
             .assertNoFailure()
-            .print()
-            .eraseToAnyPublisher()
+            .subscribeOnBackground()
     }
     
     func fetchCast(for movieId: Int, completion: @escaping(Result<[CastResponse], RequestError>) -> Void) {

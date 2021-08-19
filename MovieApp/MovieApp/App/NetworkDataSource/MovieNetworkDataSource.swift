@@ -55,9 +55,7 @@ class MovieNetworkDataSource: MovieNetworkDataSourceProtocol {
     func fetchMovieDetails(for movieId: Int) -> AnyPublisher<MovieDataModel, Never> {
         movieClient
             .fetchMovieDetails(for: movieId)
-            .map {
-                print("Network DS -> ", $0)
-                return MovieDataModel(fromModel: $0) }
+            .map { MovieDataModel(fromModel: $0) }
             .eraseToAnyPublisher()
     }
     

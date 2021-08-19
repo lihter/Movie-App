@@ -86,7 +86,6 @@ class MovieRepository: MovieRepositoryProtocol {
     func fetchMovieDetails(for movieId: Int) -> AnyPublisher<MovieRepoModel, Never> {
         let userDefaultsPublisher = userDefaultsDataSource
             .favorites
-            .print()
             .eraseToAnyPublisher()
         
         return networkDataSource
@@ -94,7 +93,6 @@ class MovieRepository: MovieRepositoryProtocol {
             .combineLatest(userDefaultsPublisher)
             .map { movie, favoriteArray -> MovieRepoModel in
                 let isFavorite = favoriteArray.contains(movie.identifier)
-                print("Repo -> ", movie)
                 return MovieRepoModel(fromModel: movie, isFavorite: isFavorite)
             }
             .eraseToAnyPublisher()
