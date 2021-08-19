@@ -36,7 +36,6 @@ class MovieDetailViewController: UIViewController {
         buildViews()
         
         presenter.fetchAll()
-        
         bindViews()
     }
     

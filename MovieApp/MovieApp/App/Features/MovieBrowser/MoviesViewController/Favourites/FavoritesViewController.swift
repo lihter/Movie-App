@@ -60,17 +60,23 @@ class FavoritesViewController: UIViewController {
                 else {
                     return UICollectionViewCell()
                 }
+
+                cell
+                    .movieImageView
+                    .throttledTapGesture()
+                    .sink { [weak self] _ in
+                        self?.presenter.showDetailScreen(for: movie.identifier)
+                    }
+                    .store(in: &cell.disposables)
                 
-                cell.showDetailScreen = { [weak self] movieId in
-                    guard let self = self else { return }
-                    
-                    self.presenter.showDetailScreen(for: movieId)
-                }
-                cell.favoritePressed = { [weak self] movieId in
-                    guard let self = self else { return }
-                    
-                    self.presenter.toggleFavorite(movieId)
-                }
+                cell
+                    .favouriteButton
+                    .throttledTap()
+                    .sink { [weak self] _ in
+                        self?.presenter.toggleFavorite(movie.identifier)
+                    }
+                    .store(in: &cell.disposables)
+                
                 cell.populate(withMovie: movie)
                 return cell
             })
