@@ -225,6 +225,7 @@ class MovieRepository: MovieRepositoryProtocol {
             .map { $0.map { MovieRepoModel(fromModel: $0, isFavorite: true) } }
             .eraseToAnyPublisher()
     }
+    
 }
 
 extension MovieRepository {
