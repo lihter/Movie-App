@@ -27,7 +27,6 @@ class MoviesUseCase: MoviesUseCaseProtocol {
             self?.mapResult(result: result, completion: completion)
         }
     }
-
     func getMovieDetails(for movieId: Int) -> AnyPublisher<MovieModel, Never> {
         moviesDataRepo
             .fetchMovieDetails(for: movieId)

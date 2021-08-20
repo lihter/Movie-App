@@ -33,7 +33,6 @@ final class MovieDetailPresenter {
             .map { DetailTitleViewModel(fromModel: $0) }
             .receiveOnMain()
     }
-
     func getMostPopularCast() {
         useCase.getMostPopularCast(for: movieId) { [weak self] result in
             guard let self = self else { return }
