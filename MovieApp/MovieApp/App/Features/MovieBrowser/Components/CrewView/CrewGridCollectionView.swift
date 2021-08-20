@@ -1,11 +1,14 @@
+import Combine
 import UIKit
 
 class CrewGridCollectionView: UIView {
     
+    typealias DataSource = UICollectionViewDiffableDataSource<CrewSection, CrewViewModel>
+    typealias Snapshot = NSDiffableDataSourceSnapshot<CrewSection, CrewViewModel>
+    
     let spacing: CGFloat = 8
     let numberOfColumns: Int = 3
     
-    var crew: [CrewViewModel]!
     var numberOfRows: Int = 0 {
         didSet {
             collectionView.snp.updateConstraints {
@@ -16,12 +19,13 @@ class CrewGridCollectionView: UIView {
     
     var layout: UICollectionViewFlowLayout!
     var collectionView: UICollectionView!
+    lazy var dataSource = makeDataSource()
+    
+    private var disposables = Set<AnyCancellable>()
     
     init() {
         super.init(frame: .zero)
-        
-        crew = []
-        
+                
         buildViews()
         setupCollectionView()
     }
@@ -32,44 +36,34 @@ class CrewGridCollectionView: UIView {
     
     func setupCollectionView() {
         collectionView.register(CrewCell.self, forCellWithReuseIdentifier: CrewCell.reuseIdentifier)
-        collectionView.dataSource = self
         collectionView.delegate = self
     }
     
-    func populate(with crew: [CrewViewModel]) {
-        self.crew = crew
+    private func makeDataSource() -> DataSource {
+        let dataSource = DataSource(
+            collectionView: collectionView,
+            cellProvider: { (collectionView, indexPath, crewMember) -> UICollectionViewCell? in
+                guard
+                    let cell = collectionView.dequeueReusableCell(
+                        withReuseIdentifier: CrewCell.reuseIdentifier,
+                        for: indexPath) as? CrewCell
+                else {
+                    return UICollectionViewCell()
+                }
+                
+                cell.populate(with: crewMember)
+                return cell
+            })
+        return dataSource
+    }
+    
+    func applySnapshot(with crew: [CrewViewModel], animatingDifferences: Bool = true) {
         numberOfRows = Int(ceil(Double(crew.count) / 3.0))
 
-        collectionView.reloadData()
-    }
-    
-}
-
-extension CrewGridCollectionView: UICollectionViewDataSource {
-    
-    func numberOfSections(in collectionView: UICollectionView) -> Int {
-        1
-    }
-    
-    func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
-        return crew.count
-    }
-    
-    func collectionView(
-        _ collectionView: UICollectionView,
-        cellForItemAt indexPath: IndexPath
-    ) -> UICollectionViewCell {
-        guard
-            let cell = collectionView.dequeueReusableCell(
-                withReuseIdentifier: CrewCell.reuseIdentifier,
-                for: indexPath) as? CrewCell,
-            let crewMember = crew?[indexPath.item]
-        else {
-            return UICollectionViewCell()
-        }
-
-        cell.populate(with: crewMember)
-        return cell
+        var snapshot = Snapshot()
+        snapshot.appendSections([.mainSection])
+        snapshot.appendItems(crew)
+        dataSource.apply(snapshot, animatingDifferences: animatingDifferences)
     }
     
 }

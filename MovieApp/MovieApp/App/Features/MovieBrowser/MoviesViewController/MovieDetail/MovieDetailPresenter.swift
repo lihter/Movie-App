@@ -15,35 +15,55 @@ final class MovieDetailPresenter {
         self.movieId = movieId
     }
     
-    var movieDetails: AnyPublisher<DetailTitleViewModel, Never> {
+    var details: AnyPublisher<DetailViewModel, Never> {
+        let castAndCrewPubliser: AnyPublisher<CastAndCrewViewModel, Never> = Publishers
+            .CombineLatest(mostPopularCast, crew)
+            .map { cast, crew in
+                CastAndCrewViewModel(cast: cast, crew: crew)
+            }
+            .eraseToAnyPublisher()
+        
+        return Publishers
+            .CombineLatest4(movieDetails, castAndCrewPubliser, recommendations, review)
+            .map { titleDetails, castAndCrew, recommendations, review in
+                DetailViewModel(
+                    titleDetails: titleDetails,
+                    castAndCrew: castAndCrew,
+                    recommendations: recommendations,
+                    review: review)
+            }
+            .eraseToAnyPublisher()
+    }
+    
+    private var movieDetails: AnyPublisher<DetailTitleViewModel, Never> {
         useCase
             .getMovieDetails(for: movieId)
             .map { DetailTitleViewModel(fromModel: $0) }
             .receiveOnMain()
     }
 
-    var mostPopularCast: AnyPublisher<[CastViewModel], Never> {
+    private var mostPopularCast: AnyPublisher<[CastViewModel], Never> {
         useCase
             .getMostPopularCast(for: movieId)
             .map { $0.map { CastViewModel(fromModel: $0) } }
             .receiveOnMain()
     }
     
-    var crew: AnyPublisher<[CrewViewModel], Never> {
+    private var crew: AnyPublisher<[CrewViewModel], Never> {
         useCase
             .getCrew(for: movieId)
             .map { $0.map { CrewViewModel(fromModel: $0) } }
             .receiveOnMain()
     }
     
-    var recommendations: AnyPublisher<[MovieViewModel], Never> {
+    private var recommendations: AnyPublisher<[MovieViewModel], Never> {
         useCase
             .getRecommendations(for: movieId)
             .map { $0.map { MovieViewModel(fromModel: $0) } }
             .receiveOnMain()
     }
     
-    var review: AnyPublisher<ReviewViewModel?, Never> {
+    private var review: AnyPublisher<ReviewViewModel?, Never> {
         useCase
             .fetchReviews(for: movieId)
             .map { review in

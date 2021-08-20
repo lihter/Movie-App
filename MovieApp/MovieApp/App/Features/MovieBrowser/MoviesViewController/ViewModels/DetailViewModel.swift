@@ -1,8 +1,7 @@
 struct DetailViewModel {
     
     let titleDetails: DetailTitleViewModel
-    let cast: [CastViewModel]
-    let crew: [CrewViewModel]
+    let castAndCrew: CastAndCrewViewModel
     let recommendations: [MovieViewModel]
     let review: ReviewViewModel?
     

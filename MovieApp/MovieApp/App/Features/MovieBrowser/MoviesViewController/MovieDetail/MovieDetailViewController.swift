@@ -39,48 +39,28 @@ class MovieDetailViewController: UIViewController {
     
     private func bindViews() {
         presenter
-            .movieDetails
+            .details
             .sink { [weak self] in
                 self?.setData($0)
             }
             .store(in: &disposables)
-        
-        presenter
-            .mostPopularCast
-            .sink { [weak self] in
-                self?.castView.populate(with: $0)
-            }
-            .store(in: &disposables)
-        
-        presenter
-            .crew
-            .sink { [weak self] in
-                self?.crewGridCollectionView.populate(with: $0)
-            }
-            .store(in: &disposables)
-        
-        presenter
-            .recommendations
-            .sink { [weak self] in
-                self?.recommendationsView.populate(with: $0)
-            }
-            .store(in: &disposables)
-        
-        presenter
-            .review
-            .sink { [weak self] review in
-                if let review = review {
-                    self?.review.populate(with: review)
-                }
-            }
-            .store(in: &disposables)
     }
-    
-    private func setData(_ data: DetailTitleViewModel) {
-        titleView.populate(with: data)
+
+    private func setData(_ data: DetailViewModel) {
+        titleView.populate(with: data.titleDetails)
         
-        overview.text = data.overview
+        overview.text = data.titleDetails.overview
         self.overview.setLineSpacing(lineSpacing: 0, lineHeightMultiple: 1.4)
+        
+        castView.applySnapshot(with: data.castAndCrew.cast)
+        
+        crewGridCollectionView.applySnapshot(with: data.castAndCrew.crew)
+        
+        recommendationsView.applySnapshot(with: data.recommendations)
+        
+        if let review = data.review {
+            self.review.populate(with: review)
+        }
     }
 
 }

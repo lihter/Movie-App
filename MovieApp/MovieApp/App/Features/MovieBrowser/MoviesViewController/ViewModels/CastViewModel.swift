@@ -8,6 +8,18 @@ struct CastViewModel {
     
 }
 
+extension CastViewModel: Hashable {
+    
+    func hash(into hasher: inout Hasher) {
+        hasher.combine("\(name)\(characterName)")
+    }
+    
+    static func == (lhs: CastViewModel, rhs: CastViewModel) -> Bool {
+        lhs.name == rhs.name && lhs.characterName == rhs.characterName
+    }
+    
+}
+
 extension CastViewModel {
     
     init(fromModel model: CastModel) {

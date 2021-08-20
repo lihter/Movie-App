@@ -1,14 +1,19 @@
+import Combine
 import UIKit
 
 class RecommendationsView: UIView {
+    
+    typealias DataSource = UICollectionViewDiffableDataSource<RecommendationsSection, MovieViewModel>
+    typealias Snapshot = NSDiffableDataSourceSnapshot<RecommendationsSection, MovieViewModel>
         
     let offset: CGFloat = 4
-    
-    var recommendations: [MovieViewModel]!
-    
+        
     var recommendationsLabel: UILabel!
     var flowLayout: UICollectionViewFlowLayout!
     var collectionView: UICollectionView!
+    lazy var dataSource = makeDataSource()
+    
+    private var disposables = Set<AnyCancellable>()
     
     init() {
         super.init(frame: .zero)
@@ -23,38 +28,32 @@ class RecommendationsView: UIView {
     
     private func setupCollectionView() {
         collectionView.register(RecommendationCell.self, forCellWithReuseIdentifier: RecommendationCell.reuseIdentifier)
-        collectionView.dataSource = self
         collectionView.delegate = self
     }
-    
-    func populate(with movies: [MovieViewModel]) {
-        recommendations = movies
-        collectionView.reloadData()
-    }
-    
-}
 
-extension RecommendationsView: UICollectionViewDataSource {
-    
-    func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
-        recommendations?.count ?? 0
+    private func makeDataSource() -> DataSource {
+        let dataSource = DataSource(
+            collectionView: collectionView,
+            cellProvider: { (collectionView, indexPath, movie) -> UICollectionViewCell? in
+                guard
+                    let cell = collectionView.dequeueReusableCell(
+                        withReuseIdentifier: RecommendationCell.reuseIdentifier,
+                        for: indexPath) as? RecommendationCell
+                else {
+                    return UICollectionViewCell()
+                }
+                
+                cell.populate(withMovie: movie)
+                return cell
+            })
+        return dataSource
     }
     
-    func collectionView(
-        _ collectionView: UICollectionView,
-        cellForItemAt indexPath: IndexPath
-    ) -> UICollectionViewCell {
-        guard
-            let cell = collectionView.dequeueReusableCell(
-                withReuseIdentifier: RecommendationCell.reuseIdentifier,
-                for: indexPath) as? RecommendationCell,
-            let movie = recommendations?[indexPath.item]
-        else {
-            return UICollectionViewCell()
-        }
-        
-        cell.populate(withMovie: movie)
-        return cell
+    func applySnapshot(with movies: [MovieViewModel], animatingDifferences: Bool = true) {
+        var snapshot = Snapshot()
+        snapshot.appendSections([.mainSection])
+        snapshot.appendItems(movies)
+        dataSource.apply(snapshot, animatingDifferences: animatingDifferences)
     }
     
 }
