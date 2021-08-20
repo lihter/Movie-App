@@ -1,3 +1,5 @@
+import Combine
+
 protocol MovieRepositoryProtocol {
     
     func fetchPopularMovies(completion: @escaping (Result<[MovieRepoModel], RequestError>) -> Void)
@@ -6,7 +8,8 @@ protocol MovieRepositoryProtocol {
     
     func fetchTopRatedMovies(completion: @escaping(Result<[MovieRepoModel], RequestError>) -> Void)
         
-    func fetchMovieDetails(for movieId: Int, completion: @escaping(Result<MovieRepoModel, RequestError>) -> Void)
+    //func fetchMovieDetails(for movieId: Int, completion: @escaping(Result<MovieRepoModel, RequestError>) -> Void)
+    func fetchMovieDetails(for movieId: Int) -> AnyPublisher<MovieRepoModel, Never>
     
     func fetchCast(for movieId: Int, completion: @escaping(Result<[CastRepoModel], RequestError>) -> Void)
     
@@ -25,7 +28,5 @@ protocol MovieRepositoryProtocol {
     func getMovie(with movieId: Int) -> MovieRepoModel?
     
     func getFavoriteMovies(completion: @escaping(Result<[MovieRepoModel], RequestError>) -> Void)
-    
-    func checkIfFavorite(for movieId: Int) -> Bool
-    
+        
 }

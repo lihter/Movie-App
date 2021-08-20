@@ -1,3 +1,4 @@
+import Combine
 import UIKit
 
 class MovieDetailViewController: UIViewController {
@@ -5,6 +6,8 @@ class MovieDetailViewController: UIViewController {
     let offset: CGFloat = 4
         
     var presenter: MovieDetailPresenter!
+    
+    var disposables = Set<AnyCancellable>()
     
     var scrollView: UIScrollView!
     var contentView: UIView!
@@ -33,6 +36,22 @@ class MovieDetailViewController: UIViewController {
         buildViews()
         
         presenter.fetchAll()
+        
+        bindViews()
+    }
+    
+    private func bindViews() {
+        presenter
+            .movieDetails
+            .sink { [weak self] in
+                self?.setData($0)
+            }
+            .store(in: &disposables)
+    }
+    
+    private func setData(_ data: DetailTitleViewModel) {
+        titleView.populate(with: data)
+        overview.text = data.overview
     }
 
 }
@@ -61,7 +80,7 @@ extension MovieDetailViewController: MovieDetailDelegate {
     }
     
     func reloadData() {
-        titleView.reloadData()
+        //titleView.reloadData()
     }
     
     func fillCrew(with crew: [CrewViewModel]) {

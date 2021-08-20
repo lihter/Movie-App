@@ -108,6 +108,7 @@
 		6397421D26CD3EF900A2D0B1 /* UIControl+Combine.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6397421C26CD3EF900A2D0B1 /* UIControl+Combine.swift */; };
 		6397421F26CD3EFF00A2D0B1 /* UIView+Combine.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6397421E26CD3EFF00A2D0B1 /* UIView+Combine.swift */; };
 		6397422126CD3F4000A2D0B1 /* UIBarButtonItem+Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6397422026CD3F4000A2D0B1 /* UIBarButtonItem+Extensions.swift */; };
+		6397422326CE569100A2D0B1 /* UserDefaults+key.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6397422226CE569100A2D0B1 /* UserDefaults+key.swift */; };
 		63A8E41126CBE4F000783D31 /* CrewGridCollectionView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 63A8E41026CBE4F000783D31 /* CrewGridCollectionView.swift */; };
 		63A8E41326CBE50100783D31 /* CrewGridCollectionView+Design.swift in Sources */ = {isa = PBXBuildFile; fileRef = 63A8E41226CBE50100783D31 /* CrewGridCollectionView+Design.swift */; };
 		63BD081026A1C30900AF366A /* NetworkClient.swift in Sources */ = {isa = PBXBuildFile; fileRef = 63BD080F26A1C30900AF366A /* NetworkClient.swift */; };
@@ -236,6 +237,7 @@
 		6397421C26CD3EF900A2D0B1 /* UIControl+Combine.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "UIControl+Combine.swift"; sourceTree = "<group>"; };
 		6397421E26CD3EFF00A2D0B1 /* UIView+Combine.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "UIView+Combine.swift"; sourceTree = "<group>"; };
 		6397422026CD3F4000A2D0B1 /* UIBarButtonItem+Extensions.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "UIBarButtonItem+Extensions.swift"; sourceTree = "<group>"; };
+		6397422226CE569100A2D0B1 /* UserDefaults+key.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UserDefaults+key.swift"; sourceTree = "<group>"; };
 		63A8E41026CBE4F000783D31 /* CrewGridCollectionView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CrewGridCollectionView.swift; sourceTree = "<group>"; };
 		63A8E41226CBE50100783D31 /* CrewGridCollectionView+Design.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "CrewGridCollectionView+Design.swift"; sourceTree = "<group>"; };
 		63BD080F26A1C30900AF366A /* NetworkClient.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NetworkClient.swift; sourceTree = "<group>"; };
@@ -427,6 +429,7 @@
 				6397422026CD3F4000A2D0B1 /* UIBarButtonItem+Extensions.swift */,
 				63019A2926B17AC200584356 /* UIStackView.swift */,
 				630CDD6826B4330E0052D290 /* UILabel+setLineSpacing.swift */,
+				6397422226CE569100A2D0B1 /* UserDefaults+key.swift */,
 			);
 			path = Extensions;
 			sourceTree = "<group>";
@@ -925,6 +928,7 @@
 				631628C626C26390009299C5 /* UserDefaultsDataSourceProtocol.swift in Sources */,
 				633E7E9A26A942CD0091322D /* GenreView.swift in Sources */,
 				630CDD9A26BA84170052D290 /* ReviewResponse.swift in Sources */,
+				6397422326CE569100A2D0B1 /* UserDefaults+key.swift in Sources */,
 				6397421D26CD3EF900A2D0B1 /* UIControl+Combine.swift in Sources */,
 				630CDD8826B824FF0052D290 /* ReviewViewModel.swift in Sources */,
 				633E7EA526A96D140091322D /* FavouriteButton.swift in Sources */,

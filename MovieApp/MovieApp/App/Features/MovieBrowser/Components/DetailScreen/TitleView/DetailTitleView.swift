@@ -26,7 +26,6 @@ class DetailTitleView: UIView {
     }
     
     public var favoritePressed: (() -> ())!
-    public var checkIfFavorite: (() -> Bool)!
         
     init() {
         super.init(frame: .zero)
@@ -63,10 +62,6 @@ class DetailTitleView: UIView {
     
     @objc func favoriteButtonPressed() {
         favoritePressed()
-    }
-    
-    func reloadData() {
-        isFavorite = checkIfFavorite()
     }
     
 }

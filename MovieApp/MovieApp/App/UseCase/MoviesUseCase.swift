@@ -1,3 +1,5 @@
+import Combine
+
 class MoviesUseCase: MoviesUseCaseProtocol {
     
     static let shared: MoviesUseCaseProtocol = MoviesUseCase()
@@ -25,22 +27,29 @@ class MoviesUseCase: MoviesUseCaseProtocol {
             self?.mapResult(result: result, completion: completion)
         }
     }
-    func getMovieDetails(for movieId: Int, completion: @escaping(Result<MovieModel, RequestError>) -> Void) {
-        moviesDataRepo.fetchMovieDetails(for: movieId) { [weak self] result in
-            self?.mapMovieDetailResult(result: result, completion: completion)
-        }
+    
+//    func getMovieDetails(for movieId: Int, completion: @escaping(Result<MovieModel, RequestError>) -> Void) {
+//        moviesDataRepo.fetchMovieDetails(for: movieId) { [weak self] result in
+//            self?.mapMovieDetailResult(result: result, completion: completion)
+//        }
+//    }
+    func getMovieDetails(for movieId: Int) -> AnyPublisher<MovieModel, Never> {
+        moviesDataRepo
+            .fetchMovieDetails(for: movieId)
+            .map { MovieModel(fromModel: $0) }
+            .eraseToAnyPublisher()
     }
     
-    func getMovieOverview(for movieId: Int, completion: @escaping(Result<String, RequestError>) -> Void) {
-        moviesDataRepo.fetchMovieDetails(for: movieId) { result in
-            switch result {
-            case .failure(let error):
-                completion(.failure(error))
-            case .success(let movie):
-                completion(.success(movie.overview))
-            }
-        }
-    }
+//    func getMovieOverview(for movieId: Int, completion: @escaping(Result<String, RequestError>) -> Void) {
+//        moviesDataRepo.fetchMovieDetails(for: movieId) { result in
+//            switch result {
+//            case .failure(let error):
+//                completion(.failure(error))
+//            case .success(let movie):
+//                completion(.success(movie.overview))
+//            }
+//        }
+//    }
     
     func getMostPopularCast(for movieId: Int, completion: @escaping(Result<[CastModel], RequestError>) -> Void) {
         moviesDataRepo.fetchCast(for: movieId) { result in
@@ -121,10 +130,6 @@ class MoviesUseCase: MoviesUseCaseProtocol {
         moviesDataRepo.getFavoriteMovies { [weak self] result in
             self?.mapResult(result: result, completion: completion)
         }
-    }
-    
-    func checkIfFavorite(for movieId: Int) -> Bool {
-        moviesDataRepo.checkIfFavorite(for: movieId)
     }
 
 }

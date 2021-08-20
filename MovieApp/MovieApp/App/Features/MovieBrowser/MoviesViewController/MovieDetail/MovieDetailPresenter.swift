@@ -1,3 +1,4 @@
+import Combine
 import Foundation
 import UIKit
 
@@ -8,10 +9,6 @@ final class MovieDetailPresenter {
     private let router: AppRouter!
     
     let movieId: Int!
-    
-    var isFavorite: Bool {
-        useCase.checkIfFavorite(for: movieId)
-    }
     
     init (useCase: MoviesUseCaseProtocol, router: AppRouter, for movieId: Int) {
         self.useCase = useCase
@@ -24,39 +21,46 @@ final class MovieDetailPresenter {
     }
     
     func fetchAll() {
-        getMovieDetails()
-        getOverview()
+        //getMovieDetails()
+        //getOverview()
         getMostPopularCast()
         getCrew()
         getRecommendations()
         getReview()
     }
     
-    func getMovieDetails() {
-        useCase.getMovieDetails(for: movieId) { [weak self] result in
-            guard let self = self else { return }
-            
-            switch result {
-            case .success(let movie):
-                self.delegate?.fillDetailTitleView(with: DetailTitleViewModel(fromModel: movie))
-            case .failure(let error):
-                print("Loading error: \(error.localizedDescription)")
-            }
-        }
+//    func getMovieDetails() {
+//        useCase.getMovieDetails(for: movieId) { [weak self] result in
+//            guard let self = self else { return }
+//
+//            switch result {
+//            case .success(let movie):
+//                self.delegate?.fillDetailTitleView(with: DetailTitleViewModel(fromModel: movie))
+//            case .failure(let error):
+//                print("Loading error: \(error.localizedDescription)")
+//            }
+//        }
+//    }
+    var movieDetails: AnyPublisher<DetailTitleViewModel, Never> {
+        useCase
+            .getMovieDetails(for: movieId)
+            .map { DetailTitleViewModel(fromModel: $0) }
+            .receiveOnMain()
     }
     
-    func getOverview() {
-        useCase.getMovieOverview(for: movieId) { [weak self] result in
-            guard let self = self else { return }
-            
-            switch result {
-            case .success(let overview):
-                self.delegate?.fillOverview(with: overview)
-            case .failure(let error):
-                print("Loading error: \(error.localizedDescription)")
-            }
-        }
-    }
+//    func getOverview() {
+//        useCase.getMovieOverview(for: movieId) { [weak self] result in
+//            guard let self = self else { return }
+//
+//            switch result {
+//            case .success(let overview):
+//                self.delegate?.fillOverview(with: overview)
+//            case .failure(let error):
+//                print("Loading error: \(error.localizedDescription)")
+//            }
+//        }
+//    }
+
     
     func getMostPopularCast() {
         useCase.getMostPopularCast(for: movieId) { [weak self] result in

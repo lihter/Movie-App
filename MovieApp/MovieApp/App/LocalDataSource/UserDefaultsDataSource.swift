@@ -1,3 +1,4 @@
+import Combine
 import Foundation
 
 class UserDefaultsDataSource: UserDefaultsDataSourceProtocol {
@@ -6,12 +7,19 @@ class UserDefaultsDataSource: UserDefaultsDataSourceProtocol {
     
     private let favoritesUDKey = "favorites"
     
-    var favorites: [Int] {
-        if let favorites = UserDefaults.standard.object(forKey: favoritesUDKey) as? [Int] {
-            return favorites
-        } else {
-            return []
-        }
+//    var favorites: [Int] {
+//        if let favorites = UserDefaults.standard.object(forKey: favoritesUDKey) as? [Int] {
+//            return favorites
+//        } else {
+//            return []
+//        }
+//    }
+    
+    var favorites: AnyPublisher<[Int], Never> {
+        UserDefaults
+            .standard
+            .publisher(for: \.favorites)
+            .eraseToAnyPublisher()
     }
     
     func toggleFavorite(_ movieId: Int) {
@@ -20,7 +28,7 @@ class UserDefaultsDataSource: UserDefaultsDataSourceProtocol {
             return
         }
         
-        if isFavorite(movieId: movieId) {
+        if favorites.contains(movieId) {
             favorites.removeAll { $0 == movieId }
         } else {
             favorites.append(movieId)
@@ -28,8 +36,8 @@ class UserDefaultsDataSource: UserDefaultsDataSourceProtocol {
         UserDefaults.standard.setValue(favorites, forKey: favoritesUDKey)
     }
     
-    func isFavorite(movieId: Int) -> Bool {
-        favorites.contains(movieId)
-    }
+//    func isFavorite(movieId: Int) -> Bool {
+//        favorites.contains(movieId)
+//    }
     
 }
