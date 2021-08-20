@@ -7,7 +7,7 @@ class FavoritesViewController: UIViewController {
     typealias Snapshot = NSDiffableDataSourceSnapshot<FavoritesSection, MovieViewModel>
     
     let offset: CGFloat = 4
-    
+        
     var favouritesLabel: UILabel!
     var flowLayout: UICollectionViewFlowLayout!
     var collectionView: UICollectionView!
