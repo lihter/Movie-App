@@ -10,12 +10,10 @@ extension NewMovieCell: DesignProtocol {
     
     func createViews() {
         movieImageView = UIImageView()
-        movieImageView.addGestureRecognizer(UITapGestureRecognizer(target: self, action: #selector(imageTapped)))
         movieImageView.isUserInteractionEnabled = true
         contentView.addSubview(movieImageView)
         
         favouriteButton = FavouriteButton()
-        favouriteButton.addTarget(self, action: #selector(favoriteButtonPressed), for: .touchUpInside)
         contentView.addSubview(favouriteButton)
     }
     

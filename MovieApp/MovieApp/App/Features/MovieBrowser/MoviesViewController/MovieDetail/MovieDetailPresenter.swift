@@ -21,47 +21,18 @@ final class MovieDetailPresenter {
     }
     
     func fetchAll() {
-        //getMovieDetails()
-        //getOverview()
         getMostPopularCast()
         getCrew()
         getRecommendations()
         getReview()
     }
     
-//    func getMovieDetails() {
-//        useCase.getMovieDetails(for: movieId) { [weak self] result in
-//            guard let self = self else { return }
-//
-//            switch result {
-//            case .success(let movie):
-//                self.delegate?.fillDetailTitleView(with: DetailTitleViewModel(fromModel: movie))
-//            case .failure(let error):
-//                print("Loading error: \(error.localizedDescription)")
-//            }
-//        }
-//    }
     var movieDetails: AnyPublisher<DetailTitleViewModel, Never> {
         useCase
             .getMovieDetails(for: movieId)
             .map { DetailTitleViewModel(fromModel: $0) }
             .receiveOnMain()
     }
-    
-//    func getOverview() {
-//        useCase.getMovieOverview(for: movieId) { [weak self] result in
-//            guard let self = self else { return }
-//
-//            switch result {
-//            case .success(let overview):
-//                self.delegate?.fillOverview(with: overview)
-//            case .failure(let error):
-//                print("Loading error: \(error.localizedDescription)")
-//            }
-//        }
-//    }
-
-    
     func getMostPopularCast() {
         useCase.getMostPopularCast(for: movieId) { [weak self] result in
             guard let self = self else { return }
@@ -119,8 +90,6 @@ final class MovieDetailPresenter {
     
     func favoritePressed() {
         useCase.toggleFavorite(movieId)
-        
-        delegate?.reloadData()
     }
     
 }

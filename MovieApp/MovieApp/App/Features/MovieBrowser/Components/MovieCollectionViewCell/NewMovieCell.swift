@@ -1,3 +1,4 @@
+import Combine
 import UIKit
 import Kingfisher
 
@@ -5,10 +6,10 @@ class NewMovieCell: UICollectionViewCell {
     
     static let reuseIdentifier = String(describing: NewMovieCell.self)
     static let cellSize = CGSize(width: 122, height: 179)
-    
-    var movieId: Int!
-    
+        
     let offset: CGFloat = 8
+    
+    var disposables = Set<AnyCancellable>()
     
     var movieImageView: UIImageView!
     var favouriteButton: FavouriteButton!
@@ -18,9 +19,6 @@ class NewMovieCell: UICollectionViewCell {
             favouriteButton.setImage(UIImage(with: icon), for: .normal)
         }
     }
-    
-    public var showDetailScreen: ((Int) -> ())!
-    public var favoritePressed: ((Int) -> ())!
 
     override init(frame: CGRect) {
         super.init(frame: frame)
@@ -33,17 +31,8 @@ class NewMovieCell: UICollectionViewCell {
     }
     
     func populate(withMovie movie: MovieViewModel) {
-        movieId = movie.identifier
         movieImageView.kf.setImage(with: movie.posterPath)
         isFavorite = movie.isFavorite
-    }
-    
-    @objc func favoriteButtonPressed() {
-        favoritePressed(movieId)
-    }
-    
-    @objc func imageTapped() {        
-        showDetailScreen(movieId)
     }
     
 }

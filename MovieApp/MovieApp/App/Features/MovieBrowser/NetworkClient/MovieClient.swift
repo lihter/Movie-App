@@ -36,12 +36,6 @@ class MovieClient: MovieClientProtocol {
         }
     }
     
-//    func fetchMovieDetails(for movieId: Int, completion: @escaping(Result<MovieDetailResponse, RequestError>) -> Void) {
-//        fetch(forUrl: "movie/\(movieId)") { (result: Result<MovieDetailResponse, RequestError>) in
-//            completion(result)
-//        }
-//    }
-    
     func fetchMovieDetails(for movieId: Int) -> AnyPublisher<MovieDetailResponse, Never> {
         guard let url = URL(string: "https://api.themoviedb.org/3/movie/\(movieId)?api_key=ca4ebd2878172f71e1cfb5b5f748f928&language=en-US")
         else {

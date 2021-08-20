@@ -73,17 +73,19 @@ extension CategoryCell: UICollectionViewDataSource {
         else {
             return UICollectionViewCell()
         }
-        
-        cell.showDetailScreen = { [weak self] movieId in
-            guard let self = self else { return }
-            
-            self.showDetailScreen(movieId)
-        }
-        cell.favoritePressed = { [weak self] movieId in
-            guard let self = self else { return }
-            
-            self.favoritePressed(movieId)
-        }
+/*       I will leave this commented here for now so
+         I don't forget to replace it later
+ */
+//        cell.showDetailScreen = { [weak self] movieId in
+//            guard let self = self else { return }
+//
+//            self.showDetailScreen(movieId)
+//        }
+//        cell.favoritePressed = { [weak self] movieId in
+//            guard let self = self else { return }
+//
+//            self.favoritePressed(movieId)
+//        }
         cell.populate(withMovie: movie)
         return cell
     }

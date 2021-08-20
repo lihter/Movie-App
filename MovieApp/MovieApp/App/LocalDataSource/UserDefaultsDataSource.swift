@@ -7,14 +7,6 @@ class UserDefaultsDataSource: UserDefaultsDataSourceProtocol {
     
     private let favoritesUDKey = "favorites"
     
-//    var favorites: [Int] {
-//        if let favorites = UserDefaults.standard.object(forKey: favoritesUDKey) as? [Int] {
-//            return favorites
-//        } else {
-//            return []
-//        }
-//    }
-    
     var favorites: AnyPublisher<[Int], Never> {
         UserDefaults
             .standard
@@ -35,9 +27,5 @@ class UserDefaultsDataSource: UserDefaultsDataSourceProtocol {
         }
         UserDefaults.standard.setValue(favorites, forKey: favoritesUDKey)
     }
-    
-//    func isFavorite(movieId: Int) -> Bool {
-//        favorites.contains(movieId)
-//    }
     
 }

@@ -46,12 +46,6 @@ class MovieNetworkDataSource: MovieNetworkDataSourceProtocol {
         }
     }
     
-//    func fetchMovieDetails(for movieId: Int, completion: @escaping(Result<MovieDataModel, RequestError>) -> Void) {
-//        movieClient.fetchMovieDetails(for: movieId) { [weak self] result in
-//            self?.mapMovieDetailResult(result: result, completion: completion)
-//        }
-//    }
-    
     func fetchMovieDetails(for movieId: Int) -> AnyPublisher<MovieDataModel, Never> {
         movieClient
             .fetchMovieDetails(for: movieId)

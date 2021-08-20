@@ -8,7 +8,6 @@ protocol MoviesUseCaseProtocol {
         
     func getTopRatedMovies(completion: @escaping (Result<[MovieModel], RequestError>) -> Void)
         
-    //func getMovieDetails(for movieId: Int, completion: @escaping(Result<MovieModel, RequestError>) -> Void)
     func getMovieDetails(for movieId: Int) -> AnyPublisher<MovieModel, Never>
     
     func getMostPopularCast(for movieId: Int, completion: @escaping(Result<[CastModel], RequestError>) -> Void)
@@ -27,6 +26,6 @@ protocol MoviesUseCaseProtocol {
     
     func getMovie(with movieId: Int) -> MovieModel?
     
-    func getFavoriteMovies(completion: @escaping(Result<[MovieModel], RequestError>) -> Void)
+    var favoriteMovies: AnyPublisher<[MovieModel], Never> { get }
 
 }

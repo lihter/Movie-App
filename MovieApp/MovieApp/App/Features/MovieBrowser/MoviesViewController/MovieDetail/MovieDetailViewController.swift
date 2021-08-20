@@ -36,7 +36,6 @@ class MovieDetailViewController: UIViewController {
         buildViews()
         
         presenter.fetchAll()
-        
         bindViews()
     }
     
@@ -77,10 +76,6 @@ extension MovieDetailViewController: MovieDetailDelegate {
     
     func fillReview(with review: ReviewViewModel) {
         self.review.populate(with: review)
-    }
-    
-    func reloadData() {
-        //titleView.reloadData()
     }
     
     func fillCrew(with crew: [CrewViewModel]) {
