@@ -1,5 +1,4 @@
 import Combine
-import Foundation
 
 class MoviesUseCase: MoviesUseCaseProtocol {
     
@@ -28,7 +27,7 @@ class MoviesUseCase: MoviesUseCaseProtocol {
             self?.mapResult(result: result, completion: completion)
         }
     }
-
+    
     func getMovieDetails(for movieId: Int) -> AnyPublisher<MovieModel, Never> {
         moviesDataRepo
             .fetchMovieDetails(for: movieId)

@@ -62,5 +62,5 @@ class MovieDetailViewController: UIViewController {
             self.review.populate(with: review)
         }
     }
-
+    
 }
