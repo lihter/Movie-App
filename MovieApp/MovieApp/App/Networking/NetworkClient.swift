@@ -34,6 +34,8 @@ class NetworkClient: NetworkClientProtocol {
         var components = URLComponents(string: "https://api.themoviedb.org/3/\(urlPath)")
         
         if let parameters = parameters {
+            components?.queryItems = []
+
             for parameter in parameters {
                 components?.queryItems?.append(URLQueryItem(name: parameter.key, value: parameter.value))
             }
@@ -43,7 +45,7 @@ class NetworkClient: NetworkClientProtocol {
             return Fail(error: RequestError.invalidEndpoint)
                 .eraseToAnyPublisher()
         }
-        
+
         var request = URLRequest(url: url)
         request.httpMethod = method.rawValue
 

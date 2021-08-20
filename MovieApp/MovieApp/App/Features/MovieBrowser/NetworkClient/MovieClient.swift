@@ -37,74 +37,44 @@ class MovieClient: MovieClientProtocol {
     }
     
     func fetchMovieDetails(for movieId: Int) -> AnyPublisher<MovieDetailResponse, Never> {
-//        fetch(forUrl: "movie/\(movieId)")
-//            .assertNoFailure()
-//            .eraseToAnyPublisher()
-        guard let url = URL(string: "https://api.themoviedb.org/3/movie/\(movieId)?api_key=ca4ebd2878172f71e1cfb5b5f748f928&language=en-US")
-        else {
-            return .empty()
-        }
-
-        return URLSession.shared.dataTaskPublisher(for: url)
-            .map { $0.data }
-            .decode(type: MovieDetailResponse.self, decoder: JSONDecoder())
+        fetch(forUrl: "movie/\(movieId)")
             .assertNoFailure()
             .eraseToAnyPublisher()
     }
     
     func fetchCast(for movieId: Int) -> AnyPublisher<[CastResponse], Never> {
-        guard let url = URL(string: "https://api.themoviedb.org/3/movie/\(movieId)/credits?api_key=ca4ebd2878172f71e1cfb5b5f748f928&language=en-US")
-        else {
-            return .empty()
-        }
-        
-        return URLSession.shared.dataTaskPublisher(for: url)
-            .map { $0.data }
-            .decode(type: CastWrapperResponse.self, decoder: JSONDecoder())
+        fetch(forUrl: "movie/\(movieId)/credits")
+            .map { (result: CastWrapperResponse) in
+                result.cast ?? []
+            }
             .assertNoFailure()
-            .map { $0.cast ?? [] }
             .eraseToAnyPublisher()
     }
     
     func fetchCrew(for movieId: Int) -> AnyPublisher<[CrewResponse], Never> {
-        guard let url = URL(string: "https://api.themoviedb.org/3/movie/\(movieId)/credits?api_key=ca4ebd2878172f71e1cfb5b5f748f928&language=en-US")
-        else {
-            return .empty()
-        }
-        
-        return URLSession.shared.dataTaskPublisher(for: url)
-            .map { $0.data }
-            .decode(type: CrewWrapperResponse.self, decoder: JSONDecoder())
+        fetch(forUrl: "movie/\(movieId)/credits")
+            .map { (result: CrewWrapperResponse) in
+                result.crew ?? []
+            }
             .assertNoFailure()
-            .map { $0.crew ?? [] }
             .eraseToAnyPublisher()
     }
     
     func fetchRecommendations(for movieId: Int) -> AnyPublisher<[MovieResponse], Never> {
-        guard let url = URL(string: "https://api.themoviedb.org/3/movie/\(movieId)/recommendations?api_key=ca4ebd2878172f71e1cfb5b5f748f928&language=en-US")
-        else {
-            return .empty()
-        }
-        
-        return URLSession.shared.dataTaskPublisher(for: url)
-            .map { $0.data }
-            .decode(type: MoviesWrapperResponse.self, decoder: JSONDecoder())
+        fetch(forUrl: "movie/\(movieId)/recommendations")
+            .map { (result: MoviesWrapperResponse) in
+                result.movies ?? []
+            }
             .assertNoFailure()
-            .map { $0.movies ?? [] }
             .eraseToAnyPublisher()
     }
     
     func fetchReviews(for movieId: Int) -> AnyPublisher<[ReviewResponse], Never> {
-        guard let url = URL(string: "https://api.themoviedb.org/3/movie/\(movieId)/reviews?api_key=ca4ebd2878172f71e1cfb5b5f748f928&language=en-US")
-        else {
-            return .empty()
-        }
-        
-        return URLSession.shared.dataTaskPublisher(for: url)
-            .map { $0.data }
-            .decode(type: ReviewWrapperResponse.self, decoder: JSONDecoder())
+        fetch(forUrl: "movie/\(movieId)/reviews")
+            .map { (result: ReviewWrapperResponse) in
+                result.reviews ?? []
+            }
             .assertNoFailure()
-            .map { $0.reviews ?? [] }
             .eraseToAnyPublisher()
     }
     
@@ -171,7 +141,7 @@ extension MovieClient {
         if let additionalParameters = additionalParameters {
             parameters = parameters.merging(additionalParameters, uniquingKeysWith: { (_, last) in last })
         }
-
+        
         return NetworkClient.shared.executeUrlRequestPublisher(urlPath, method: .get, parameters: parameters)
     }
     
