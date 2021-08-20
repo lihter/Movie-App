@@ -1,4 +1,5 @@
 import Combine
+import Foundation
 
 class MoviesUseCase: MoviesUseCaseProtocol {
     
@@ -34,59 +35,50 @@ class MoviesUseCase: MoviesUseCaseProtocol {
             .map { MovieModel(fromModel: $0) }
             .eraseToAnyPublisher()
     }
-    
-    func getMostPopularCast(for movieId: Int, completion: @escaping(Result<[CastModel], RequestError>) -> Void) {
-        moviesDataRepo.fetchCast(for: movieId) { result in
-            switch result {
-            case .failure(let error):
-                completion(.failure(error))
-            case .success(let cast):
-                let mappedCast = cast
+
+    func getMostPopularCast(for movieId: Int) -> AnyPublisher<[CastModel], Never> {
+        moviesDataRepo
+            .fetchCast(for: movieId)
+            .map {
+                $0
                     .sorted { $0.popularity > $1.popularity }
                     .prefix(10)
                     .map { CastModel(fromModel: $0) }
-                completion(.success(mappedCast))
             }
-        }
+            .eraseToAnyPublisher()
     }
     
-    func getCrew(for movieId: Int, completion: @escaping(Result<[CrewModel], RequestError>) -> Void) {
-        moviesDataRepo.fetchCrew(for: movieId) { result in
-            switch result {
-            case .failure(let error):
-                completion(.failure(error))
-            case .success(let crew):
-                let mappedCrew = crew
+    func getCrew(for movieId: Int) -> AnyPublisher<[CrewModel], Never> {
+        moviesDataRepo
+            .fetchCrew(for: movieId)
+            .map {
+                $0
                     .filter { !$0.job.isEmpty }
                     .prefix(6)
                     .map { CrewModel(fromModel: $0) }
-                completion(.success(mappedCrew))
             }
-        }
+            .eraseToAnyPublisher()
     }
 
-    
-    func getRecommendations(for movieId: Int, completion: @escaping(Result<[MovieModel], RequestError>) -> Void) {
-        moviesDataRepo.fetchRecommendations(for: movieId) { [weak self] result in
-            self?.mapResult(result: result, completion: completion)
-        }
+    func getRecommendations(for movieId: Int) -> AnyPublisher<[MovieModel], Never> {
+        moviesDataRepo
+            .fetchRecommendations(for: movieId)
+            .map { $0.map { MovieModel(fromModel: $0) } }
+            .eraseToAnyPublisher()
     }
     
-    func getReview(for movieId: Int, completion: @escaping(Result<ReviewModel, RequestError>) -> Void) {
-        moviesDataRepo.fetchReviews(for: movieId) { result in
-            switch result {
-            case .success(let reviews):
-                guard reviews.count > 0 else {
-                    completion(.failure(.noData))
-                    return
+    func fetchReviews(for movieId: Int) -> AnyPublisher<ReviewModel?, Never> {
+        moviesDataRepo
+            .fetchReviews(for: movieId)
+            .map { reviews in
+                guard let review = reviews.first else {
+                    print("No review available.")
+                    return nil
                 }
-                
-                let mappedReview = ReviewModel(fromModel: reviews[0])
-                completion(.success(mappedReview))
-            case .failure(let error):
-                completion(.failure(error))
+
+                return ReviewModel(fromModel: review)
             }
-        }
+            .eraseToAnyPublisher()
     }
     
     func getSearchedMovies(searchQuery: String, completion: @escaping(Result<[MovieModel], RequestError>) -> Void) {

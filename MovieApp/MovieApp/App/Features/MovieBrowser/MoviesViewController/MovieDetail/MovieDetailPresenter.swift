@@ -4,7 +4,6 @@ import UIKit
 
 final class MovieDetailPresenter {
     
-    private weak var delegate: MovieDetailDelegate?
     private let useCase: MoviesUseCaseProtocol!
     private let router: AppRouter!
     
@@ -16,17 +15,6 @@ final class MovieDetailPresenter {
         self.movieId = movieId
     }
     
-    func setDelegate(delegate: MovieDetailDelegate) {
-        self.delegate = delegate
-    }
-    
-    func fetchAll() {
-        getMostPopularCast()
-        getCrew()
-        getRecommendations()
-        getReview()
-    }
-    
     var movieDetails: AnyPublisher<DetailTitleViewModel, Never> {
         useCase
             .getMovieDetails(for: movieId)
@@ -34,59 +22,37 @@ final class MovieDetailPresenter {
             .receiveOnMain()
     }
 
-    func getMostPopularCast() {
-        useCase.getMostPopularCast(for: movieId) { [weak self] result in
-            guard let self = self else { return }
-            
-            switch result {
-            case .success(let cast):
-                let mappedCast = cast.map { CastViewModel(fromModel: $0) }
-                self.delegate?.fillCastCV(with: mappedCast)
-            case .failure(let error):
-                print("Loading error: \(error.localizedDescription)")
-            }
-        }
+    var mostPopularCast: AnyPublisher<[CastViewModel], Never> {
+        useCase
+            .getMostPopularCast(for: movieId)
+            .map { $0.map { CastViewModel(fromModel: $0) } }
+            .receiveOnMain()
     }
     
-    func getCrew() {
-        useCase.getCrew(for: movieId) { [weak self] result in
-            guard let self = self else { return }
-            
-            switch result {
-            case .success(let crew):
-                let mappedCrew = crew.map { CrewViewModel(fromModel: $0) }
-                self.delegate?.fillCrew(with: mappedCrew)
-            case .failure(let error):
-                print("Loading error: \(error.localizedDescription)")
-            }
-        }
+    var crew: AnyPublisher<[CrewViewModel], Never> {
+        useCase
+            .getCrew(for: movieId)
+            .map { $0.map { CrewViewModel(fromModel: $0) } }
+            .receiveOnMain()
     }
     
-    func getRecommendations() {
-        useCase.getRecommendations(for: movieId) { [weak self] result in
-            guard let self = self else { return }
-            
-            switch result {
-            case .success(let movies):
-                let mappedMovies = movies.map { MovieViewModel(fromModel: $0) }
-                self.delegate?.fillRecommendationsCV(with: mappedMovies)
-            case .failure(let error):
-                print("Loading error: \(error.localizedDescription)")
-            }
-        }
+    var recommendations: AnyPublisher<[MovieViewModel], Never> {
+        useCase
+            .getRecommendations(for: movieId)
+            .map { $0.map { MovieViewModel(fromModel: $0) } }
+            .receiveOnMain()
     }
     
-    func getReview() {
-        useCase.getReview(for: movieId) { [weak self] result in
-            guard let self = self else { return }
-            
-            switch result {
-            case .success(let review):
-                self.delegate?.fillReview(with: ReviewViewModel(fromModel: review))
-            case .failure(let error):
-                print("Loading error: \(error.localizedDescription). No review.")
-            }
-        }
+    var review: AnyPublisher<ReviewViewModel?, Never> {
+        useCase
+            .fetchReviews(for: movieId)
+            .map { review in
+                guard let review = review else {
+                    return nil
+                }
+                
+                return ReviewViewModel(fromModel: review) }
+            .receiveOnMain()
     }
     
     func favoritePressed() {

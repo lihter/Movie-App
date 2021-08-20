@@ -53,46 +53,32 @@ class MovieNetworkDataSource: MovieNetworkDataSourceProtocol {
             .eraseToAnyPublisher()
     }
     
-    func fetchCast(for movieId: Int, completion: @escaping(Result<[CastDataModel], RequestError>) -> Void) {
-        movieClient.fetchCast(for: movieId) { result in
-            switch result {
-            case .success(let cast):
-                let mappedCast = cast.map { CastDataModel(fromModel: $0) }
-                completion(.success(mappedCast))
-            case .failure(let error):
-                completion(.failure(error))
-            }
-        }
+    func fetchCast(for movieId: Int) -> AnyPublisher<[CastDataModel], Never> {
+        movieClient
+            .fetchCast(for: movieId)
+            .map { $0.map { CastDataModel(fromModel: $0) } }
+            .eraseToAnyPublisher()
     }
     
-    func fetchCrew(for movieId: Int, completion: @escaping(Result<[CrewDataModel], RequestError>) -> Void) {
-        movieClient.fetchCrew(for: movieId) { result in
-            switch result {
-            case .success(let crew):
-                let mappedCrew = crew.map { CrewDataModel(fromModel: $0) }
-                completion(.success(mappedCrew))
-            case .failure(let error):
-                completion(.failure(error))
-            }
-        }
+    func fetchCrew(for movieId: Int) -> AnyPublisher<[CrewDataModel], Never> {
+        movieClient
+            .fetchCrew(for: movieId)
+            .map { $0.map { CrewDataModel(fromModel: $0) } }
+            .eraseToAnyPublisher()
     }
     
-    func fetchRecommendations(for movieId: Int, completion: @escaping(Result<[MovieDataModel], RequestError>) -> Void) {
-        movieClient.fetchRecommendations(for: movieId) { [weak self] result in
-            self?.mapResult(result: result, completion: completion)
-        }
+    func fetchRecommendations(for movieId: Int) -> AnyPublisher<[MovieDataModel], Never> {
+        movieClient
+            .fetchRecommendations(for: movieId)
+            .map { $0.map { MovieDataModel(fromModel: $0) } }
+            .eraseToAnyPublisher()
     }
     
-    func fetchReviews(for movieId: Int, completion: @escaping(Result<[ReviewDataModel], RequestError>) -> Void) {
-        movieClient.fetchReviews(for: movieId) { result in
-            switch result {
-            case .success(let reviews):
-                let mappedReviews = reviews.map { ReviewDataModel(fromModel: $0) }
-                completion(.success(mappedReviews))
-            case .failure(let error):
-                completion(.failure(error))
-            }
-        }
+    func fetchReviews(for movieId: Int) -> AnyPublisher<[ReviewDataModel], Never> {
+        movieClient
+            .fetchReviews(for: movieId)
+            .map { $0.map { ReviewDataModel(fromModel: $0) } }
+            .eraseToAnyPublisher()
     }
     
     func fetchMovies(searchQuery: String, completion: @escaping(Result<[MovieDataModel], RequestError>) -> Void) {

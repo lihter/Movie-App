@@ -3,17 +3,18 @@ import UIKit
 
 class FavoritesViewController: UIViewController {
     
-    let offset: CGFloat = 4
-        
-    var disposables = Set<AnyCancellable>()
     typealias DataSource = UICollectionViewDiffableDataSource<FavoritesSection, MovieViewModel>
     typealias Snapshot = NSDiffableDataSourceSnapshot<FavoritesSection, MovieViewModel>
-    lazy var dataSource = makeDataSource()
+    
+    let offset: CGFloat = 4
     
     var favouritesLabel: UILabel!
     var flowLayout: UICollectionViewFlowLayout!
     var collectionView: UICollectionView!
     var presenter: FavoritesPresenter!
+    lazy var dataSource = makeDataSource()
+    
+    private var disposables = Set<AnyCancellable>()
     
     init(presenter: FavoritesPresenter) {
         super.init(nibName: nil, bundle: nil)

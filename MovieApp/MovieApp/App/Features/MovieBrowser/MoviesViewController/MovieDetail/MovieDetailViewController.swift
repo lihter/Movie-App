@@ -23,7 +23,6 @@ class MovieDetailViewController: UIViewController {
         super.init(nibName: nil, bundle: nil)
         
         self.presenter = presenter
-        self.presenter.setDelegate(delegate: self)
     }
     
     required init?(coder: NSCoder) {
@@ -35,7 +34,6 @@ class MovieDetailViewController: UIViewController {
         
         buildViews()
         
-        presenter.fetchAll()
         bindViews()
     }
     
@@ -46,40 +44,43 @@ class MovieDetailViewController: UIViewController {
                 self?.setData($0)
             }
             .store(in: &disposables)
+        
+        presenter
+            .mostPopularCast
+            .sink { [weak self] in
+                self?.castView.populate(with: $0)
+            }
+            .store(in: &disposables)
+        
+        presenter
+            .crew
+            .sink { [weak self] in
+                self?.crewGridCollectionView.populate(with: $0)
+            }
+            .store(in: &disposables)
+        
+        presenter
+            .recommendations
+            .sink { [weak self] in
+                self?.recommendationsView.populate(with: $0)
+            }
+            .store(in: &disposables)
+        
+        presenter
+            .review
+            .sink { [weak self] review in
+                if let review = review {
+                    self?.review.populate(with: review)
+                }
+            }
+            .store(in: &disposables)
     }
     
     private func setData(_ data: DetailTitleViewModel) {
         titleView.populate(with: data)
+        
         overview.text = data.overview
-    }
-
-}
-
-extension MovieDetailViewController: MovieDetailDelegate {
-    
-    func fillDetailTitleView(with movieDetails: DetailTitleViewModel) {
-        titleView.populate(with: movieDetails)
-    }
-    
-    func fillOverview(with overview: String) {
-        self.overview.text = overview
         self.overview.setLineSpacing(lineSpacing: 0, lineHeightMultiple: 1.4)
     }
-    
-    func fillCastCV(with cast: [CastViewModel]) {
-        castView.populate(with: cast)
-    }
-    
-    func fillRecommendationsCV(with movies: [MovieViewModel]) {
-        recommendationsView.populate(with: movies)
-    }
-    
-    func fillReview(with review: ReviewViewModel) {
-        self.review.populate(with: review)
-    }
-    
-    func fillCrew(with crew: [CrewViewModel]) {
-        crewGridCollectionView.populate(with: crew)
-    }
-    
+
 }
