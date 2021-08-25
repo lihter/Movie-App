@@ -107,7 +107,7 @@ extension CategoryCell: UICollectionViewDelegateFlowLayout {
         layout collectionViewLayout: UICollectionViewLayout,
         sizeForItemAt indexPath: IndexPath
     ) -> CGSize {
-        return NewMovieCell.cellSize
+        NewMovieCell.cellSize
     }
     
 }

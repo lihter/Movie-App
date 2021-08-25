@@ -13,11 +13,19 @@ class NewMovieCell: UICollectionViewCell {
     
     var movieImageView: UIImageView!
     var favouriteButton: FavouriteButton!
-    var isFavorite: Bool! {
+    var isFavorite: Bool? {
         didSet {
-            let icon: BundleImage = isFavorite ? .favouriteIconFilled : .favouriteIcon
+            let icon: BundleImage = isFavorite ?? false ? .favouriteIconFilled : .favouriteIcon
             favouriteButton.setImage(UIImage(with: icon), for: .normal)
         }
+    }
+    
+    override func prepareForReuse() {
+        super.prepareForReuse()
+        
+        disposables = Set<AnyCancellable>()
+        movieImageView.image = nil
+        isFavorite = nil
     }
 
     override init(frame: CGRect) {
