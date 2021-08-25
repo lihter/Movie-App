@@ -11,9 +11,7 @@ class HomePageViewController: UIViewController {
     var searchViewController: SearchViewController!
     var presenter: HomePagePresenter!
         
-    private var disposables = Set<AnyCancellable>()
-    private var searchDisposables = Set<AnyCancellable>()
-    
+    private var disposables = Set<AnyCancellable>()    
     init(
         presenter: HomePagePresenter,
         categoriesPresenter: CategoriesPresenter,
@@ -44,15 +42,16 @@ class HomePageViewController: UIViewController {
             .searchTextField
             .textPublisher()
             .debounce(for: .milliseconds(500), scheduler: RunLoop.main)
-            .sink { [weak self] searchString in
+            .flatMap { [weak self] text -> AnyPublisher<[MovieViewModel], Never> in
+                guard let self = self else { return .empty() }
+                
+                return self.presenter
+                    .search(for: text)
+            }
+            .sink { [weak self] movies in
                 guard let self = self else { return }
                 
-                let searchPublisher = self.presenter.search(for: searchString)
-                searchPublisher
-                    .sink { [weak self] in
-                        self?.searchViewController.applySnapshot(with: $0)
-                    }
-                    .store(in: &self.searchDisposables)
+                self.searchViewController.applySnapshot(with: movies)
             }
             .store(in: &disposables)
     }

@@ -23,6 +23,7 @@ extension MovieCell: DesignProtocol {
     
     func styleViews() {
         backgroundColor = UIColor.clear
+        selectionStyle = .none
         layer.cornerRadius = 10
         layer.shadowColor = UIColor.black.cgColor
         layer.shadowOffset = CGSize(width: 0, height: 4)

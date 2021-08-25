@@ -24,6 +24,7 @@ extension CategoryCell: DesignProtocol {
     
     func styleViews() {
         backgroundColor = .clear
+        selectionStyle = .none
         
         categoryLabel.textColor = .primaryBlue
         categoryLabel.adjustsFontSizeToFitWidth = true

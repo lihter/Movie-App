@@ -83,7 +83,6 @@ class CategoriesViewController: UIViewController {
                 }
                 
                 cell.populate(with: category)
-                cell.selectionStyle = .none
                 return cell
             })
     }

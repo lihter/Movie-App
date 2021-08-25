@@ -10,7 +10,7 @@ class SearchViewController: UIViewController {
         
     var tableView: UITableView!
     var presenter: SearchPresenter!
-    lazy var dataSource = makeDataSource()
+    var dataSource: DataSource!
     
     private var disposables = Set<AnyCancellable>()
     
@@ -29,14 +29,15 @@ class SearchViewController: UIViewController {
         
         buildViews()
         setupTableView()
+        makeDataSource()
     }
     
     private func setupTableView() {
         tableView.register(MovieCell.self, forCellReuseIdentifier: MovieCell.reuseIdentifier)
     }
     
-    private func makeDataSource() -> DataSource {
-        DataSource(
+    private func makeDataSource() {
+        dataSource = DataSource(
             tableView: tableView,
             cellProvider: { (tableView, indexPath, movie) -> UITableViewCell? in
                 guard
@@ -48,7 +49,6 @@ class SearchViewController: UIViewController {
                 }
                 
                 cell.populate(with: movie)
-                cell.selectionStyle = .none
                 return cell
             })
     }
