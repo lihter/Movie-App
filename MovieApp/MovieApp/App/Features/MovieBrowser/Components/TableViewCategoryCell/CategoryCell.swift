@@ -1,6 +1,10 @@
+import Combine
 import UIKit
 
 class CategoryCell: UITableViewCell {
+    
+    typealias DataSource = UICollectionViewDiffableDataSource<CategoryCellSection, MovieViewModel>
+    typealias Snapshot = NSDiffableDataSourceSnapshot<CategoryCellSection, MovieViewModel>
     
     static let reuseIdentifier = String(describing: CategoryCell.self)
     static let height: CGFloat = 270
@@ -8,12 +12,14 @@ class CategoryCell: UITableViewCell {
     let offset: CGFloat = 4
     
     var category: LocalCategory!
-    var movies: [MovieViewModel]?
     
     var categoryLabel: UILabel!
     var genresView: GenreView!
     var flowLayout: UICollectionViewFlowLayout!
     var moviesCollectionView: UICollectionView!
+    lazy var dataSource = makeDataSource()
+    
+    private var disposables = Set<AnyCancellable>()
     
     var collectionViewOffset: CGFloat {
         set { moviesCollectionView.contentOffset.x = newValue }
@@ -21,7 +27,7 @@ class CategoryCell: UITableViewCell {
     }
     
     public var getGenres: ((LocalCategory) -> [Genre])!
-    public var getGenreMovies: ((LocalCategory, Int) -> [MovieViewModel])!
+    public var getGenreMovies: ((LocalCategory, Int) -> AnyPublisher<[MovieViewModel], Never>)!
     public var showDetailScreen: ((Int) -> ())!
     public var favoritePressed: ((Int) -> ())!
         
@@ -40,7 +46,6 @@ class CategoryCell: UITableViewCell {
     
     private func setupCollectionView() {
         moviesCollectionView.register(NewMovieCell.self, forCellWithReuseIdentifier: NewMovieCell.reuseIdentifier)
-        moviesCollectionView.dataSource = self
         moviesCollectionView.delegate = self
         moviesCollectionView.setContentOffset(moviesCollectionView.contentOffset, animated: true)
     }
@@ -52,42 +57,45 @@ class CategoryCell: UITableViewCell {
         categoryLabel.text = category.title
         genresView.populate(with: getGenres(category))
     }
-
-}
-
-extension CategoryCell: UICollectionViewDataSource {
     
-    func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
-        movies?.count ?? 0
+    private func makeDataSource() -> DataSource {
+        DataSource(
+            collectionView: moviesCollectionView,
+            cellProvider: { (collectionView, indexPath, movie) -> UICollectionViewCell? in
+                guard
+                    let cell = collectionView.dequeueReusableCell(
+                        withReuseIdentifier: NewMovieCell.reuseIdentifier,
+                        for: indexPath) as? NewMovieCell
+                else {
+                    return UICollectionViewCell()
+                }
+                                
+                cell
+                    .movieImageView
+                    .throttledTapGesture()
+                    .sink { [weak self] _ in
+                        self?.showDetailScreen(movie.identifier)
+                    }
+                    .store(in: &cell.disposables)
+                
+                cell
+                    .favouriteButton
+                    .throttledTap()
+                    .sink { [weak self] _ in
+                        self?.favoritePressed(movie.identifier)
+                    }
+                    .store(in: &cell.disposables)
+                
+                cell.populate(withMovie: movie)
+                return cell
+            })
     }
     
-    func collectionView(
-        _ collectionView: UICollectionView,
-        cellForItemAt indexPath: IndexPath
-    ) -> UICollectionViewCell {
-        guard
-            let cell = collectionView.dequeueReusableCell(
-                withReuseIdentifier: NewMovieCell.reuseIdentifier,
-                for: indexPath) as? NewMovieCell,
-            let movie = movies?[indexPath.item]
-        else {
-            return UICollectionViewCell()
-        }
-/*       I will leave this commented here for now so
-         I don't forget to replace it later
- */
-//        cell.showDetailScreen = { [weak self] movieId in
-//            guard let self = self else { return }
-//
-//            self.showDetailScreen(movieId)
-//        }
-//        cell.favoritePressed = { [weak self] movieId in
-//            guard let self = self else { return }
-//
-//            self.favoritePressed(movieId)
-//        }
-        cell.populate(withMovie: movie)
-        return cell
+    private func applySnapshot(with movies: [MovieViewModel], animatingDifferences: Bool = true) {
+        var snapshot = Snapshot()
+        snapshot.appendSections([.mainSection])
+        snapshot.appendItems(movies)
+        dataSource.apply(snapshot, animatingDifferences: animatingDifferences)
     }
     
 }
@@ -109,8 +117,14 @@ extension CategoryCell: CategoryCellDelegate {
     func changeGenre(to genre: Genre?, resetOffset: Bool) {
         guard let genre = genre else { return }
         
-        movies = getGenreMovies(category, genre.rawValue)
-        moviesCollectionView.reloadData()
+        disposables = []
+        
+        getGenreMovies(category, genre.rawValue)
+            .sink { [weak self] in
+                self?.applySnapshot(with: $0)
+            }
+            .store(in: &disposables)
+        
         if resetOffset {
             moviesCollectionView.setContentOffset(CGPoint(x: 0, y: 0), animated: true)
         }

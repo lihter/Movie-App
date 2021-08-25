@@ -31,21 +31,6 @@ extension MovieDataModel {
             runtime: model.runtime)
     }
     
-    init(fromModel model: TVShowResponse) {
-        self.init(
-            identifier: model.identifier,
-            title: model.title,
-            backdropPath: model.backdropPath,
-            posterPath: model.posterPath,
-            overview: model.overview,
-            voteAverage: model.voteAverage,
-            voteCount: model.voteCount,
-            releaseDate: model.releaseDate,
-            genreIds: model.genreIds,
-            budget: nil,
-            runtime: model.runtime)
-    }
-    
     init(fromModel model: MovieDetailResponse) {
         self.init(
             identifier: model.identifier,
@@ -59,6 +44,18 @@ extension MovieDataModel {
             genreIds: model.genreIds.map { $0.identifier },
             budget: nil,
             runtime: model.runtime)
+    }
+    
+}
+
+extension MovieDataModel: Hashable {
+    
+    func hash(into hasher: inout Hasher) {
+        hasher.combine(identifier)
+    }
+    
+    static func == (lhs: MovieDataModel, rhs: MovieDataModel) -> Bool {
+        lhs.identifier == rhs.identifier
     }
     
 }

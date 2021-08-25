@@ -2,15 +2,13 @@ import Combine
 
 protocol MovieNetworkDataSourceProtocol {
     
-    func fetchPopularMovies(completion: @escaping (Result<[MovieDataModel], RequestError>) -> Void)
+    var popularMovies: AnyPublisher<[MovieDataModel], Never> { get }
+        
+    var trendingToday: AnyPublisher<[MovieDataModel], Never> { get }
     
-    func fetchTrendingToday(completion: @escaping(Result<[MovieDataModel], RequestError>) -> Void)
+    var trendingWeek: AnyPublisher<[MovieDataModel], Never> { get }
     
-    func fetchTrendingThisWeek(completion: @escaping(Result<[MovieDataModel], RequestError>) -> Void)
-    
-    func fetchTopRatedMovies(completion: @escaping(Result<[MovieDataModel], RequestError>) -> Void)
-    
-    func fetchTopRatedTV(completion: @escaping(Result<[MovieDataModel], RequestError>) -> Void)
+    var topRated: AnyPublisher<[MovieDataModel], Never> { get }
     
     func fetchMovieDetails(for movieId: Int) -> AnyPublisher<MovieDataModel, Never>
     
@@ -22,6 +20,6 @@ protocol MovieNetworkDataSourceProtocol {
     
     func fetchReviews(for movieId: Int) -> AnyPublisher<[ReviewDataModel], Never>
 
-    func fetchMovies(searchQuery: String, completion: @escaping(Result<[MovieDataModel], RequestError>) -> Void)
+    func fetchMovies(searchQuery: String) -> AnyPublisher<[MovieDataModel], Never>
     
 }

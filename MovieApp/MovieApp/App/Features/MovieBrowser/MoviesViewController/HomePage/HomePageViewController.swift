@@ -1,3 +1,4 @@
+import Combine
 import UIKit
 
 class HomePageViewController: UIViewController {
@@ -9,6 +10,9 @@ class HomePageViewController: UIViewController {
     var searchPresenter: SearchPresenter!
     var searchViewController: SearchViewController!
     var presenter: HomePagePresenter!
+        
+    private var disposables = Set<AnyCancellable>()
+    private var searchDisposables = Set<AnyCancellable>()
     
     init(
         presenter: HomePagePresenter,
@@ -32,17 +36,30 @@ class HomePageViewController: UIViewController {
         buildViews()
 
         searchBar.setDelegate(delegate: self)
+        bindViews()
+    }
+    
+    private func bindViews() {
+        searchBar
+            .searchTextField
+            .textPublisher()
+            .debounce(for: .milliseconds(500), scheduler: RunLoop.main)
+            .sink { [weak self] searchString in
+                guard let self = self else { return }
+                
+                let searchPublisher = self.presenter.search(for: searchString)
+                searchPublisher
+                    .sink { [weak self] in
+                        self?.searchViewController.applySnapshot(with: $0)
+                    }
+                    .store(in: &self.searchDisposables)
+            }
+            .store(in: &disposables)
     }
     
 }
 
 extension HomePageViewController: MovieSearchBarDelegate {
-    
-    func textDidChange(to text: String) {
-        if text.lengthOfBytes(using: .utf8) > 2 {
-            searchPresenter.getSearchedMovies(searchQuery: text)
-        }
-    }
     
     func editingEnded() {
         categoriesViewController.view.isHidden = false

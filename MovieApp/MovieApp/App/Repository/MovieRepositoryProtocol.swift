@@ -2,11 +2,11 @@ import Combine
 
 protocol MovieRepositoryProtocol {
     
-    func fetchPopularMovies(completion: @escaping (Result<[MovieRepoModel], RequestError>) -> Void)
+    var popularMovies: AnyPublisher<[MovieRepoModel], Never> { get }
+        
+    var trendingMovies: AnyPublisher<[MovieRepoModel], Never> { get }
     
-    func fetchTrending(completion: @escaping(Result<[MovieRepoModel], RequestError>) -> Void)
-    
-    func fetchTopRatedMovies(completion: @escaping(Result<[MovieRepoModel], RequestError>) -> Void)
+    var topRatedMovies: AnyPublisher<[MovieRepoModel], Never> { get }
         
     func fetchMovieDetails(for movieId: Int) -> AnyPublisher<MovieRepoModel, Never>
     
@@ -18,14 +18,12 @@ protocol MovieRepositoryProtocol {
     
     func fetchReviews(for movieId: Int) -> AnyPublisher<[ReviewRepoModel], Never>
 
-    func fetchMovies(searchQuery: String, completion: @escaping(Result<[MovieRepoModel], RequestError>) -> Void)
+    func fetchMovies(searchQuery: String) -> AnyPublisher<[MovieRepoModel], Never>
     
     func toggleFavorite(_ movieId: Int)
-    
-    func getMovies(for category: LocalCategory, genreId: Int) -> [MovieRepoModel]
-    
-    func getMovie(with movieId: Int) -> MovieRepoModel?
-    
+        
+    func getMoviesPublisher(for category: LocalCategory, genreId: Int) -> AnyPublisher<[MovieRepoModel], Never>
+        
     var favoriteMovies: AnyPublisher<[MovieRepoModel], Never> { get }
         
 }

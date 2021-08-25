@@ -1,24 +1,28 @@
+import Combine
 import UIKit
 
 class CategoriesViewController: UIViewController {
     
+    typealias DataSource = UITableViewDiffableDataSource<CategoriesSection, LocalCategory>
+    typealias Snapshot = NSDiffableDataSourceSnapshot<CategoriesSection, LocalCategory>
+    
     let offset: CGFloat = 4
     let tableRowOffset: CGFloat = 40
     
-    var categories: [LocalCategory]!
     var storedCVOffsets: [Int: CGFloat]!
     var storedSelectedGenres: [Int: Int]!
     
     var tableView: UITableView!
     var presenter: CategoriesPresenter!
+    lazy var dataSource = makeDataSource()
+    
+    private var disposables = Set<AnyCancellable>()
     
     init(presenter: CategoriesPresenter) {
         super.init(nibName: nil, bundle: nil)
         
         self.presenter = presenter
-        self.presenter.setDelegate(delegate: self)
         
-        categories = []
         storedCVOffsets = [:]
         storedSelectedGenres  = [:]
     }
@@ -33,69 +37,67 @@ class CategoriesViewController: UIViewController {
         buildViews()
         setupTableView()
         
-        presenter.getAllCategories()
+        setCategories()
     }
     
-    override func viewWillAppear(_ animated: Bool) {
-        reloadData()
+    private func setCategories() {
+        let categories = presenter.getCategories()
+        applySnapshot(with: categories)
     }
     
     private func setupTableView() {
         tableView.register(CategoryCell.self, forCellReuseIdentifier: CategoryCell.reuseIdentifier)
-        tableView.dataSource = self
-        tableView.delegate = self
+    }
+    
+    private func makeDataSource() -> DataSource {
+        DataSource(
+            tableView: tableView,
+            cellProvider: { (tableView, indexPath, category) -> UITableViewCell? in
+                guard
+                    let cell = tableView.dequeueReusableCell(
+                        withIdentifier: CategoryCell.reuseIdentifier,
+                        for: indexPath) as? CategoryCell
+                else {
+                    return UITableViewCell()
+                }
+                
+                cell.getGenres = { [weak self] category in
+                    guard let self = self else { return [] }
+                    
+                    return self.presenter.getGenres(for: category)
+                }
+                cell.getGenreMovies = { [weak self] category, genreId in
+                    guard let self = self else { return .empty() }
+                    
+                    return self.presenter.getMoviesPublisher(for: category, genreId: genreId)
+                }
+                cell.showDetailScreen = { [weak self] movieId in
+                    guard let self = self else { return }
+                    
+                    self.presenter.selectedMovie(withId: movieId)
+                }
+                cell.favoritePressed = { [weak self] movieId in
+                    guard let self = self else { return }
+                    
+                    self.presenter.toggleFavorite(movieId)
+                }
+                
+                cell.populate(with: category)
+                cell.selectionStyle = .none
+                return cell
+            })
+    }
+    
+    private func applySnapshot(with categories: [LocalCategory], animatingDifferences: Bool = true) {
+        var snapshot = Snapshot()
+        snapshot.appendSections([.mainSection])
+        snapshot.appendItems(categories)
+        dataSource.apply(snapshot, animatingDifferences: animatingDifferences)
     }
     
 }
 
-extension CategoriesViewController: UITableViewDelegate {
-    
-    func numberOfSections(in collectionView: UICollectionView) -> Int {
-        1
-    }
-    
-}
-
-extension CategoriesViewController: UITableViewDataSource {
-    
-    func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        categories.count
-    }
-    
-    func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        guard
-            let cell = tableView.dequeueReusableCell(
-                withIdentifier: CategoryCell.reuseIdentifier,
-                for: indexPath) as? CategoryCell
-        else {
-            return UITableViewCell()
-        }
-
-        cell.getGenreMovies = { [weak self] category, genreId in
-            guard let self = self else { return [] }
-            
-            return self.presenter.getMovies(for: category, genreId: genreId)
-        }
-        cell.getGenres = { [weak self] category in
-            guard let self = self else { return [] }
-            
-            return self.presenter.getGenres(for: category)
-        }
-        cell.showDetailScreen = { [weak self] movieId in
-            guard let self = self else { return }
-            
-            self.presenter.selectedMovie(withId: movieId)
-        }
-        cell.favoritePressed = { [weak self] movieId in
-            guard let self = self else { return }
-            
-            self.presenter.toggleFavorite(movieId)
-        }
-        
-        cell.populate(with: categories[indexPath.row])
-        cell.selectionStyle = .none
-        return cell
-    }
+extension CategoriesViewController: UITabBarDelegate {
     
     func tableView(_ tableView: UITableView, willDisplay cell: UITableViewCell, forRowAt indexPath: IndexPath) {
         guard let cell = cell as? CategoryCell else { return }
@@ -109,21 +111,6 @@ extension CategoriesViewController: UITableViewDataSource {
         
         storedSelectedGenres[indexPath.row] = cell.genresView.selectedGenre
         storedCVOffsets[indexPath.row] = cell.collectionViewOffset
-    }
-    
-}
-
-extension CategoriesViewController: CategoriesDelegate {
-    
-    func addToTableView(category: LocalCategory?) {
-        guard let category = category else { return }
-        
-        categories.append(category)
-        tableView.reloadData()
-    }
-    
-    func reloadData() {
-        tableView.reloadData()
     }
     
 }

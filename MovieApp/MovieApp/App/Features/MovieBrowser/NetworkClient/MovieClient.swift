@@ -6,34 +6,40 @@ class MovieClient: MovieClientProtocol {
     
     static let shared: MovieClientProtocol = MovieClient()
     
-    func fetchPopularMovies(completion: @escaping(Result<[MovieResponse], RequestError>) -> Void) {
-        fetch(forUrl: "movie/popular") { (result: Result<MoviesWrapperResponse, RequestError>) in
-            completion(result.map { $0.movies ?? [] })
-        }
+    var popularMovies: AnyPublisher<[MovieResponse], Never> {
+        fetch(forUrl: "movie/popular")
+            .map { (result: MoviesWrapperResponse) in
+                result.movies ?? []
+            }
+            .assertNoFailure()
+            .eraseToAnyPublisher()
     }
     
-    func fetchTrendingToday(completion: @escaping(Result<[MovieResponse], RequestError>) -> Void) {
-        fetch(forUrl: "trending/movie/day") { (result: Result<MoviesWrapperResponse, RequestError>) in
-            completion(result.map { $0.movies ?? [] })
-        }
+    var trendingToday: AnyPublisher<[MovieResponse], Never> {
+        fetch(forUrl: "trending/movie/day")
+            .map { (result: MoviesWrapperResponse) in
+                result.movies ?? []
+            }
+            .assertNoFailure()
+            .eraseToAnyPublisher()
     }
     
-    func fetchTrendingThisWeek(completion: @escaping(Result<[MovieResponse], RequestError>) -> Void) {
-        fetch(forUrl: "trending/movie/week") { (result: Result<MoviesWrapperResponse, RequestError>) in
-            completion(result.map { $0.movies ?? [] })
-        }
+    var trendingWeek: AnyPublisher<[MovieResponse], Never> {
+        fetch(forUrl: "trending/movie/week")
+            .map { (result: MoviesWrapperResponse) in
+                result.movies ?? []
+            }
+            .assertNoFailure()
+            .eraseToAnyPublisher()
     }
     
-    func fetchTopRatedMovies(completion: @escaping(Result<[MovieResponse], RequestError>) -> Void) {
-        fetch(forUrl: "movie/top_rated") { (result: Result<MoviesWrapperResponse, RequestError>) in
-            completion(result.map { $0.movies ?? [] })
-        }
-    }
-    
-    func fetchTopRatedTV(completion: @escaping(Result<[TVShowResponse], RequestError>) -> Void) {
-        fetch(forUrl: "tv/top_rated") { (result: Result<TVShowsWrapperResponse, RequestError>) in
-            completion(result.map { $0.shows ?? [] })
-        }
+    var topRated: AnyPublisher<[MovieResponse], Never> {
+        fetch(forUrl: "movie/top_rated")
+            .map { (result: MoviesWrapperResponse) in
+                result.movies ?? []
+            }
+            .assertNoFailure()
+            .eraseToAnyPublisher()
     }
     
     func fetchMovieDetails(for movieId: Int) -> AnyPublisher<MovieDetailResponse, Never> {
@@ -78,15 +84,18 @@ class MovieClient: MovieClientProtocol {
             .eraseToAnyPublisher()
     }
     
-    func fetchMovies(searchQuery: String, completion: @escaping(Result<[MovieResponse], RequestError>) -> Void) {
-        let parameters: Parameters = [
+    func fetchMovies(searchQuery: String) -> AnyPublisher<[MovieResponse], Never> {
+        let parameters: [String: String] = [
             "query": searchQuery,
             "include_adult": "false",
         ]
         
-        fetch(forUrl: "search/movie", additionalParameters: parameters) { (result: Result<MoviesWrapperResponse, RequestError>) in
-            completion(result.map { $0.movies ?? [] })
-        }
+        return fetch(forUrl: "search/movie", additionalParameters: parameters)
+            .map { (result: MoviesWrapperResponse) in
+                result.movies ?? []
+            }
+            .assertNoFailure()
+            .eraseToAnyPublisher()
     }
     
 }
