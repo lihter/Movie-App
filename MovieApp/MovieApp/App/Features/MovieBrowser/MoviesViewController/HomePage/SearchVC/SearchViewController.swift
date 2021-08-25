@@ -33,6 +33,7 @@ class SearchViewController: UIViewController {
     }
     
     private func setupTableView() {
+        tableView.delegate = self
         tableView.register(MovieCell.self, forCellReuseIdentifier: MovieCell.reuseIdentifier)
     }
     
@@ -58,6 +59,16 @@ class SearchViewController: UIViewController {
         snapshot.appendSections([.mainSection])
         snapshot.appendItems(movies)
         dataSource.apply(snapshot, animatingDifferences: animatingDifferences)
+    }
+    
+}
+
+extension SearchViewController: UITableViewDelegate {
+    
+    func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+        guard let movie = dataSource.itemIdentifier(for: indexPath) else { return }
+        
+        presenter.selectedMovie(withId: movie.identifier)
     }
     
 }
