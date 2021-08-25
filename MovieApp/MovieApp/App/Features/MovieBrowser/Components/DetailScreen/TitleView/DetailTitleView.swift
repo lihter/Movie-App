@@ -51,7 +51,6 @@ class DetailTitleView: UIView {
         isFavorite = movieDetails.isFavorite
         
         progressBar.setPercentage(to: movieDetails.userScore)
-        progressBar.progressAnimation(duration: 1.2)
     }
     
     override func layoutSubviews() {

@@ -3,7 +3,6 @@ import UIKit
 extension ProgressBarView: DesignProtocol {
     
     func buildViews() {
-        createViews()
         styleViews()
         defineLayoutForViews()
     }

@@ -11,10 +11,26 @@ class ProgressBarView: UIView {
     var circularPath: UIBezierPath!
     var progressPath: UIBezierPath!
     
+    init() {
+        super.init(frame: .zero)
+        
+        endPoint = 0
+        createViews()
+    }
+    
+    required init?(coder: NSCoder) {
+        fatalError("init(coder:) has not been implemented")
+    }
+    
     func setPercentage(to endPoint: Int) {
+        let hasDifferentValue = self.endPoint != endPoint
+        
         self.endPoint = endPoint
         
         buildViews()
+        if hasDifferentValue {
+            progressAnimation(duration: 1.2)
+        }
     }
     
     override func layoutSubviews() {
