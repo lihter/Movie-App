@@ -1,5 +1,5 @@
 struct MovieNetworkDataSourceModel {
-    
+
     let identifier: Int
     let title: String
     let backdropPath: String?
@@ -10,5 +10,5 @@ struct MovieNetworkDataSourceModel {
     let releaseDate: String?
     let genreIds: [Int]?
     let budget: Int?
-    
+
 }

@@ -1,5 +1,5 @@
 enum SearchSection {
-    
+
     case mainSection
-    
+
 }

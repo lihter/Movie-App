@@ -2,45 +2,45 @@ import Combine
 import UIKit
 
 class FavoritesViewController: UIViewController {
-    
+
     typealias DataSource = UICollectionViewDiffableDataSource<FavoritesSection, MovieViewModel>
     typealias Snapshot = NSDiffableDataSourceSnapshot<FavoritesSection, MovieViewModel>
-    
+
     let offset: CGFloat = 4
-        
+
     var favouritesLabel: UILabel!
     var flowLayout: UICollectionViewFlowLayout!
     var collectionView: UICollectionView!
     var presenter: FavoritesPresenter!
     lazy var dataSource = makeDataSource()
-    
+
     private var disposables = Set<AnyCancellable>()
-    
+
     init(presenter: FavoritesPresenter) {
         super.init(nibName: nil, bundle: nil)
-        
+
         self.presenter = presenter
     }
-    
+
     required init?(coder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
-    
+
     private func setupCollectionView() {
         collectionView.register(NewMovieCell.self, forCellWithReuseIdentifier: NewMovieCell.reuseIdentifier)
         collectionView.delegate = self
         collectionView.setContentOffset(collectionView.contentOffset, animated: true)
     }
-    
+
     override func viewDidLoad() {
         super.viewDidLoad()
-        
+
         buildViews()
         setupCollectionView()
-        
+
         bindViews()
     }
-    
+
     private func bindViews() {
         presenter
             .favoriteMovies
@@ -49,7 +49,7 @@ class FavoritesViewController: UIViewController {
             }
             .store(in: &disposables)
     }
-    
+
     private func makeDataSource() -> DataSource {
         let dataSource = DataSource(
             collectionView: collectionView,
@@ -69,7 +69,7 @@ class FavoritesViewController: UIViewController {
                         self?.presenter.showDetailScreen(for: movie.identifier)
                     }
                     .store(in: &cell.disposables)
-                
+
                 cell
                     .favouriteButton
                     .throttledTap()
@@ -77,24 +77,24 @@ class FavoritesViewController: UIViewController {
                         self?.presenter.toggleFavorite(movie.identifier)
                     }
                     .store(in: &cell.disposables)
-                
+
                 cell.populate(withMovie: movie)
                 return cell
             })
         return dataSource
     }
-    
+
     private func applySnapshot(with movies: [MovieViewModel], animatingDifferences: Bool = true) {
         var snapshot = Snapshot()
         snapshot.appendSections([.mainSection])
         snapshot.appendItems(movies)
         dataSource.apply(snapshot, animatingDifferences: animatingDifferences)
     }
-    
+
 }
 
 extension FavoritesViewController: UICollectionViewDelegateFlowLayout {
-    
+
     func collectionView(
         _ collectionView: UICollectionView,
         layout collectionViewLayout: UICollectionViewLayout,
@@ -107,5 +107,5 @@ extension FavoritesViewController: UICollectionViewDelegateFlowLayout {
         let height = NewMovieCell.cellSize.height / NewMovieCell.cellSize.width * oneCellWidth
         return CGSize(width: oneCellWidth, height: height)
     }
-    
+
 }

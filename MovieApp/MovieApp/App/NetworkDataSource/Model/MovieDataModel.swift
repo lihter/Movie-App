@@ -1,5 +1,5 @@
 struct MovieDataModel {
-    
+
     let identifier: Int
     let title: String
     let backdropPath: String?
@@ -11,11 +11,11 @@ struct MovieDataModel {
     let genreIds: [Int]?
     let budget: Int?
     let runtime: Int?
-    
+
 }
 
 extension MovieDataModel {
-    
+
     init(fromModel model: MovieResponse) {
         self.init(
             identifier: model.identifier,
@@ -30,7 +30,7 @@ extension MovieDataModel {
             budget: nil,
             runtime: model.runtime)
     }
-    
+
     init(fromModel model: MovieDetailResponse) {
         self.init(
             identifier: model.identifier,
@@ -45,17 +45,17 @@ extension MovieDataModel {
             budget: nil,
             runtime: model.runtime)
     }
-    
+
 }
 
 extension MovieDataModel: Hashable {
-    
+
     func hash(into hasher: inout Hasher) {
         hasher.combine(identifier)
     }
-    
+
     static func == (lhs: MovieDataModel, rhs: MovieDataModel) -> Bool {
         lhs.identifier == rhs.identifier
     }
-    
+
 }

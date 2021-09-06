@@ -1,9 +1,9 @@
 enum LocalCategory {
-    
+
     case popular
     case trending
     case topRated
-    
+
     var title: String {
         switch self {
         case .popular:
@@ -14,5 +14,5 @@ enum LocalCategory {
             return "Top Rated"
         }
     }
-    
+
 }

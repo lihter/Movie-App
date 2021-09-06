@@ -1,5 +1,5 @@
 struct MovieDetailResponse: Decodable {
-    
+
     let identifier: Int
     let title: String
     let backdropPath: String?
@@ -10,7 +10,7 @@ struct MovieDetailResponse: Decodable {
     let releaseDate: String?
     let genreIds: [GenreResponse]
     let runtime: Int?
-    
+
     private enum CodingKeys: String, CodingKey {
         case title = "original_title"
         case overview
@@ -23,5 +23,5 @@ struct MovieDetailResponse: Decodable {
         case genreIds = "genres"
         case runtime
     }
-    
+
 }

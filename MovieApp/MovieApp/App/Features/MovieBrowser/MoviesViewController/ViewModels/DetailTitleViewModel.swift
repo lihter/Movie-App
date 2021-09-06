@@ -1,7 +1,7 @@
 import Foundation
 
 struct DetailTitleViewModel {
-    
+
     let title: String
     let overview: String
     let year: String
@@ -11,24 +11,24 @@ struct DetailTitleViewModel {
     let userScore: Int
     let posterPath: URL?
     let isFavorite: Bool
-    
+
 }
 
 extension DetailTitleViewModel {
-    
+
     init(fromModel model: MovieModel) {
         var dateString = ""
         var year = ""
-        
+
         if let date = model.releaseDate, !date.isEmpty {
             let dateSplitted = date.split(separator: "-")
             dateString = "\(dateSplitted[1])/\(dateSplitted[2])/\(dateSplitted[0])"
             year = String(dateSplitted[0])
         }
-        
+
         let hours = (model.runtime ?? 0) / 60
         let minutes = (model.runtime ?? 0) % 60
-        
+
         self.init(
             title: model.title,
             overview: model.overview,
@@ -40,5 +40,5 @@ extension DetailTitleViewModel {
             posterPath: model.posterPath,
             isFavorite: model.isFavorite)
     }
-    
+
 }

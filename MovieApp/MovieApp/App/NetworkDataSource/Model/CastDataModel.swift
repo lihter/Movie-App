@@ -1,15 +1,15 @@
 struct CastDataModel {
-    
+
     let identifier: Int
     let name: String
     let characterName: String
     let posterPath: String
     let popularity: Double
-    
+
 }
 
 extension CastDataModel {
-    
+
     init(fromModel model: CastResponse) {
         self.init(
             identifier: model.identifier,
@@ -18,6 +18,5 @@ extension CastDataModel {
             posterPath: model.posterPath ?? "",
             popularity: model.popularity ?? 0)
     }
-    
-}
 
+}

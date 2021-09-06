@@ -1,15 +1,15 @@
 import Combine
 
 class MoviesUseCase: MoviesUseCaseProtocol {
-    
+
     static let shared: MoviesUseCaseProtocol = MoviesUseCase()
-    
+
     private let moviesDataRepo: MovieRepositoryProtocol!
-    
+
     init() {
         self.moviesDataRepo = MovieRepository.shared
     }
-    
+
     func getMoviesPublisher(for category: LocalCategory, genreId: Int) -> AnyPublisher<[MovieModel], Never> {
         moviesDataRepo
             .getMoviesPublisher(for: category, genreId: genreId)
@@ -17,7 +17,7 @@ class MoviesUseCase: MoviesUseCaseProtocol {
             .map { $0.map { MovieModel(fromModel: $0) } }
             .eraseToAnyPublisher()
     }
-    
+
     func getMovieDetails(for movieId: Int) -> AnyPublisher<MovieModel, Never> {
         moviesDataRepo
             .fetchMovieDetails(for: movieId)
@@ -36,7 +36,7 @@ class MoviesUseCase: MoviesUseCaseProtocol {
             }
             .eraseToAnyPublisher()
     }
-    
+
     func getCrew(for movieId: Int) -> AnyPublisher<[CrewModel], Never> {
         moviesDataRepo
             .fetchCrew(for: movieId)
@@ -55,7 +55,7 @@ class MoviesUseCase: MoviesUseCaseProtocol {
             .map { $0.map { MovieModel(fromModel: $0) } }
             .eraseToAnyPublisher()
     }
-    
+
     func fetchReviews(for movieId: Int) -> AnyPublisher<ReviewModel?, Never> {
         moviesDataRepo
             .fetchReviews(for: movieId)
@@ -69,18 +69,18 @@ class MoviesUseCase: MoviesUseCaseProtocol {
             }
             .eraseToAnyPublisher()
     }
-    
+
     func getSearchedMovies(searchQuery: String) -> AnyPublisher<[MovieModel], Never> {
         moviesDataRepo
             .fetchMovies(searchQuery: searchQuery)
             .map { $0.map { MovieModel(fromModel: $0) } }
             .eraseToAnyPublisher()
     }
-    
+
     func toggleFavorite(_ movieId: Int) {
         moviesDataRepo.toggleFavorite(movieId)
     }
-    
+
     var favoriteMovies: AnyPublisher<[MovieModel], Never> {
         moviesDataRepo
             .favoriteMovies
@@ -91,8 +91,11 @@ class MoviesUseCase: MoviesUseCaseProtocol {
 }
 
 extension MoviesUseCase {
-    
-    private func mapResult(result: Result<[MovieRepoModel], RequestError>, completion:@escaping(Result<[MovieModel], RequestError>) -> Void) {
+
+    private func mapResult(
+        result: Result<[MovieRepoModel], RequestError>,
+        completion:@escaping(Result<[MovieModel], RequestError>
+        ) -> Void) {
         switch result {
         case .success(let movies):
             let mappedMovies = movies.map { MovieModel(fromModel: $0) }
@@ -101,8 +104,11 @@ extension MoviesUseCase {
             completion(.failure(error))
         }
     }
-    
-    private func mapMovieDetailResult(result: Result<MovieRepoModel, RequestError>, completion: @escaping(Result<MovieModel, RequestError>) -> Void) {
+
+    private func mapMovieDetailResult(
+        result: Result<MovieRepoModel, RequestError>,
+        completion: @escaping(Result<MovieModel, RequestError>
+        ) -> Void) {
         switch result {
         case .success(let movie):
             let mappedMovie = MovieModel(fromModel: movie)
@@ -111,6 +117,5 @@ extension MoviesUseCase {
             completion(.failure(error))
         }
     }
-    
-}
 
+}

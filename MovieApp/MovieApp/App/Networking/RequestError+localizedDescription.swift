@@ -1,5 +1,5 @@
 extension RequestError {
-    
+
     var localizedDescription: String {
         switch self {
         case .general:
@@ -18,5 +18,5 @@ extension RequestError {
             return "Failed to decode data"
         }
     }
-    
+
 }
