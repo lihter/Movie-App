@@ -75,6 +75,10 @@ final class MovieDetailPresenter {
             .eraseToAnyPublisher()
     }
     
+    func selectedMovie(withId movieId: Int) {
+        router.showDetailScreen(for: movieId)
+    }
+    
     func favoritePressed() {
         useCase.toggleFavorite(movieId)
     }

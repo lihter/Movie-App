@@ -13,8 +13,8 @@ class RecommendationsView: UIView {
     var collectionView: UICollectionView!
     lazy var dataSource = makeDataSource()
     
-    private var disposables = Set<AnyCancellable>()
-    
+    var selectedMoviePublisher = PassthroughSubject<Int, Never>()
+        
     init() {
         super.init(frame: .zero)
         
@@ -60,7 +60,11 @@ class RecommendationsView: UIView {
 
 extension RecommendationsView: UICollectionViewDelegate {
     
-    func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) { }
+    func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
+        guard let movie = dataSource.itemIdentifier(for: indexPath) else { return }
+        
+        selectedMoviePublisher.send(movie.identifier)
+    }
     
 }
 

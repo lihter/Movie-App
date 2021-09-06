@@ -44,6 +44,13 @@ class MovieDetailViewController: UIViewController {
                 self?.setData($0)
             }
             .store(in: &disposables)
+        
+        recommendationsView
+            .selectedMoviePublisher
+            .sink { [weak self] movieId in
+                self?.presenter.selectedMovie(withId: movieId)
+            }
+            .store(in: &disposables)
     }
 
     private func setData(_ data: DetailViewModel) {
