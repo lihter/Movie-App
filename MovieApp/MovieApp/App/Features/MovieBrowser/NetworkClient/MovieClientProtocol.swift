@@ -14,13 +14,13 @@ protocol MovieClientProtocol {
     
     func fetchMovieDetails(for movieId: Int) -> AnyPublisher<MovieDetailResponse, Never>
     
-    func fetchCast(for movieId: Int, completion: @escaping(Result<[CastResponse], RequestError>) -> Void)
+    func fetchCast(for movieId: Int) -> AnyPublisher<[CastResponse], Never>
     
-    func fetchCrew(for movieId: Int, completion: @escaping(Result<[CrewResponse], RequestError>) -> Void)
+    func fetchCrew(for movieId: Int) -> AnyPublisher<[CrewResponse], Never>
     
-    func fetchRecommendations(for movieId: Int, completion: @escaping(Result<[MovieResponse], RequestError>) -> Void)
+    func fetchRecommendations(for movieId: Int) -> AnyPublisher<[MovieResponse], Never>
     
-    func fetchReviews(for movieId: Int, completion: @escaping(Result<[ReviewResponse], RequestError>) -> Void)
+    func fetchReviews(for movieId: Int) -> AnyPublisher<[ReviewResponse], Never>
     
     func fetchMovies(searchQuery: String, completion: @escaping(Result<[MovieResponse], RequestError>) -> Void)
 

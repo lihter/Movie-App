@@ -14,14 +14,14 @@ protocol MovieNetworkDataSourceProtocol {
     
     func fetchMovieDetails(for movieId: Int) -> AnyPublisher<MovieDataModel, Never>
     
-    func fetchCast(for movieId: Int, completion: @escaping(Result<[CastDataModel], RequestError>) -> Void)
+    func fetchCast(for movieId: Int) -> AnyPublisher<[CastDataModel], Never>
     
-    func fetchCrew(for movieId: Int, completion: @escaping(Result<[CrewDataModel], RequestError>) -> Void)
+    func fetchCrew(for movieId: Int) -> AnyPublisher<[CrewDataModel], Never>
     
-    func fetchRecommendations(for movieId: Int, completion: @escaping(Result<[MovieDataModel], RequestError>) -> Void)
+    func fetchRecommendations(for movieId: Int) -> AnyPublisher<[MovieDataModel], Never>
     
-    func fetchReviews(for movieId: Int, completion: @escaping(Result<[ReviewDataModel], RequestError>) -> Void)
-    
+    func fetchReviews(for movieId: Int) -> AnyPublisher<[ReviewDataModel], Never>
+
     func fetchMovies(searchQuery: String, completion: @escaping(Result<[MovieDataModel], RequestError>) -> Void)
     
 }

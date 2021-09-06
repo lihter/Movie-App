@@ -23,7 +23,6 @@ class MovieDetailViewController: UIViewController {
         super.init(nibName: nil, bundle: nil)
         
         self.presenter = presenter
-        self.presenter.setDelegate(delegate: self)
     }
     
     required init?(coder: NSCoder) {
@@ -35,51 +34,33 @@ class MovieDetailViewController: UIViewController {
         
         buildViews()
         
-        presenter.fetchAll()
         bindViews()
     }
     
     private func bindViews() {
         presenter
-            .movieDetails
+            .details
             .sink { [weak self] in
                 self?.setData($0)
             }
             .store(in: &disposables)
     }
-    
-    private func setData(_ data: DetailTitleViewModel) {
-        titleView.populate(with: data)
-        overview.text = data.overview
-    }
 
-}
-
-extension MovieDetailViewController: MovieDetailDelegate {
-    
-    func fillDetailTitleView(with movieDetails: DetailTitleViewModel) {
-        titleView.populate(with: movieDetails)
-    }
-    
-    func fillOverview(with overview: String) {
-        self.overview.text = overview
+    private func setData(_ data: DetailViewModel) {
+        titleView.populate(with: data.titleDetails)
+        
+        overview.text = data.titleDetails.overview
         self.overview.setLineSpacing(lineSpacing: 0, lineHeightMultiple: 1.4)
-    }
-    
-    func fillCastCV(with cast: [CastViewModel]) {
-        castView.populate(with: cast)
-    }
-    
-    func fillRecommendationsCV(with movies: [MovieViewModel]) {
-        recommendationsView.populate(with: movies)
-    }
-    
-    func fillReview(with review: ReviewViewModel) {
-        self.review.populate(with: review)
-    }
-    
-    func fillCrew(with crew: [CrewViewModel]) {
-        crewGridCollectionView.populate(with: crew)
+        
+        castView.applySnapshot(with: data.castAndCrew.cast)
+        
+        crewGridCollectionView.applySnapshot(with: data.castAndCrew.crew)
+        
+        recommendationsView.applySnapshot(with: data.recommendations)
+        
+        if let review = data.review {
+            self.review.populate(with: review)
+        }
     }
     
 }

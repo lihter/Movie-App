@@ -10,14 +10,14 @@ protocol MovieRepositoryProtocol {
         
     func fetchMovieDetails(for movieId: Int) -> AnyPublisher<MovieRepoModel, Never>
     
-    func fetchCast(for movieId: Int, completion: @escaping(Result<[CastRepoModel], RequestError>) -> Void)
+    func fetchCast(for movieId: Int) -> AnyPublisher<[CastRepoModel], Never>
     
-    func fetchCrew(for movieId: Int, completion: @escaping(Result<[CrewRepoModel], RequestError>) -> Void)
+    func fetchCrew(for movieId: Int) -> AnyPublisher<[CrewRepoModel], Never>
     
-    func fetchRecommendations(for movieId: Int, completion: @escaping(Result<[MovieRepoModel], RequestError>) -> Void)
+    func fetchRecommendations(for movieId: Int) -> AnyPublisher<[MovieRepoModel], Never>
     
-    func fetchReviews(for movieId: Int, completion: @escaping(Result<[ReviewRepoModel], RequestError>) -> Void)
-    
+    func fetchReviews(for movieId: Int) -> AnyPublisher<[ReviewRepoModel], Never>
+
     func fetchMovies(searchQuery: String, completion: @escaping(Result<[MovieRepoModel], RequestError>) -> Void)
     
     func toggleFavorite(_ movieId: Int)

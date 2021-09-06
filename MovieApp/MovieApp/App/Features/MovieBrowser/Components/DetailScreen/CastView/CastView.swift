@@ -1,15 +1,20 @@
+import Combine
 import UIKit
 
 class CastView: UIView {
+    
+    typealias DataSource = UICollectionViewDiffableDataSource<CastSection, CastViewModel>
+    typealias Snapshot = NSDiffableDataSourceSnapshot<CastSection, CastViewModel>
         
     let offset: CGFloat = 4
-    
-    var cast: [CastViewModel]?
     
     var titleLabel: UILabel!
     var fullCastButton: UIButton!
     var flowLayout: UICollectionViewFlowLayout!
     var collectionView: UICollectionView!
+    lazy var dataSource = makeDataSource()
+
+    private var disposables = Set<AnyCancellable>()
         
     init() {
         super.init(frame: .zero)
@@ -24,38 +29,32 @@ class CastView: UIView {
     
     private func setupCollectionView() {
         collectionView.register(CastCell.self, forCellWithReuseIdentifier: CastCell.reuseIdentifier)
-        collectionView.dataSource = self
         collectionView.delegate = self
     }
     
-    func populate(with cast: [CastViewModel]) {
-        self.cast = cast
-        collectionView.reloadData()
+    private func makeDataSource() -> DataSource {
+        let dataSource = DataSource(
+            collectionView: collectionView,
+            cellProvider: { (collectionView, indexPath, person) -> UICollectionViewCell? in
+                guard
+                    let cell = collectionView.dequeueReusableCell(
+                        withReuseIdentifier: CastCell.reuseIdentifier,
+                        for: indexPath) as? CastCell
+                else {
+                    return UICollectionViewCell()
+                }
+                
+                cell.populate(withPerson: person)
+                return cell
+            })
+        return dataSource
     }
     
-}
-
-extension CastView: UICollectionViewDataSource {
-    
-    func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
-        cast?.count ?? 0
-    }
-    
-    func collectionView(
-        _ collectionView: UICollectionView,
-        cellForItemAt indexPath: IndexPath
-    ) -> UICollectionViewCell {
-        guard
-            let cell = collectionView.dequeueReusableCell(
-                withReuseIdentifier: CastCell.reuseIdentifier,
-                for: indexPath) as? CastCell,
-            let person = cast?[indexPath.item]
-        else {
-            return UICollectionViewCell()
-        }
-        
-        cell.populate(withPerson: person)
-        return cell
+    func applySnapshot(with cast: [CastViewModel], animatingDifferences: Bool = true) {
+        var snapshot = Snapshot()
+        snapshot.appendSections([.mainSection])
+        snapshot.appendItems(cast)
+        dataSource.apply(snapshot, animatingDifferences: animatingDifferences)
     }
     
 }

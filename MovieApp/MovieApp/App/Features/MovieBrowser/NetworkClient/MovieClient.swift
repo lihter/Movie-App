@@ -37,40 +37,45 @@ class MovieClient: MovieClientProtocol {
     }
     
     func fetchMovieDetails(for movieId: Int) -> AnyPublisher<MovieDetailResponse, Never> {
-        guard let url = URL(string: "https://api.themoviedb.org/3/movie/\(movieId)?api_key=ca4ebd2878172f71e1cfb5b5f748f928&language=en-US")
-        else {
-            return .empty()
-        }
-        
-        return URLSession.shared.dataTaskPublisher(for: url)
-            .map { $0.data }
-            .decode(type: MovieDetailResponse.self, decoder: JSONDecoder())
+        fetch(forUrl: "movie/\(movieId)")
             .assertNoFailure()
             .eraseToAnyPublisher()
     }
     
-    func fetchCast(for movieId: Int, completion: @escaping(Result<[CastResponse], RequestError>) -> Void) {
-        fetch(forUrl: "movie/\(movieId)/credits") { (result: Result<CastWrapperResponse, RequestError>) in
-            completion(result.map { $0.cast ?? [] })
-        }
+    func fetchCast(for movieId: Int) -> AnyPublisher<[CastResponse], Never> {
+        fetch(forUrl: "movie/\(movieId)/credits")
+            .map { (result: CastWrapperResponse) in
+                result.cast ?? []
+            }
+            .assertNoFailure()
+            .eraseToAnyPublisher()
     }
     
-    func fetchCrew(for movieId: Int, completion: @escaping(Result<[CrewResponse], RequestError>) -> Void) {
-        fetch(forUrl: "movie/\(movieId)/credits") { (result: Result<CrewWrapperResponse, RequestError>) in
-            completion(result.map { $0.crew ?? [] })
-        }
+    func fetchCrew(for movieId: Int) -> AnyPublisher<[CrewResponse], Never> {
+        fetch(forUrl: "movie/\(movieId)/credits")
+            .map { (result: CrewWrapperResponse) in
+                result.crew ?? []
+            }
+            .assertNoFailure()
+            .eraseToAnyPublisher()
     }
     
-    func fetchRecommendations(for movieId: Int, completion: @escaping(Result<[MovieResponse], RequestError>) -> Void) {
-        fetch(forUrl: "movie/\(movieId)/recommendations") { (result: Result<MoviesWrapperResponse, RequestError>) in
-            completion(result.map { $0.movies ?? [] })
-        }
+    func fetchRecommendations(for movieId: Int) -> AnyPublisher<[MovieResponse], Never> {
+        fetch(forUrl: "movie/\(movieId)/recommendations")
+            .map { (result: MoviesWrapperResponse) in
+                result.movies ?? []
+            }
+            .assertNoFailure()
+            .eraseToAnyPublisher()
     }
     
-    func fetchReviews(for movieId: Int, completion: @escaping(Result<[ReviewResponse], RequestError>) -> Void) {
-        fetch(forUrl: "movie/\(movieId)/reviews") { (result: Result<ReviewWrapperResponse, RequestError>) in
-            completion(result.map { $0.reviews ?? [] })
-        }
+    func fetchReviews(for movieId: Int) -> AnyPublisher<[ReviewResponse], Never> {
+        fetch(forUrl: "movie/\(movieId)/reviews")
+            .map { (result: ReviewWrapperResponse) in
+                result.reviews ?? []
+            }
+            .assertNoFailure()
+            .eraseToAnyPublisher()
     }
     
     func fetchMovies(searchQuery: String, completion: @escaping(Result<[MovieResponse], RequestError>) -> Void) {
@@ -118,32 +123,26 @@ extension MovieClient {
         }
     }
     
-}
-
-extension MovieClient {
-    
-    private func mapError(_ error: AFError) -> RequestError {
-        switch error {
-        case .createURLRequestFailed(error: _),
-             .urlRequestValidationFailed(reason: _):
-            return .invalidRequest
-        case .invalidURL(url: _):
-            return .invalidEndpoint
-        case .responseValidationFailed(reason: _),
-             .responseSerializationFailed(reason: _):
-            return .invalidResponse
-        case .serverTrustEvaluationFailed(reason: _),
-             .sessionDeinitialized,
-             .sessionInvalidated(error: _),
-             .sessionTaskFailed(error: _):
-            return .apiError
-        default:
-            return .general
+    func fetch<T: Decodable>(
+        forUrl urlPath: String,
+        additionalParameters: [String: String]? = nil
+    ) -> AnyPublisher<T, RequestError> {
+        guard let apiKey = Bundle.main.infoDictionary?["API_KEY"] else {
+            return Fail(error: RequestError.general)
+                .eraseToAnyPublisher()
         }
-    }
-    
-    private func mapError(_ error: Error) -> RequestError {
-        .invalidRequest
+        
+        var parameters: [String: String] = [
+            "api_key": apiKey as? String ?? "",
+            "language": "en-US",
+            "page": "1"
+        ]
+        
+        if let additionalParameters = additionalParameters {
+            parameters = parameters.merging(additionalParameters, uniquingKeysWith: { (_, last) in last })
+        }
+        
+        return NetworkClient.shared.executeUrlRequestPublisher(urlPath, method: .get, parameters: parameters)
     }
     
 }
