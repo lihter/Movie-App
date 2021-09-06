@@ -81,33 +81,3 @@ class MovieNetworkDataSource: MovieNetworkDataSourceProtocol {
     }
 
 }
-
-extension MovieNetworkDataSource {
-
-    private func mapResult(
-        result: Result<[MovieResponse], RequestError>,
-        completion: @escaping(Result<[MovieDataModel], RequestError>) -> Void
-    ) {
-        switch result {
-        case .success(let movies):
-            let mappedMovies = movies.map { MovieDataModel(fromModel: $0) }
-            completion(.success(mappedMovies))
-        case .failure(let error):
-            completion(.failure(error))
-        }
-    }
-
-    private func mapMovieDetailResult(
-        result: Result<MovieDetailResponse, RequestError>,
-        completion: @escaping(Result<MovieDataModel, RequestError>) -> Void
-    ) {
-        switch result {
-        case .success(let movie):
-            let mappedMovie = MovieDataModel(fromModel: movie)
-            completion(.success(mappedMovie))
-        case .failure(let error):
-            completion(.failure(error))
-        }
-    }
-
-}

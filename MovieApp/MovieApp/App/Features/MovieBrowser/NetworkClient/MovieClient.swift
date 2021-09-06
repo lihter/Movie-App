@@ -104,39 +104,6 @@ extension MovieClient {
 
     func fetch<T: Decodable>(
         forUrl urlPath: String,
-        additionalParameters: Parameters? = nil,
-        completion: @escaping (Result<T, RequestError>) -> Void
-    ) {
-        guard let apiKey = Bundle.main.infoDictionary?["API_KEY"] else {
-            completion(.failure(.general))
-            return
-        }
-
-        var parameters: Parameters = [
-            "api_key": apiKey,
-            "language": "en-US",
-            "page": 1
-        ]
-
-        if let additionalParameters = additionalParameters {
-            parameters = parameters.merging(additionalParameters, uniquingKeysWith: { (_, last) in last })
-        }
-
-        NetworkClient.shared.executeUrlRequest(
-            urlPath,
-            method: .get,
-            parameters: parameters) { (result: Result<T, RequestError>) in
-            switch result {
-            case .failure(let error):
-                completion(.failure(error))
-            case .success(let value):
-                completion(.success(value))
-            }
-        }
-    }
-
-    func fetch<T: Decodable>(
-        forUrl urlPath: String,
         additionalParameters: [String: String]? = nil
     ) -> AnyPublisher<T, RequestError> {
         guard let apiKey = Bundle.main.infoDictionary?["API_KEY"] else {
