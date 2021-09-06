@@ -1,5 +1,5 @@
 enum RecommendationsSection {
-    
+
     case mainSection
-    
+
 }

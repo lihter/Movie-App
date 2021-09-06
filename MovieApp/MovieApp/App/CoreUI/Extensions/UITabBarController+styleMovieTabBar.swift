@@ -1,7 +1,7 @@
 import UIKit
 
 extension UITabBarController {
-    
+
     func styleMovieTabBar() {
         self.tabBar.isTranslucent = false
         UITabBar.appearance().tintColor = .tabbarTintItemColor
@@ -9,5 +9,5 @@ extension UITabBarController {
             [.font: UIFont.tabBarFont],
             for: .normal)
     }
-    
+
 }

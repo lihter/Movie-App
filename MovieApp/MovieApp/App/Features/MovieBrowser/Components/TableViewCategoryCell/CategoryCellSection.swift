@@ -1,5 +1,5 @@
 enum CategoryCellSection {
-    
+
     case mainSection
-    
+
 }

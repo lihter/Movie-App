@@ -1,5 +1,5 @@
 enum RequestError: Error {
-    
+
     case general
     case apiError
     case invalidRequest
@@ -7,5 +7,5 @@ enum RequestError: Error {
     case invalidResponse
     case noData
     case decodingError
-    
+
 }

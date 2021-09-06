@@ -1,27 +1,27 @@
 import UIKit
 
 extension ProgressBarView: DesignProtocol {
-    
+
     func buildViews() {
         createViews()
         styleViews()
         defineLayoutForViews()
     }
-    
+
     func createViews() {
         circleLayer = CAShapeLayer()
         layer.addSublayer(circleLayer)
-        
+
         progressLayer = CAShapeLayer()
         layer.addSublayer(progressLayer)
-        
+
         percentageLabel = UILabel()
         addSubview(percentageLabel)
-        
+
         userScoreLabel = UILabel()
         addSubview(userScoreLabel)
     }
-    
+
     func styleViews() {
         circleLayer.fillColor = UIColor.clear.cgColor
         circleLayer.lineCap = .round
@@ -34,22 +34,22 @@ extension ProgressBarView: DesignProtocol {
         progressLayer.lineWidth = 5.0
         progressLayer.strokeEnd = 0
         progressLayer.strokeColor = UIColor.progressBarGreen.cgColor
-        
+
         userScoreLabel.text = "User Score"
         userScoreLabel.textColor = .white
         userScoreLabel.font = .regularBold
     }
-    
+
     func defineLayoutForViews() {
         percentageLabel.snp.makeConstraints {
             $0.leading.equalToSuperview().offset(-10.5)
             $0.top.equalToSuperview().offset(-7)
         }
-        
+
         userScoreLabel.snp.makeConstraints {
             $0.leading.equalTo(percentageLabel.snp.trailing).offset(15)
             $0.centerY.equalTo(percentageLabel.snp.centerY)
         }
     }
-    
+
 }

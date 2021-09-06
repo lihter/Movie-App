@@ -1,7 +1,7 @@
 import Foundation
 
 struct MovieRepoModel {
-    
+
     let identifier: Int
     let title: String
     let backdropPath: String?
@@ -14,11 +14,11 @@ struct MovieRepoModel {
     let budget: Int?
     let runtime: Int?
     let isFavorite: Bool
-    
+
 }
 
 extension MovieRepoModel {
-    
+
     init(fromModel model: MovieDataModel, isFavorite: Bool = true) {
         self.init(
             identifier: model.identifier,
@@ -34,7 +34,7 @@ extension MovieRepoModel {
             runtime: model.runtime,
             isFavorite: isFavorite)
     }
-    
+
     init(fromModel model: MovieDataModel, isFavorite: Bool = true, withGenres genreIds: [Int]) {
         self.init(
             identifier: model.identifier,
@@ -50,7 +50,7 @@ extension MovieRepoModel {
             runtime: model.runtime,
             isFavorite: isFavorite)
     }
-    
+
     func copy(
         identifier: Int? = nil,
         title: String? = nil,
@@ -79,5 +79,5 @@ extension MovieRepoModel {
             runtime: runtime ?? self.runtime,
             isFavorite: isFavorite ?? self.isFavorite)
     }
-    
+
 }

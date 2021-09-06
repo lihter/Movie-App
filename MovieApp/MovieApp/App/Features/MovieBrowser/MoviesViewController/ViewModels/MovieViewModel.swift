@@ -1,7 +1,7 @@
 import Foundation
 
 struct MovieViewModel {
-    
+
     let identifier: Int
     let title: String
     let overview: String
@@ -12,19 +12,19 @@ struct MovieViewModel {
 }
 
 extension MovieViewModel: Hashable {
-    
+
     func hash(into hasher: inout Hasher) {
         hasher.combine(identifier)
     }
-    
+
     static func == (lhs: MovieViewModel, rhs: MovieViewModel) -> Bool {
         lhs.identifier == rhs.identifier && lhs.isFavorite == rhs.isFavorite
     }
-    
+
 }
 
 extension MovieViewModel {
-    
+
     init(fromModel model: MovieModel) {
         self.init(
             identifier: model.identifier,
@@ -34,5 +34,5 @@ extension MovieViewModel {
             genreIds: model.genreIds,
             isFavorite: model.isFavorite)
     }
-    
+
 }

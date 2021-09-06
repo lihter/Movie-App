@@ -1,7 +1,7 @@
 import Foundation
 
 struct MovieModel {
-    
+
     let identifier: Int
     let title: String
     let backdropPath: String?
@@ -14,11 +14,11 @@ struct MovieModel {
     let budget: Int?
     let runtime: Int?
     let isFavorite: Bool
-    
+
 }
 
 extension MovieModel {
-    
+
     init(fromModel model: MovieRepoModel) {
         self.init(
             identifier: model.identifier,
@@ -34,5 +34,5 @@ extension MovieModel {
             runtime: model.runtime,
             isFavorite: model.isFavorite)
     }
-    
+
 }

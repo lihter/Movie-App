@@ -1,5 +1,5 @@
 enum Genre: Int {
-    
+
     case action = 28
     case adventure = 12
     case comedy = 35
@@ -29,7 +29,7 @@ enum Genre: Int {
     case warPolitics = 10768
     case day = 998
     case week = 999
-    
+
     var genreName: String {
         switch self {
         case .day:
@@ -92,5 +92,5 @@ enum Genre: Int {
             return "Reality"
         }
     }
-    
+
 }

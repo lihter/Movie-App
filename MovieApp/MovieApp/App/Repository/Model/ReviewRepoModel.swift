@@ -1,15 +1,15 @@
 struct ReviewRepoModel {
-    
+
     let identifier: String
     let author: String
     let authorDetails: AuthorRepoModel
     let content: String
     let createdAt: String
-    
+
 }
 
 extension ReviewRepoModel {
-    
+
     init(fromModel model: ReviewDataModel) {
         self.init(
             identifier: model.identifier,
@@ -18,5 +18,5 @@ extension ReviewRepoModel {
             content: model.content,
             createdAt: model.createdAt)
     }
-    
+
 }

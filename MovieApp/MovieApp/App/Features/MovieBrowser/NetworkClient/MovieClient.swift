@@ -3,9 +3,9 @@ import Foundation
 import Alamofire
 
 class MovieClient: MovieClientProtocol {
-    
+
     static let shared: MovieClientProtocol = MovieClient()
-    
+
     var popularMovies: AnyPublisher<[MovieResponse], Never> {
         fetch(forUrl: "movie/popular")
             .map { (result: MoviesWrapperResponse) in
@@ -14,7 +14,7 @@ class MovieClient: MovieClientProtocol {
             .assertNoFailure()
             .eraseToAnyPublisher()
     }
-    
+
     var trendingToday: AnyPublisher<[MovieResponse], Never> {
         fetch(forUrl: "trending/movie/day")
             .map { (result: MoviesWrapperResponse) in
@@ -23,7 +23,7 @@ class MovieClient: MovieClientProtocol {
             .assertNoFailure()
             .eraseToAnyPublisher()
     }
-    
+
     var trendingWeek: AnyPublisher<[MovieResponse], Never> {
         fetch(forUrl: "trending/movie/week")
             .map { (result: MoviesWrapperResponse) in
@@ -32,7 +32,7 @@ class MovieClient: MovieClientProtocol {
             .assertNoFailure()
             .eraseToAnyPublisher()
     }
-    
+
     var topRated: AnyPublisher<[MovieResponse], Never> {
         fetch(forUrl: "movie/top_rated")
             .map { (result: MoviesWrapperResponse) in
@@ -41,13 +41,13 @@ class MovieClient: MovieClientProtocol {
             .assertNoFailure()
             .eraseToAnyPublisher()
     }
-    
+
     func fetchMovieDetails(for movieId: Int) -> AnyPublisher<MovieDetailResponse, Never> {
         fetch(forUrl: "movie/\(movieId)")
             .assertNoFailure()
             .eraseToAnyPublisher()
     }
-    
+
     func fetchCast(for movieId: Int) -> AnyPublisher<[CastResponse], Never> {
         fetch(forUrl: "movie/\(movieId)/credits")
             .map { (result: CastWrapperResponse) in
@@ -56,7 +56,7 @@ class MovieClient: MovieClientProtocol {
             .assertNoFailure()
             .eraseToAnyPublisher()
     }
-    
+
     func fetchCrew(for movieId: Int) -> AnyPublisher<[CrewResponse], Never> {
         fetch(forUrl: "movie/\(movieId)/credits")
             .map { (result: CrewWrapperResponse) in
@@ -65,7 +65,7 @@ class MovieClient: MovieClientProtocol {
             .assertNoFailure()
             .eraseToAnyPublisher()
     }
-    
+
     func fetchRecommendations(for movieId: Int) -> AnyPublisher<[MovieResponse], Never> {
         fetch(forUrl: "movie/\(movieId)/recommendations")
             .map { (result: MoviesWrapperResponse) in
@@ -74,7 +74,7 @@ class MovieClient: MovieClientProtocol {
             .assertNoFailure()
             .eraseToAnyPublisher()
     }
-    
+
     func fetchReviews(for movieId: Int) -> AnyPublisher<[ReviewResponse], Never> {
         fetch(forUrl: "movie/\(movieId)/reviews")
             .map { (result: ReviewWrapperResponse) in
@@ -83,13 +83,13 @@ class MovieClient: MovieClientProtocol {
             .assertNoFailure()
             .eraseToAnyPublisher()
     }
-    
+
     func fetchMovies(searchQuery: String) -> AnyPublisher<[MovieResponse], Never> {
         let parameters: [String: String] = [
             "query": searchQuery,
-            "include_adult": "false",
+            "include_adult": "false"
         ]
-        
+
         return fetch(forUrl: "search/movie", additionalParameters: parameters)
             .map { (result: MoviesWrapperResponse) in
                 result.movies ?? []
@@ -97,41 +97,11 @@ class MovieClient: MovieClientProtocol {
             .assertNoFailure()
             .eraseToAnyPublisher()
     }
-    
+
 }
 
 extension MovieClient {
-    
-    func fetch<T: Decodable>(
-        forUrl urlPath: String,
-        additionalParameters: Parameters? = nil,
-        completion: @escaping (Result<T, RequestError>) -> Void
-    ) {
-        guard let apiKey = Bundle.main.infoDictionary?["API_KEY"] else {
-            completion(.failure(.general))
-            return
-        }
-        
-        var parameters: Parameters = [
-            "api_key": apiKey,
-            "language": "en-US",
-            "page": 1
-        ]
-        
-        if let additionalParameters = additionalParameters {
-            parameters = parameters.merging(additionalParameters, uniquingKeysWith: { (_, last) in last })
-        }
-        
-        NetworkClient.shared.executeUrlRequest(urlPath, method: .get, parameters: parameters) { (result: Result<T, RequestError>) in
-            switch result {
-            case .failure(let error):
-                completion(.failure(error))
-            case .success(let value):
-                completion(.success(value))
-            }
-        }
-    }
-    
+
     func fetch<T: Decodable>(
         forUrl urlPath: String,
         additionalParameters: [String: String]? = nil
@@ -140,18 +110,18 @@ extension MovieClient {
             return Fail(error: RequestError.general)
                 .eraseToAnyPublisher()
         }
-        
+
         var parameters: [String: String] = [
             "api_key": apiKey as? String ?? "",
             "language": "en-US",
             "page": "1"
         ]
-        
+
         if let additionalParameters = additionalParameters {
             parameters = parameters.merging(additionalParameters, uniquingKeysWith: { (_, last) in last })
         }
-        
+
         return NetworkClient.shared.executeUrlRequestPublisher(urlPath, method: .get, parameters: parameters)
     }
-    
+
 }

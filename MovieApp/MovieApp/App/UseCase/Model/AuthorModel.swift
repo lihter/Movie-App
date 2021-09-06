@@ -1,16 +1,16 @@
 import Foundation
 
 struct AuthorModel {
-    
+
     let name: String
     let username: String
     let avatarPath: URL?
     let rating: Double?
-    
+
 }
 
 extension AuthorModel {
-    
+
     init(fromModel model: AuthorRepoModel) {
         self.init(
             name: model.name,
@@ -18,5 +18,5 @@ extension AuthorModel {
             avatarPath: model.avatarPath,
             rating: model.rating)
     }
-    
+
 }

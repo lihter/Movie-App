@@ -1,15 +1,15 @@
 struct TVShowsWrapperResponse: Decodable {
-    
+
     let shows: [TVShowResponse]?
-    
+
     enum CodingKeys: String, CodingKey {
         case shows = "results"
     }
-    
+
 }
 
 struct TVShowResponse: Decodable {
-    
+
     let identifier: Int
     let title: String
     let backdropPath: String?
@@ -20,7 +20,7 @@ struct TVShowResponse: Decodable {
     let releaseDate: String?
     let genreIds: [Int]?
     let runtime: Int?
-    
+
     private enum CodingKeys: String, CodingKey {
         case title = "original_name"
         case overview
@@ -33,5 +33,5 @@ struct TVShowResponse: Decodable {
         case genreIds = "genre_ids"
         case runtime
     }
-    
+
 }
