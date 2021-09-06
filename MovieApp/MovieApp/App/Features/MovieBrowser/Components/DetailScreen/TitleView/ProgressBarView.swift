@@ -2,7 +2,18 @@ import UIKit
 
 class ProgressBarView: UIView {
     
-    var endPoint: Int!
+    var endPoint: Int = 0 {
+        didSet {
+            let text = NSMutableAttributedString(string: "\(endPoint)%")
+            text.setAttributes(
+                [.font: UIFont.extraSmallBold, .foregroundColor: UIColor.white],
+                range: NSMakeRange(0, text.length))
+            text.setAttributes(
+                [.font: UIFont.regularBold, .foregroundColor: UIColor.white],
+                range: NSMakeRange(0, text.length - 1))
+            percentageLabel.attributedText = text
+        }
+    }
     
     var circleLayer: CAShapeLayer!
     var progressLayer: CAShapeLayer!
@@ -11,10 +22,24 @@ class ProgressBarView: UIView {
     var circularPath: UIBezierPath!
     var progressPath: UIBezierPath!
     
-    func setPercentage(to endPoint: Int) {
-        self.endPoint = endPoint
+    init() {
+        super.init(frame: .zero)
         
         buildViews()
+    }
+    
+    required init?(coder: NSCoder) {
+        fatalError("init(coder:) has not been implemented")
+    }
+    
+    func setPercentage(to endPoint: Int) {
+        let hasDifferentValue = self.endPoint != endPoint
+        
+        self.endPoint = endPoint
+        
+        if hasDifferentValue {
+            progressAnimation(duration: 1.2)
+        }
     }
     
     override func layoutSubviews() {
@@ -46,5 +71,5 @@ class ProgressBarView: UIView {
         circularProgressAnimation.isRemovedOnCompletion = false
         progressLayer.add(circularProgressAnimation, forKey: "progressAnim")
     }
-    
+
 }
