@@ -53,7 +53,7 @@ class FavoritesViewController: UIViewController {
     private func makeDataSource() -> DataSource {
         let dataSource = DataSource(
             collectionView: collectionView,
-            cellProvider: { (collectionView, indexPath, movie) -> UICollectionViewCell? in
+            cellProvider: { [weak self] (collectionView, indexPath, movie) -> UICollectionViewCell? in
                 guard
                     let cell = collectionView.dequeueReusableCell(
                         withReuseIdentifier: NewMovieCell.reuseIdentifier,

@@ -32,35 +32,35 @@ final class MovieDetailPresenter {
                     recommendations: recommendations,
                     review: review)
             }
-            .eraseToAnyPublisher()
+            .receiveOnMain()
     }
     
     private var movieDetails: AnyPublisher<DetailTitleViewModel, Never> {
         useCase
             .getMovieDetails(for: movieId)
             .map { DetailTitleViewModel(fromModel: $0) }
-            .receiveOnMain()
+            .eraseToAnyPublisher()
     }
 
     private var mostPopularCast: AnyPublisher<[CastViewModel], Never> {
         useCase
             .getMostPopularCast(for: movieId)
             .map { $0.map { CastViewModel(fromModel: $0) } }
-            .receiveOnMain()
+            .eraseToAnyPublisher()
     }
     
     private var crew: AnyPublisher<[CrewViewModel], Never> {
         useCase
             .getCrew(for: movieId)
             .map { $0.map { CrewViewModel(fromModel: $0) } }
-            .receiveOnMain()
+            .eraseToAnyPublisher()
     }
     
     private var recommendations: AnyPublisher<[MovieViewModel], Never> {
         useCase
             .getRecommendations(for: movieId)
             .map { $0.map { MovieViewModel(fromModel: $0) } }
-            .receiveOnMain()
+            .eraseToAnyPublisher()
     }
     
     private var review: AnyPublisher<ReviewViewModel?, Never> {
@@ -72,7 +72,7 @@ final class MovieDetailPresenter {
                 }
                 
                 return ReviewViewModel(fromModel: review) }
-            .receiveOnMain()
+            .eraseToAnyPublisher()
     }
     
     func selectedMovie(withId movieId: Int) {
