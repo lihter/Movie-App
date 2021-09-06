@@ -18,7 +18,7 @@ extension MovieViewModel: Hashable {
     }
     
     static func == (lhs: MovieViewModel, rhs: MovieViewModel) -> Bool {
-        lhs.identifier == rhs.identifier
+        lhs.identifier == rhs.identifier && lhs.isFavorite == rhs.isFavorite
     }
     
 }

@@ -10,40 +10,32 @@ class MovieNetworkDataSource: MovieNetworkDataSourceProtocol {
         self.movieClient = MovieClient.shared
     }
 
-    func fetchPopularMovies(completion: @escaping (Result<[MovieDataModel], RequestError>) -> Void) {
-        movieClient.fetchPopularMovies { [weak self] result in
-            self?.mapResult(result: result, completion: completion)
-        }
+    var popularMovies: AnyPublisher<[MovieDataModel], Never> {
+        movieClient
+            .popularMovies
+            .map { $0.map { MovieDataModel(fromModel: $0) } }
+            .eraseToAnyPublisher()
     }
     
-    func fetchTrendingToday(completion: @escaping(Result<[MovieDataModel], RequestError>) -> Void) {
-        movieClient.fetchTrendingToday { [weak self] result in
-            self?.mapResult(result: result, completion: completion)
-        }
+    var trendingToday: AnyPublisher<[MovieDataModel], Never> {
+        movieClient
+            .trendingToday
+            .map { $0.map { MovieDataModel(fromModel: $0) } }
+            .eraseToAnyPublisher()
     }
     
-    func fetchTrendingThisWeek(completion: @escaping(Result<[MovieDataModel], RequestError>) -> Void) {
-        movieClient.fetchTrendingThisWeek { [weak self] result in
-            self?.mapResult(result: result, completion: completion)
-        }
+    var trendingWeek: AnyPublisher<[MovieDataModel], Never> {
+        movieClient
+            .trendingWeek
+            .map { $0.map { MovieDataModel(fromModel: $0) } }
+            .eraseToAnyPublisher()
     }
     
-    func fetchTopRatedMovies(completion: @escaping(Result<[MovieDataModel], RequestError>) -> Void) {
-        movieClient.fetchTopRatedMovies { [weak self] result in
-            self?.mapResult(result: result, completion: completion)
-        }
-    }
-    
-    func fetchTopRatedTV(completion: @escaping(Result<[MovieDataModel], RequestError>) -> Void) {
-        movieClient.fetchTopRatedTV { result in
-            switch result {
-            case .success(let shows):
-                let mappedMovies = shows.map { MovieDataModel(fromModel: $0) }
-                completion(.success(mappedMovies))
-            case .failure(let error):
-                completion(.failure(error))
-            }
-        }
+    var topRated: AnyPublisher<[MovieDataModel], Never> {
+        movieClient
+            .topRated
+            .map { $0.map { MovieDataModel(fromModel: $0) } }
+            .eraseToAnyPublisher()
     }
     
     func fetchMovieDetails(for movieId: Int) -> AnyPublisher<MovieDataModel, Never> {
@@ -81,10 +73,11 @@ class MovieNetworkDataSource: MovieNetworkDataSourceProtocol {
             .eraseToAnyPublisher()
     }
     
-    func fetchMovies(searchQuery: String, completion: @escaping(Result<[MovieDataModel], RequestError>) -> Void) {
-        movieClient.fetchMovies(searchQuery: searchQuery) { [weak self] result in
-            self?.mapResult(result: result, completion: completion)
-        }
+    func fetchMovies(searchQuery: String) -> AnyPublisher<[MovieDataModel], Never>  {
+        movieClient
+            .fetchMovies(searchQuery: searchQuery)
+            .map { $0.map { MovieDataModel(fromModel: $0) } }
+            .eraseToAnyPublisher()
     }
 
 }

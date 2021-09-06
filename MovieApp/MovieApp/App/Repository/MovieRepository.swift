@@ -17,72 +17,73 @@ class MovieRepository: MovieRepositoryProtocol {
         categoryMovies = [:]
     }
     
-    func fetchPopularMovies(completion: @escaping (Result<[MovieRepoModel], RequestError>) -> Void) {
-        networkDataSource.fetchPopularMovies { [weak self] result in
-            self?.mapResult(result: result, category: .popular, completion: completion)
-        }
+    private var userDefaultsPublisher: AnyPublisher<[Int], Never> {
+        userDefaultsDataSource
+            .favorites
+            .eraseToAnyPublisher()
     }
     
-    func fetchTrending(completion: @escaping(Result<[MovieRepoModel], RequestError>) -> Void) {
-        var today = false
-        var week = false
-        networkDataSource.fetchTrendingToday { [weak self] result in
-            guard let self = self else { return }
-            
-            today = true
-            switch result {
-            case .success(let movies):
-                let mappedMovies: [MovieRepoModel] = movies.map {
-                    MovieRepoModel(
-                        fromModel: $0,
-                        isFavorite: false,
-                        withGenre: Genre.day.rawValue)
+    var popularMovies: AnyPublisher<[MovieRepoModel], Never> {
+        networkDataSource
+            .popularMovies
+            .combineLatest(userDefaultsPublisher)
+            .map { movies, favoriteIds -> [MovieRepoModel] in
+                movies.map { movie in
+                    let isFavorite = favoriteIds.contains(movie.identifier)
+                    return MovieRepoModel(fromModel: movie, isFavorite: isFavorite)
                 }
-                if today, week {
-                    self.categoryMovies[.trending]?.append(contentsOf: mappedMovies)
-                    completion(.success(self.categoryMovies[.trending] ?? []))
-                } else {
-                    self.categoryMovies[.trending] = mappedMovies
-                }
-            case .failure(let error):
-                completion(.failure(error))
             }
-        }
+            .eraseToAnyPublisher()
+    }
+    
+    var trendingMovies: AnyPublisher<[MovieRepoModel], Never> {
+        let today = networkDataSource
+            .trendingToday
+            .eraseToAnyPublisher()
         
-        networkDataSource.fetchTrendingThisWeek { [weak self] result in
-            week = true
-            switch result {
-            case .success(let movies):
-                let mappedMovies: [MovieRepoModel] = movies.map {
-                    MovieRepoModel(
-                        fromModel: $0,
-                        isFavorite: false,
-                        withGenre: Genre.week.rawValue)
-                }
-                if today, week {
-                    self?.categoryMovies[.trending]?.append(contentsOf: mappedMovies)
-                    completion(.success(self?.categoryMovies[.trending] ?? []))
-                } else {
-                    self?.categoryMovies[.trending] = mappedMovies
-                }
-            case .failure(let error):
-                completion(.failure(error))
+        let week = networkDataSource
+            .trendingWeek
+            .eraseToAnyPublisher()
+        
+        return Publishers
+            .CombineLatest3(today, week, userDefaultsPublisher)
+            .map { todayMovies, weekMovies, favoriteIds -> [MovieRepoModel] in
+                var combinedMovies = todayMovies
+                combinedMovies.append(contentsOf: weekMovies)
+                
+                return combinedMovies
+                    .uniqued
+                    .map {
+                        let isFavorite = favoriteIds.contains($0.identifier)
+                        var genres: [Int] = []
+                        if todayMovies.contains($0) {
+                            genres.append(Genre.day.rawValue)
+                        }
+                        if weekMovies.contains($0) {
+                            genres.append(Genre.week.rawValue)
+                        }
+                        
+                        return MovieRepoModel(fromModel: $0, isFavorite: isFavorite, withGenres: genres)
+                    }
             }
-        }
+            .eraseToAnyPublisher()
     }
     
-    func fetchTopRatedMovies(completion: @escaping(Result<[MovieRepoModel], RequestError>) -> Void) {
-        networkDataSource.fetchTopRatedMovies { [weak self] result in
-            self?.mapResult(result: result, category: .topRated, completion: completion)
-        }
+    var topRatedMovies: AnyPublisher<[MovieRepoModel], Never> {
+        networkDataSource
+            .topRated
+            .combineLatest(userDefaultsPublisher)
+            .map { movies, favoriteIds -> [MovieRepoModel] in
+                movies.map { movie in
+                    let isFavorite = favoriteIds.contains(movie.identifier)
+                    return MovieRepoModel(fromModel: movie, isFavorite: isFavorite)
+                }
+            }
+            .eraseToAnyPublisher()
     }
     
     func fetchMovieDetails(for movieId: Int) -> AnyPublisher<MovieRepoModel, Never> {
-        let userDefaultsPublisher = userDefaultsDataSource
-            .favorites
-            .eraseToAnyPublisher()
-        
-        return networkDataSource
+        networkDataSource
             .fetchMovieDetails(for: movieId)
             .combineLatest(userDefaultsPublisher)
             .map { movie, favoriteArray -> MovieRepoModel in
@@ -120,30 +121,32 @@ class MovieRepository: MovieRepositoryProtocol {
             .eraseToAnyPublisher()
     }
     
-    func fetchMovies(searchQuery: String, completion: @escaping(Result<[MovieRepoModel], RequestError>) -> Void) {
-        networkDataSource.fetchMovies(searchQuery: searchQuery) { result in
-            switch result {
-            case .success(let movies):
-                let mappedMovies = movies.map { MovieRepoModel(fromModel: $0) }
-                completion(.success(mappedMovies))
-            case .failure(let error):
-                completion(.failure(error))
-            }
-        }
+    func fetchMovies(searchQuery: String) -> AnyPublisher<[MovieRepoModel], Never> {
+        networkDataSource
+            .fetchMovies(searchQuery: searchQuery)
+            .map { $0.map { MovieRepoModel(fromModel: $0) } }
+            .eraseToAnyPublisher()
     }
     
     func toggleFavorite(_ movieId: Int) {
         userDefaultsDataSource.toggleFavorite(movieId)
-        
-        updateCategoryMovies()
     }
     
-    func getMovies(for category: LocalCategory, genreId: Int) -> [MovieRepoModel] {
-        var movies: [MovieRepoModel]
-        movies = categoryMovies[category]?.filter {
-            $0.genreIds?.contains(genreId) ?? false
-        } ?? []
-        return movies
+    func getMoviesPublisher(for category: LocalCategory, genreId: Int) -> AnyPublisher<[MovieRepoModel], Never> {
+        switch category {
+        case .popular:
+            return popularMovies
+                .map { $0.filter { $0.genreIds?.contains(genreId) ?? false } }
+                .eraseToAnyPublisher()
+        case .topRated:
+            return topRatedMovies
+                .map { $0.filter { $0.genreIds?.contains(genreId) ?? false } }
+                .eraseToAnyPublisher()
+        case .trending:
+            return trendingMovies
+                .map { $0.filter { $0.genreIds?.contains(genreId) ?? false } }
+                .eraseToAnyPublisher()
+        }
     }
     
     func getMovie(with movieId: Int) -> MovieRepoModel? {
@@ -169,50 +172,6 @@ class MovieRepository: MovieRepositoryProtocol {
             }
             .map { $0.map { MovieRepoModel(fromModel: $0, isFavorite: true) } }
             .eraseToAnyPublisher()
-    }
-    
-}
-
-extension MovieRepository {
-    
-    private func mapResult(
-        result: Result<[MovieDataModel], RequestError>,
-        category: LocalCategory,
-        completion: @escaping(Result<[MovieRepoModel], RequestError>) -> Void
-    ) {
-        switch result {
-        case .success(let movies):
-            let mappedMovies: [MovieRepoModel] = movies.map {
-                MovieRepoModel(fromModel: $0, isFavorite: false)
-            }
-            categoryMovies[category] = mappedMovies
-            completion(.success(mappedMovies))
-        case .failure(let error):
-            completion(.failure(error))
-        }
-    }
-    
-    private func mapMovieDetailResult(
-        result: Result<MovieDataModel, RequestError>,
-        completion: @escaping(Result<MovieRepoModel, RequestError>) -> Void
-    ) {
-        switch result {
-        case .success(let movie):
-            let mappedMovie = MovieRepoModel(
-                fromModel: movie,
-                isFavorite: false)
-            completion(.success(mappedMovie))
-        case .failure(let error):
-            completion(.failure(error))
-        }
-    }
-    
-    func updateCategoryMovies() {
-        categoryMovies = categoryMovies
-            .mapValues { categoryMovies in
-                categoryMovies
-                    .map { $0.copy(isFavorite: false) }
-            }
     }
     
 }

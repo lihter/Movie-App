@@ -35,7 +35,7 @@ extension MovieRepoModel {
             isFavorite: isFavorite)
     }
     
-    init(fromModel model: MovieDataModel, isFavorite: Bool = true, withGenre genreId: Int) {
+    init(fromModel model: MovieDataModel, isFavorite: Bool = true, withGenres genreIds: [Int]) {
         self.init(
             identifier: model.identifier,
             title: model.title,
@@ -45,7 +45,7 @@ extension MovieRepoModel {
             voteAverage: model.voteAverage,
             voteCount: model.voteCount,
             releaseDate: model.releaseDate,
-            genreIds: [genreId],
+            genreIds: genreIds,
             budget: model.budget,
             runtime: model.runtime,
             isFavorite: isFavorite)

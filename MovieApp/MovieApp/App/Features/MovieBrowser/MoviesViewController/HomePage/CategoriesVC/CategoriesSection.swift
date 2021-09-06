@@ -1,0 +1,5 @@
+enum CategoriesSection {
+    
+    case mainSection
+    
+}

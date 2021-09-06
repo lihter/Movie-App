@@ -2,16 +2,14 @@ import Combine
 
 protocol MovieClientProtocol {
     
-    func fetchPopularMovies(completion: @escaping(Result<[MovieResponse], RequestError>) -> Void)
+    var popularMovies: AnyPublisher<[MovieResponse], Never> { get }
     
-    func fetchTrendingToday(completion: @escaping(Result<[MovieResponse], RequestError>) -> Void)
+    var trendingToday: AnyPublisher<[MovieResponse], Never> { get }
     
-    func fetchTrendingThisWeek(completion: @escaping(Result<[MovieResponse], RequestError>) -> Void)
+    var trendingWeek: AnyPublisher<[MovieResponse], Never> { get }
     
-    func fetchTopRatedMovies(completion: @escaping(Result<[MovieResponse], RequestError>) -> Void)
-    
-    func fetchTopRatedTV(completion: @escaping(Result<[TVShowResponse], RequestError>) -> Void)
-    
+    var topRated: AnyPublisher<[MovieResponse], Never> { get }
+        
     func fetchMovieDetails(for movieId: Int) -> AnyPublisher<MovieDetailResponse, Never>
     
     func fetchCast(for movieId: Int) -> AnyPublisher<[CastResponse], Never>
@@ -22,6 +20,6 @@ protocol MovieClientProtocol {
     
     func fetchReviews(for movieId: Int) -> AnyPublisher<[ReviewResponse], Never>
     
-    func fetchMovies(searchQuery: String, completion: @escaping(Result<[MovieResponse], RequestError>) -> Void)
+    func fetchMovies(searchQuery: String) -> AnyPublisher<[MovieResponse], Never>
 
 }
