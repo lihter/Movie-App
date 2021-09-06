@@ -40,7 +40,7 @@ class HomePageViewController: UIViewController {
     private func bindViews() {
         searchBar
             .searchTextField
-            .textPublisher()
+            .textPublisher
             .debounce(for: .milliseconds(500), scheduler: RunLoop.main)
             .flatMap { [weak self] text -> AnyPublisher<[MovieViewModel], Never> in
                 guard let self = self else { return .empty() }

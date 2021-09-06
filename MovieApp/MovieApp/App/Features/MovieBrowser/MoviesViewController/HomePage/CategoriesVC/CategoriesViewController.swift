@@ -52,7 +52,7 @@ class CategoriesViewController: UIViewController {
     private func makeDataSource() -> DataSource {
         DataSource(
             tableView: tableView,
-            cellProvider: { (tableView, indexPath, category) -> UITableViewCell? in
+            cellProvider: { [weak self] (tableView, indexPath, category) -> UITableViewCell? in
                 guard
                     let cell = tableView.dequeueReusableCell(
                         withIdentifier: CategoryCell.reuseIdentifier,

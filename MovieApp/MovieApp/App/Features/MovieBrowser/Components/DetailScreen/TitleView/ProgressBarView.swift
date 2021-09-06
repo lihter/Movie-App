@@ -2,7 +2,18 @@ import UIKit
 
 class ProgressBarView: UIView {
 
-    var endPoint: Int!
+    var endPoint: Int = 0 {
+        didSet {
+            let text = NSMutableAttributedString(string: "\(endPoint)%")
+            text.setAttributes(
+                [.font: UIFont.extraSmallBold, .foregroundColor: UIColor.white],
+                range: NSRange(location: 0, length: text.length))
+            text.setAttributes(
+                [.font: UIFont.regularBold, .foregroundColor: UIColor.white],
+                range: NSRange(location: 0, length: text.length - 1))
+            percentageLabel.attributedText = text
+        }
+    }
 
     var circleLayer: CAShapeLayer!
     var progressLayer: CAShapeLayer!
@@ -14,8 +25,7 @@ class ProgressBarView: UIView {
     init() {
         super.init(frame: .zero)
 
-        endPoint = 0
-        createViews()
+        buildViews()
     }
 
     required init?(coder: NSCoder) {
@@ -27,7 +37,6 @@ class ProgressBarView: UIView {
 
         self.endPoint = endPoint
 
-        buildViews()
         if hasDifferentValue {
             progressAnimation(duration: 1.2)
         }

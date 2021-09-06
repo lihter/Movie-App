@@ -3,6 +3,7 @@ import UIKit
 extension ProgressBarView: DesignProtocol {
 
     func buildViews() {
+        createViews()
         styleViews()
         defineLayoutForViews()
     }
@@ -33,15 +34,6 @@ extension ProgressBarView: DesignProtocol {
         progressLayer.lineWidth = 5.0
         progressLayer.strokeEnd = 0
         progressLayer.strokeColor = UIColor.progressBarGreen.cgColor
-
-        let text = NSMutableAttributedString(string: "\(endPoint ?? 0)%")
-        text.setAttributes(
-            [.font: UIFont.extraSmallBold, .foregroundColor: UIColor.white],
-            range: NSRange(location: 0, length: text.length))
-        text.setAttributes(
-            [.font: UIFont.regularBold, .foregroundColor: UIColor.white],
-            range: NSRange(location: 0, length: text.length - 1))
-        percentageLabel.attributedText = text
 
         userScoreLabel.text = "User Score"
         userScoreLabel.textColor = .white

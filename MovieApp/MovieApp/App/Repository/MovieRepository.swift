@@ -52,7 +52,7 @@ class MovieRepository: MovieRepositoryProtocol {
                 combinedMovies.append(contentsOf: weekMovies)
 
                 return combinedMovies
-                    .uniqued()
+                    .uniqued
                     .map {
                         let isFavorite = favoriteIds.contains($0.identifier)
                         var genres: [Int] = []

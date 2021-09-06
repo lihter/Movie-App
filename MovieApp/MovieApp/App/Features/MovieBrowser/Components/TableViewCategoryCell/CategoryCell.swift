@@ -61,7 +61,7 @@ class CategoryCell: UITableViewCell {
     private func makeDataSource() -> DataSource {
         DataSource(
             collectionView: moviesCollectionView,
-            cellProvider: { (collectionView, indexPath, movie) -> UICollectionViewCell? in
+            cellProvider: { [weak self] (collectionView, indexPath, movie) -> UICollectionViewCell? in
                 guard
                     let cell = collectionView.dequeueReusableCell(
                         withReuseIdentifier: NewMovieCell.reuseIdentifier,

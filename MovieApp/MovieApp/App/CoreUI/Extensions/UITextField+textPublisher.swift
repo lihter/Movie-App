@@ -3,7 +3,7 @@ import UIKit
 
 extension UITextField {
 
-    func textPublisher() -> AnyPublisher<String, Never> {
+    var textPublisher: AnyPublisher<String, Never> {
         NotificationCenter
             .default
             .publisher(for: UITextField.textDidChangeNotification, object: self)
