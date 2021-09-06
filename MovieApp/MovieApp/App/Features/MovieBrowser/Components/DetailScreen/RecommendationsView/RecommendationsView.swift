@@ -13,9 +13,8 @@ class RecommendationsView: UIView {
     var collectionView: UICollectionView!
     lazy var dataSource = makeDataSource()
     
-    var disposables = Set<AnyCancellable>()
     var selectedMoviePublisher = PassthroughSubject<Int, Never>()
-    
+        
     init() {
         super.init(frame: .zero)
         
