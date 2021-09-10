@@ -6,12 +6,14 @@ class MovieRepository: MovieRepositoryProtocol {
     static let shared: MovieRepositoryProtocol = MovieRepository()
 
     private let networkDataSource: MovieNetworkDataSourceProtocol!
+    private let localDataSource: MovieLocalDataSourceProtocol!
     private let userDefaultsDataSource: UserDefaultsDataSourceProtocol!
 
     var categoryMovies: [LocalCategory: [MovieRepoModel]]!
 
     init() {
         self.networkDataSource = MovieNetworkDataSource.shared
+        self.localDataSource = MovieLocalDataSource.shared
         self.userDefaultsDataSource = UserDefaultsDataSource.shared
 
         categoryMovies = [:]
@@ -26,6 +28,7 @@ class MovieRepository: MovieRepositoryProtocol {
     var popularMovies: AnyPublisher<[MovieRepoModel], Never> {
         networkDataSource
             .popularMovies
+            .handleLocalStorage(localDataSource: localDataSource)
             .combineLatest(userDefaultsPublisher)
             .map { movies, favoriteIds -> [MovieRepoModel] in
                 movies.map { movie in
@@ -39,10 +42,12 @@ class MovieRepository: MovieRepositoryProtocol {
     var trendingMovies: AnyPublisher<[MovieRepoModel], Never> {
         let today = networkDataSource
             .trendingToday
+            .handleLocalStorage(localDataSource: localDataSource)
             .eraseToAnyPublisher()
 
         let week = networkDataSource
             .trendingWeek
+            .handleLocalStorage(localDataSource: localDataSource)
             .eraseToAnyPublisher()
 
         return Publishers
@@ -72,6 +77,7 @@ class MovieRepository: MovieRepositoryProtocol {
     var topRatedMovies: AnyPublisher<[MovieRepoModel], Never> {
         networkDataSource
             .topRated
+            .handleLocalStorage(localDataSource: localDataSource)
             .combineLatest(userDefaultsPublisher)
             .map { movies, favoriteIds -> [MovieRepoModel] in
                 movies.map { movie in
@@ -79,6 +85,24 @@ class MovieRepository: MovieRepositoryProtocol {
                     return MovieRepoModel(fromModel: movie, isFavorite: isFavorite)
                 }
             }
+            .eraseToAnyPublisher()
+    }
+
+    var favoriteMovies: AnyPublisher<[MovieRepoModel], Never> {
+        userDefaultsDataSource
+            .favorites
+            .flatMap { [weak self] favoriteMovieIds -> AnyPublisher<[MovieDataModel], Never> in
+                guard let self = self else { return .empty() }
+
+                let movieDataModelPublishers = favoriteMovieIds.map {
+                    self.networkDataSource.fetchMovieDetails(for: $0)
+                }
+                return Publishers
+                    .MergeMany(movieDataModelPublishers)
+                    .collect()
+                    .eraseToAnyPublisher()
+            }
+            .map { $0.map { MovieRepoModel(fromModel: $0, isFavorite: true) } }
             .eraseToAnyPublisher()
     }
 
@@ -154,24 +178,6 @@ class MovieRepository: MovieRepositoryProtocol {
             .values
             .flatMap { $0 }
             .first(where: { $0.identifier == movieId })
-    }
-
-    var favoriteMovies: AnyPublisher<[MovieRepoModel], Never> {
-        userDefaultsDataSource
-            .favorites
-            .flatMap { [weak self] favoriteMovieIds -> AnyPublisher<[MovieDataModel], Never> in
-                guard let self = self else { return .empty() }
-
-                let movieDataModelPublishers = favoriteMovieIds.map {
-                    self.networkDataSource.fetchMovieDetails(for: $0)
-                }
-                return Publishers
-                    .MergeMany(movieDataModelPublishers)
-                    .collect()
-                    .eraseToAnyPublisher()
-            }
-            .map { $0.map { MovieRepoModel(fromModel: $0, isFavorite: true) } }
-            .eraseToAnyPublisher()
     }
 
 }

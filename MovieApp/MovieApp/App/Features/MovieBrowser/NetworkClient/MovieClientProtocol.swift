@@ -2,13 +2,13 @@ import Combine
 
 protocol MovieClientProtocol {
 
-    var popularMovies: AnyPublisher<[MovieResponse], Never> { get }
+    var popularMovies: AnyPublisher<[MovieResponse], RequestError> { get }
 
-    var trendingToday: AnyPublisher<[MovieResponse], Never> { get }
+    var trendingToday: AnyPublisher<[MovieResponse], RequestError> { get }
 
-    var trendingWeek: AnyPublisher<[MovieResponse], Never> { get }
+    var trendingWeek: AnyPublisher<[MovieResponse], RequestError> { get }
 
-    var topRated: AnyPublisher<[MovieResponse], Never> { get }
+    var topRated: AnyPublisher<[MovieResponse], RequestError> { get }
 
     func fetchMovieDetails(for movieId: Int) -> AnyPublisher<MovieDetailResponse, Never>
 
