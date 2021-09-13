@@ -40,6 +40,9 @@ extension MovieDetailViewController: DesignProtocol {
 
         recommendationsView = RecommendationsView()
         contentView.addSubview(recommendationsView)
+
+        noConnectionImageView = UIImageView()
+        view.addSubview(noConnectionImageView)
     }
 
     func styleViews() {
@@ -61,6 +64,10 @@ extension MovieDetailViewController: DesignProtocol {
         overview.textColor = .black
         overview.numberOfLines = 0
         overview.lineBreakMode = .byWordWrapping
+
+        noConnectionImageView.isHidden = true
+        noConnectionImageView.image = UIImage(with: .noConnection)
+        noConnectionImageView.contentMode = .scaleAspectFit
     }
 
     func defineLayoutForViews() {
@@ -110,6 +117,20 @@ extension MovieDetailViewController: DesignProtocol {
             $0.leading.trailing.equalToSuperview()
             $0.bottom.equalToSuperview().inset(4 * offset)
         }
+
+        noConnectionImageView.snp.makeConstraints {
+            $0.center.equalToSuperview()
+            $0.width.equalTo(view.frame.width / 2)
+        }
+    }
+
+}
+
+extension MovieDetailViewController {
+
+    func hideContent(_ hide: Bool) {
+        scrollView.isHidden = hide
+        noConnectionImageView.isHidden = !hide
     }
 
 }

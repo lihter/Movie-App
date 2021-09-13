@@ -1,5 +1,6 @@
 import Combine
 import UIKit
+import Reachability
 
 class MovieDetailViewController: UIViewController {
 
@@ -18,6 +19,8 @@ class MovieDetailViewController: UIViewController {
     var review: ReviewView!
     var recommendationsView: RecommendationsView!
     var crewGridCollectionView: CrewGridCollectionView!
+    var noConnectionImageView: UIImageView!
+    var reachability: Reachability!
 
     init(presenter: MovieDetailPresenter) {
         super.init(nibName: nil, bundle: nil)
@@ -33,8 +36,12 @@ class MovieDetailViewController: UIViewController {
         super.viewDidLoad()
 
         buildViews()
-
         bindViews()
+        hasConnection()
+    }
+
+    override func viewWillDisappear(_ animated: Bool) {
+        reachability.stopNotifier()
     }
 
     private func bindViews() {
@@ -67,6 +74,24 @@ class MovieDetailViewController: UIViewController {
 
         if let review = data.review {
             self.review.populate(with: review)
+        }
+    }
+
+    private func hasConnection() {
+        reachability = try? Reachability()
+
+        reachability.whenReachable = { [weak self] _ in
+            self?.hideContent(false)
+        }
+
+        reachability.whenUnreachable = { [weak self] _ in
+            self?.hideContent(true)
+        }
+
+        do {
+            try reachability.startNotifier()
+        } catch {
+            print("Unable to start notifier")
         }
     }
 
