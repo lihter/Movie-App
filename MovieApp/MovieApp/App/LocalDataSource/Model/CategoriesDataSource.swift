@@ -4,5 +4,6 @@ enum CategoriesDataSource: Int {
     case trendingToday
     case trendingWeek
     case topRated
+    case favorites
 
 }
