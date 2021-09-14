@@ -6,7 +6,7 @@ class MovieLocalDataSource: MovieLocalDataSourceProtocol {
 
     static let shared: MovieLocalDataSourceProtocol = MovieLocalDataSource()
 
-    func getMoviesPublisher(for category: CategoriesDataSource) -> AnyPublisher<[MovieDataModel], Never> {
+    func getMoviesArray(for category: CategoriesDataSource) -> AnyPublisher<[MovieDataModel], Never> {
         guard let realm = try? Realm() else { return .empty() }
 
         let movies = realm
@@ -18,7 +18,7 @@ class MovieLocalDataSource: MovieLocalDataSourceProtocol {
             .eraseToAnyPublisher()
     }
 
-    func saveLocal(array: [MovieDataModel], category: CategoriesDataSource) {
+    func save(array: [MovieDataModel], category: CategoriesDataSource) {
         guard let realm = try? Realm() else { return }
 
         let mappedMovies = array
@@ -32,6 +32,23 @@ class MovieLocalDataSource: MovieLocalDataSourceProtocol {
             realm.delete(oldMovies)
             realm.add(mappedMovies)
         }
+    }
+
+    func flatMap(
+        _ publisher: AnyPublisher<[MovieDataModel], MovieDataError>,
+        category: CategoriesDataSource
+    ) -> AnyPublisher<[MovieDataModel], Never> {
+        publisher
+            .handleEvents(receiveOutput: { [weak self] in
+                self?.save(array: $0, category: category)
+            })
+            .replaceError(with: [])
+            .flatMap { [weak self] _ -> AnyPublisher<[MovieDataModel], Never> in
+                guard let self = self else { return .empty() }
+
+                return self.getMoviesArray(for: category)
+            }
+            .eraseToAnyPublisher()
     }
 
 }

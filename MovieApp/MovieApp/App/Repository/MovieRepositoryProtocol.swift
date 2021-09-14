@@ -22,7 +22,7 @@ protocol MovieRepositoryProtocol {
 
     func toggleFavorite(_ movieId: Int)
 
-    func getMoviesPublisher(for category: LocalCategory, genreId: Int) -> AnyPublisher<[MovieRepoModel], Never>
+    func getMoviesArray(for category: LocalCategory, genreId: Int) -> AnyPublisher<[MovieRepoModel], Never>
 
     var favoriteMovies: AnyPublisher<[MovieRepoModel], Never> { get }
 

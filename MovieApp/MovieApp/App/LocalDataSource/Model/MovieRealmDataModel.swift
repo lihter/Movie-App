@@ -4,7 +4,7 @@ import RealmSwift
 
 final class MovieRealmDataModel: Object, ObjectKeyIdentifiable {
 
-    @Persisted(primaryKey: true) var identifier: Int
+    @Persisted var identifier: Int
     @Persisted var title: String
     @Persisted var backdropPath: String
     @Persisted var posterPath: String

@@ -2,8 +2,13 @@ import Combine
 
 protocol MovieLocalDataSourceProtocol {
 
-    func getMoviesPublisher(for category: CategoriesDataSource) ->  AnyPublisher<[MovieDataModel], Never>
+    func flatMap(
+        _ publisher: AnyPublisher<[MovieDataModel], MovieDataError>,
+        category: CategoriesDataSource
+    ) -> AnyPublisher<[MovieDataModel], Never>
 
-    func saveLocal(array: [MovieDataModel], category: CategoriesDataSource)
+    func getMoviesArray(for category: CategoriesDataSource) ->  AnyPublisher<[MovieDataModel], Never>
+
+    func save(array: [MovieDataModel], category: CategoriesDataSource)
 
 }
