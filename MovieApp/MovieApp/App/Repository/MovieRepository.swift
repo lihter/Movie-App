@@ -26,9 +26,8 @@ class MovieRepository: MovieRepositoryProtocol {
     }
 
     var popularMovies: AnyPublisher<[MovieRepoModel], Never> {
-        networkDataSource
-            .popularMovies
-            .handleLocalStorage(localDataSource: localDataSource)
+        localDataSource
+            .flatMap(networkDataSource.popularMovies, category: .popular)
             .combineLatest(userDefaultsPublisher)
             .map { movies, favoriteIds -> [MovieRepoModel] in
                 movies.map { movie in
@@ -40,14 +39,14 @@ class MovieRepository: MovieRepositoryProtocol {
     }
 
     var trendingMovies: AnyPublisher<[MovieRepoModel], Never> {
-        let today = networkDataSource
-            .trendingToday
-            .handleLocalStorage(localDataSource: localDataSource)
+        let today = localDataSource
+            .flatMap(networkDataSource.trendingToday, category: .trendingToday)
+            .replaceError(with: [])
             .eraseToAnyPublisher()
 
-        let week = networkDataSource
-            .trendingWeek
-            .handleLocalStorage(localDataSource: localDataSource)
+        let week = localDataSource
+            .flatMap(networkDataSource.trendingWeek, category: .trendingWeek)
+            .replaceError(with: [])
             .eraseToAnyPublisher()
 
         return Publishers
@@ -75,9 +74,9 @@ class MovieRepository: MovieRepositoryProtocol {
     }
 
     var topRatedMovies: AnyPublisher<[MovieRepoModel], Never> {
-        networkDataSource
-            .topRated
-            .handleLocalStorage(localDataSource: localDataSource)
+        localDataSource
+            .flatMap(networkDataSource.topRated, category: .topRated)
+            .replaceError(with: [])
             .combineLatest(userDefaultsPublisher)
             .map { movies, favoriteIds -> [MovieRepoModel] in
                 movies.map { movie in
@@ -104,10 +103,10 @@ class MovieRepository: MovieRepositoryProtocol {
                     .collect()
                     .eraseToAnyPublisher()
                     .handleEvents(receiveOutput: {
-                        self.localDataSource.saveLocal(array: $0, category: .favorites)
+                        self.localDataSource.save(array: $0, category: .favorites)
                     })
                     .flatMap { _ -> AnyPublisher<[MovieDataModel], Never> in
-                        self.localDataSource.getMoviesPublisher(for: .favorites)
+                        self.localDataSource.getMoviesArray(for: .favorites)
                     }
                     .eraseToAnyPublisher()
             }
@@ -162,11 +161,11 @@ class MovieRepository: MovieRepositoryProtocol {
     }
 
     func toggleFavorite(_ movieId: Int) {
-        localDataSource.deleteLocal(movieId: movieId, category: .favorites)
+        localDataSource.delete(movieId: movieId, category: .favorites)
         userDefaultsDataSource.toggleFavorite(movieId)
     }
 
-    func getMoviesPublisher(for category: LocalCategory, genreId: Int) -> AnyPublisher<[MovieRepoModel], Never> {
+    func getMoviesArray(for category: LocalCategory, genreId: Int) -> AnyPublisher<[MovieRepoModel], Never> {
         switch category {
         case .popular:
             return popularMovies
