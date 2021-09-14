@@ -26,8 +26,16 @@ class MovieRepository: MovieRepositoryProtocol {
     }
 
     var popularMovies: AnyPublisher<[MovieRepoModel], Never> {
-        localDataSource
-            .flatMap(networkDataSource.popularMovies, category: .popular)
+        networkDataSource
+            .popularMovies
+            .replaceError(with: [])
+            .flatMap { [weak self] movies -> AnyPublisher<[MovieDataModel], Never> in
+                guard let self = self else { return .empty() }
+
+                self.localDataSource.save(movies: movies, category: .popular)
+
+                return self.localDataSource.getMovies(for: .popular)
+            }
             .combineLatest(userDefaultsPublisher)
             .map { movies, favoriteIds -> [MovieRepoModel] in
                 movies.map { movie in
@@ -39,13 +47,29 @@ class MovieRepository: MovieRepositoryProtocol {
     }
 
     var trendingMovies: AnyPublisher<[MovieRepoModel], Never> {
-        let today = localDataSource
-            .flatMap(networkDataSource.trendingToday, category: .trendingToday)
+        let today = networkDataSource
+            .trendingToday
+            .replaceError(with: [])
+            .flatMap { [weak self] movies -> AnyPublisher<[MovieDataModel], Never> in
+                guard let self = self else { return .empty() }
+
+                self.localDataSource.save(movies: movies, category: .trendingToday)
+
+                return self.localDataSource.getMovies(for: .trendingToday)
+            }
             .replaceError(with: [])
             .eraseToAnyPublisher()
 
-        let week = localDataSource
-            .flatMap(networkDataSource.trendingWeek, category: .trendingWeek)
+        let week = networkDataSource
+            .trendingWeek
+            .replaceError(with: [])
+            .flatMap { [weak self] movies -> AnyPublisher<[MovieDataModel], Never> in
+                guard let self = self else { return .empty() }
+
+                self.localDataSource.save(movies: movies, category: .trendingWeek)
+
+                return self.localDataSource.getMovies(for: .trendingWeek)
+            }
             .replaceError(with: [])
             .eraseToAnyPublisher()
 
@@ -74,9 +98,16 @@ class MovieRepository: MovieRepositoryProtocol {
     }
 
     var topRatedMovies: AnyPublisher<[MovieRepoModel], Never> {
-        localDataSource
-            .flatMap(networkDataSource.topRated, category: .topRated)
+        networkDataSource
+            .topRated
             .replaceError(with: [])
+            .flatMap { [weak self] movies -> AnyPublisher<[MovieDataModel], Never> in
+                guard let self = self else { return .empty() }
+
+                self.localDataSource.save(movies: movies, category: .topRated)
+
+                return self.localDataSource.getMovies(for: .topRated)
+            }
             .combineLatest(userDefaultsPublisher)
             .map { movies, favoriteIds -> [MovieRepoModel] in
                 movies.map { movie in
@@ -155,7 +186,7 @@ class MovieRepository: MovieRepositoryProtocol {
         userDefaultsDataSource.toggleFavorite(movieId)
     }
 
-    func getMoviesArray(for category: LocalCategory, genreId: Int) -> AnyPublisher<[MovieRepoModel], Never> {
+    func getMovies(for category: LocalCategory, genreId: Int) -> AnyPublisher<[MovieRepoModel], Never> {
         switch category {
         case .popular:
             return popularMovies

@@ -14,9 +14,9 @@ final class CategoriesPresenter {
         [.popular, .trending, .topRated]
     }
 
-    func getMoviesArray(for category: LocalCategory, genreId: Int) -> AnyPublisher<[MovieViewModel], Never> {
+    func getMovies(for category: LocalCategory, genreId: Int) -> AnyPublisher<[MovieViewModel], Never> {
         useCase
-            .getMoviesArray(for: category, genreId: genreId)
+            .getMovies(for: category, genreId: genreId)
             .map { $0.map { MovieViewModel(fromModel: $0) } }
             .receiveOnMain()
     }
