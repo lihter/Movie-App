@@ -69,7 +69,7 @@ class CategoriesViewController: UIViewController {
                 cell.getGenreMovies = { [weak self] category, genreId in
                     guard let self = self else { return .empty() }
 
-                    return self.presenter.getMoviesPublisher(for: category, genreId: genreId)
+                    return self.presenter.getMoviesArray(for: category, genreId: genreId)
                 }
                 cell.showDetailScreen = { [weak self] movieId in
                     guard let self = self else { return }

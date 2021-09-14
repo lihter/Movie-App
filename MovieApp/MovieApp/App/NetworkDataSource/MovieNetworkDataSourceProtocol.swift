@@ -2,13 +2,13 @@ import Combine
 
 protocol MovieNetworkDataSourceProtocol {
 
-    var popularMovies: AnyPublisher<[MovieDataModel], RequestError> { get }
+    var popularMovies: AnyPublisher<[MovieDataModel], MovieDataError> { get }
 
-    var trendingToday: AnyPublisher<[MovieDataModel], RequestError> { get }
+    var trendingToday: AnyPublisher<[MovieDataModel], MovieDataError> { get }
 
-    var trendingWeek: AnyPublisher<[MovieDataModel], RequestError> { get }
+    var trendingWeek: AnyPublisher<[MovieDataModel], MovieDataError> { get }
 
-    var topRated: AnyPublisher<[MovieDataModel], RequestError> { get }
+    var topRated: AnyPublisher<[MovieDataModel], MovieDataError> { get }
 
     func fetchMovieDetails(for movieId: Int) -> AnyPublisher<MovieDataModel, Never>
 
