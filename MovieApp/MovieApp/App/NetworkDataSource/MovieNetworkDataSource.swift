@@ -10,30 +10,34 @@ class MovieNetworkDataSource: MovieNetworkDataSourceProtocol {
         self.movieClient = MovieClient.shared
     }
 
-    var popularMovies: AnyPublisher<[MovieDataModel], Never> {
+    var popularMovies: AnyPublisher<[MovieDataModel], MovieDataError> {
         movieClient
             .popularMovies
+            .mapError { MovieDataError.map(from: $0) }
             .map { $0.map { MovieDataModel(fromModel: $0) } }
             .eraseToAnyPublisher()
     }
 
-    var trendingToday: AnyPublisher<[MovieDataModel], Never> {
+    var trendingToday: AnyPublisher<[MovieDataModel], MovieDataError> {
         movieClient
             .trendingToday
+            .mapError { MovieDataError.map(from: $0) }
             .map { $0.map { MovieDataModel(fromModel: $0) } }
             .eraseToAnyPublisher()
     }
 
-    var trendingWeek: AnyPublisher<[MovieDataModel], Never> {
+    var trendingWeek: AnyPublisher<[MovieDataModel], MovieDataError> {
         movieClient
             .trendingWeek
+            .mapError { MovieDataError.map(from: $0) }
             .map { $0.map { MovieDataModel(fromModel: $0) } }
             .eraseToAnyPublisher()
     }
 
-    var topRated: AnyPublisher<[MovieDataModel], Never> {
+    var topRated: AnyPublisher<[MovieDataModel], MovieDataError> {
         movieClient
             .topRated
+            .mapError { MovieDataError.map(from: $0) }
             .map { $0.map { MovieDataModel(fromModel: $0) } }
             .eraseToAnyPublisher()
     }

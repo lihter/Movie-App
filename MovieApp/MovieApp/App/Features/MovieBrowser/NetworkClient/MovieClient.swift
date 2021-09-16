@@ -6,39 +6,35 @@ class MovieClient: MovieClientProtocol {
 
     static let shared: MovieClientProtocol = MovieClient()
 
-    var popularMovies: AnyPublisher<[MovieResponse], Never> {
+    var popularMovies: AnyPublisher<[MovieResponse], RequestError> {
         fetch(forUrl: "movie/popular")
             .map { (result: MoviesWrapperResponse) in
                 result.movies ?? []
             }
-            .assertNoFailure()
             .eraseToAnyPublisher()
     }
 
-    var trendingToday: AnyPublisher<[MovieResponse], Never> {
+    var trendingToday: AnyPublisher<[MovieResponse], RequestError> {
         fetch(forUrl: "trending/movie/day")
             .map { (result: MoviesWrapperResponse) in
                 result.movies ?? []
             }
-            .assertNoFailure()
             .eraseToAnyPublisher()
     }
 
-    var trendingWeek: AnyPublisher<[MovieResponse], Never> {
+    var trendingWeek: AnyPublisher<[MovieResponse], RequestError> {
         fetch(forUrl: "trending/movie/week")
             .map { (result: MoviesWrapperResponse) in
                 result.movies ?? []
             }
-            .assertNoFailure()
             .eraseToAnyPublisher()
     }
 
-    var topRated: AnyPublisher<[MovieResponse], Never> {
+    var topRated: AnyPublisher<[MovieResponse], RequestError> {
         fetch(forUrl: "movie/top_rated")
             .map { (result: MoviesWrapperResponse) in
                 result.movies ?? []
             }
-            .assertNoFailure()
             .eraseToAnyPublisher()
     }
 

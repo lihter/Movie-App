@@ -10,9 +10,9 @@ class MoviesUseCase: MoviesUseCaseProtocol {
         self.moviesDataRepo = MovieRepository.shared
     }
 
-    func getMoviesPublisher(for category: LocalCategory, genreId: Int) -> AnyPublisher<[MovieModel], Never> {
+    func getMovies(for category: LocalCategory, genreId: Int) -> AnyPublisher<[MovieModel], Never> {
         moviesDataRepo
-            .getMoviesPublisher(for: category, genreId: genreId)
+            .getMovies(for: category, genreId: genreId)
             .map { $0.filter { $0.genreIds?.contains(genreId) ?? false } }
             .map { $0.map { MovieModel(fromModel: $0) } }
             .eraseToAnyPublisher()
