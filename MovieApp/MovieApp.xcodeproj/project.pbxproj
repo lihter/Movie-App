@@ -11,6 +11,7 @@
 		63019A2626B1281300584356 /* CategoryCellDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 63019A2526B1281300584356 /* CategoryCellDelegate.swift */; };
 		63019A2A26B17AC200584356 /* UIStackView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 63019A2926B17AC200584356 /* UIStackView.swift */; };
 		63019A2C26B1854C00584356 /* TVShowResponse.swift in Sources */ = {isa = PBXBuildFile; fileRef = 63019A2B26B1854C00584356 /* TVShowResponse.swift */; };
+		6307A44F26EF488900C803E8 /* Reachability in Frameworks */ = {isa = PBXBuildFile; productRef = 6307A44E26EF488900C803E8 /* Reachability */; };
 		6307A45126F0A28200C803E8 /* MovieDataError.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6307A45026F0A28200C803E8 /* MovieDataError.swift */; };
 		630CDD5B26B3E9760052D290 /* MovieDetailViewController+Design.swift in Sources */ = {isa = PBXBuildFile; fileRef = 630CDD5A26B3E9760052D290 /* MovieDetailViewController+Design.swift */; };
 		630CDD5F26B3F47D0052D290 /* DetailTitleView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 630CDD5E26B3F47D0052D290 /* DetailTitleView.swift */; };
@@ -297,6 +298,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				63BD081526A4A52B00AF366A /* Kingfisher in Frameworks */,
+				6307A44F26EF488900C803E8 /* Reachability in Frameworks */,
 				63CC486F269DAB3400AE3DDB /* SnapKit in Frameworks */,
 				636D52C526E7A1AA007CBC70 /* Realm in Frameworks */,
 				636D52C726E7A1AA007CBC70 /* RealmSwift in Frameworks */,
@@ -842,6 +844,7 @@
 				63BD081426A4A52B00AF366A /* Kingfisher */,
 				636D52C426E7A1AA007CBC70 /* Realm */,
 				636D52C626E7A1AA007CBC70 /* RealmSwift */,
+				6307A44E26EF488900C803E8 /* Reachability */,
 			);
 			productName = MovieApp;
 			productReference = 63DAA5D2269C7E210004F235 /* MovieApp.app */;
@@ -875,6 +878,7 @@
 				63312C3126A05CDB004DB7B4 /* XCRemoteSwiftPackageReference "Alamofire" */,
 				63BD081326A4A52B00AF366A /* XCRemoteSwiftPackageReference "Kingfisher" */,
 				636D52C326E7A1AA007CBC70 /* XCRemoteSwiftPackageReference "realm-cocoa" */,
+				6307A44D26EF488900C803E8 /* XCRemoteSwiftPackageReference "Reachability" */,
 			);
 			productRefGroup = 63DAA5D3269C7E210004F235 /* Products */;
 			projectDirPath = "";
@@ -1241,6 +1245,14 @@
 /* End XCConfigurationList section */
 
 /* Begin XCRemoteSwiftPackageReference section */
+		6307A44D26EF488900C803E8 /* XCRemoteSwiftPackageReference "Reachability" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/ashleymills/Reachability.swift";
+			requirement = {
+				kind = upToNextMinorVersion;
+				minimumVersion = 5.1.0;
+			};
+		};
 		63312C3126A05CDB004DB7B4 /* XCRemoteSwiftPackageReference "Alamofire" */ = {
 			isa = XCRemoteSwiftPackageReference;
 			repositoryURL = "https://github.com/Alamofire/Alamofire.git";
@@ -1276,6 +1288,11 @@
 /* End XCRemoteSwiftPackageReference section */
 
 /* Begin XCSwiftPackageProductDependency section */
+		6307A44E26EF488900C803E8 /* Reachability */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 6307A44D26EF488900C803E8 /* XCRemoteSwiftPackageReference "Reachability" */;
+			productName = Reachability;
+		};
 		63312C3226A05CDB004DB7B4 /* Alamofire */ = {
 			isa = XCSwiftPackageProductDependency;
 			package = 63312C3126A05CDB004DB7B4 /* XCRemoteSwiftPackageReference "Alamofire" */;

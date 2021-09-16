@@ -16,4 +16,6 @@ enum BundleImage: String {
     case favouritesTabBarItem = "FavButton2"
     case favouritesTabBarItemSelected = "FavButton"
 
+    case noConnection = "NoConnection"
+
 }
