@@ -7,12 +7,15 @@ final class MovieDetailPresenter {
     private let useCase: MoviesUseCaseProtocol!
     private let router: AppRouter!
 
-    let movieId: Int!
+    var movieId: Int!
 
-    init (useCase: MoviesUseCaseProtocol, router: AppRouter, for movieId: Int) {
+    init (useCase: MoviesUseCaseProtocol, router: AppRouter) {
         self.useCase = useCase
         self.router = router
-        self.movieId = movieId
+    }
+
+    func setMovieId(_ id: Int) {
+        movieId = id
     }
 
     var details: AnyPublisher<DetailViewModel, Never> {

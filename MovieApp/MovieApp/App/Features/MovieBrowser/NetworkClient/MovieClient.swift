@@ -4,7 +4,11 @@ import Alamofire
 
 class MovieClient: MovieClientProtocol {
 
-    static let shared: MovieClientProtocol = MovieClient()
+    let networkClient: NetworkClientProtocol!
+
+    init(networkClient: NetworkClientProtocol) {
+        self.networkClient = networkClient
+    }
 
     var popularMovies: AnyPublisher<[MovieResponse], RequestError> {
         fetch(forUrl: "movie/popular")
@@ -117,7 +121,7 @@ extension MovieClient {
             parameters = parameters.merging(additionalParameters, uniquingKeysWith: { (_, last) in last })
         }
 
-        return NetworkClient.shared.executeUrlRequestPublisher(urlPath, method: .get, parameters: parameters)
+        return networkClient.executeUrlRequestPublisher(urlPath, method: .get, parameters: parameters)
     }
 
 }

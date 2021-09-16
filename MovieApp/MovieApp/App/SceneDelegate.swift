@@ -1,4 +1,5 @@
 import UIKit
+import Resolver
 
 class SceneDelegate: UIResponder, UIWindowSceneDelegate {
 
@@ -7,13 +8,15 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
     func scene(
         _ scene: UIScene,
         willConnectTo session: UISceneSession,
-        options connectionOptions: UIScene.ConnectionOptions) {
+        options connectionOptions: UIScene.ConnectionOptions
+    ) {
         guard let windowScene = (scene as? UIWindowScene) else { return }
 
         window = UIWindow(windowScene: windowScene)
 
-        let router: AppRouter = AppRouter()
-        router.setInitialScreen(in: window)
+        let container = Resolver.main
+        let appModule = AppModule(container: container)
+        appModule.start(in: window, container: container)
     }
 
     func sceneDidDisconnect(_ scene: UIScene) {

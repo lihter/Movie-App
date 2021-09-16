@@ -1,34 +1,26 @@
 import UIKit
+import Resolver
 
 final class AppRouter {
 
-    private let networkClient: NetworkClientProtocol!
-    private let moviesClient: MovieClientProtocol!
-    private let moviesNetworkDataSource: MovieNetworkDataSourceProtocol!
-    private let moviesRepo: MovieRepositoryProtocol!
-    private let moviesUseCase: MoviesUseCaseProtocol!
+    let container: Resolver!
 
     private let navigationController: UINavigationController!
 
-    init() {
-        networkClient = NetworkClient.shared
-        moviesClient = MovieClient.shared
-        moviesNetworkDataSource = MovieNetworkDataSource.shared
-        moviesUseCase = MoviesUseCase.shared
-        moviesRepo = MovieRepository.shared
-
+    init(container: Resolver) {
+        self.container = container
         navigationController = UINavigationController()
         styleNavigationBar()
     }
 
     func showDetailScreen(for movieId: Int) {
-        let movieDetailPresenter = MovieDetailPresenter(useCase: moviesUseCase, router: self, for: movieId)
-        let vc = MovieDetailViewController(presenter: movieDetailPresenter)
+        let vc: MovieDetailViewController = container.resolve()
+        vc.presenter.setMovieId(movieId)
 
         navigationController?.pushViewController(vc, animated: true)
     }
 
-    func setInitialScreen(in window: UIWindow?) {
+    func start(in window: UIWindow?) {
         let vc = createTabBarController()
 
         navigationController.setViewControllers([vc], animated: true)
@@ -43,16 +35,8 @@ extension AppRouter {
 
     private func createTabBarController() -> UITabBarController {
         let tabBarController = UITabBarController()
-
-        let homePagePresenter = HomePagePresenter(useCase: moviesUseCase, router: self)
-        let categoriesPresenter = CategoriesPresenter(useCase: moviesUseCase, router: self)
-        let searchPresenter = SearchPresenter(useCase: moviesUseCase, router: self)
-        let homePageVC = HomePageViewController(
-            presenter: homePagePresenter,
-            categoriesPresenter: categoriesPresenter,
-            searchPresenter: searchPresenter)
-        let favoritesPresenter = FavoritesPresenter(router: self, useCase: moviesUseCase)
-        let favoritesVC = FavoritesViewController(presenter: favoritesPresenter)
+        let homePageVC: HomePageViewController = container.resolve()
+        let favoritesVC: FavoritesViewController = container.resolve()
 
         homePageVC.tabBarItem = UITabBarItem(
             title: "Home",
