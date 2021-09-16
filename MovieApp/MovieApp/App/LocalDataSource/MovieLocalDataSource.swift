@@ -30,7 +30,19 @@ class MovieLocalDataSource: MovieLocalDataSourceProtocol {
 
         try? realm.write {
             realm.delete(oldMovies)
-            realm.add(mappedMovies)
+            realm.add(mappedMovies, update: .all)
+        }
+    }
+
+    func delete(movieId: Int, category: CategoriesDataSource) {
+        guard let realm = try? Realm() else { return }
+
+        let movie = realm
+            .objects(MovieRealmDataModel.self)
+            .filter("category == %@ AND identifier == %@", category.rawValue, movieId)
+
+        try? realm.write {
+            realm.delete(movie)
         }
     }
 

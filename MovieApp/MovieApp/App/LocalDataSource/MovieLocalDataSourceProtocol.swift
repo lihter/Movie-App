@@ -6,4 +6,6 @@ protocol MovieLocalDataSourceProtocol {
 
     func save(movies: [MovieDataModel], category: CategoriesDataSource)
 
+    func delete(movieId: Int, category: CategoriesDataSource)
+
 }

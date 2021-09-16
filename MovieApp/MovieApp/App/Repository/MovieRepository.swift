@@ -125,11 +125,20 @@ class MovieRepository: MovieRepositoryProtocol {
                 guard let self = self else { return .empty() }
 
                 let movieDataModelPublishers = favoriteMovieIds.map {
-                    self.networkDataSource.fetchMovieDetails(for: $0)
+                    self
+                        .networkDataSource
+                        .fetchMovieDetails(for: $0)
                 }
                 return Publishers
                     .MergeMany(movieDataModelPublishers)
                     .collect()
+                    .eraseToAnyPublisher()
+                    .handleEvents(receiveOutput: {
+                        self.localDataSource.save(movies: $0, category: .favorites)
+                    })
+                    .flatMap { _ -> AnyPublisher<[MovieDataModel], Never> in
+                        self.localDataSource.getMovies(for: .favorites)
+                    }
                     .eraseToAnyPublisher()
             }
             .map { $0.map { MovieRepoModel(fromModel: $0, isFavorite: true) } }
@@ -183,6 +192,7 @@ class MovieRepository: MovieRepositoryProtocol {
     }
 
     func toggleFavorite(_ movieId: Int) {
+        localDataSource.delete(movieId: movieId, category: .favorites)
         userDefaultsDataSource.toggleFavorite(movieId)
     }
 
