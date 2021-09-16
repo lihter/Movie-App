@@ -4,8 +4,6 @@ import Alamofire
 
 class NetworkClient: NetworkClientProtocol {
 
-    static let shared: NetworkClientProtocol = NetworkClient()
-
     func executeUrlRequestPublisher<T: Decodable>(
         _ urlPath: String,
         method: HTTPMethod = .get,

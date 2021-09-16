@@ -4,8 +4,6 @@ import RealmSwift
 
 class MovieLocalDataSource: MovieLocalDataSourceProtocol {
 
-    static let shared: MovieLocalDataSourceProtocol = MovieLocalDataSource()
-
     func getMovies(for category: CategoriesDataSource) -> AnyPublisher<[MovieDataModel], Never> {
         guard let realm = try? Realm() else { return .empty() }
 
