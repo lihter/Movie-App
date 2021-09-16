@@ -3,12 +3,12 @@ import Resolver
 
 final class AppRouter {
 
-    let container: Resolver!
-
+    private let container: Resolver!
     private let navigationController: UINavigationController!
 
     init(container: Resolver) {
         self.container = container
+
         navigationController = UINavigationController()
         styleNavigationBar()
     }

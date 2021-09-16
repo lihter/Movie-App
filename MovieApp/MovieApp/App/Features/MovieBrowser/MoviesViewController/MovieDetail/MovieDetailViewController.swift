@@ -1,12 +1,11 @@
 import Combine
 import UIKit
 import Reachability
+import Resolver
 
 class MovieDetailViewController: UIViewController {
 
     let offset: CGFloat = 4
-
-    var presenter: MovieDetailPresenter!
 
     var disposables = Set<AnyCancellable>()
 
@@ -22,15 +21,7 @@ class MovieDetailViewController: UIViewController {
     var noConnectionImageView: UIImageView!
     var reachability: Reachability!
 
-    init(presenter: MovieDetailPresenter) {
-        super.init(nibName: nil, bundle: nil)
-
-        self.presenter = presenter
-    }
-
-    required init?(coder: NSCoder) {
-        fatalError("init(coder:) has not been implemented")
-    }
+    @Injected var presenter: MovieDetailPresenter
 
     override func viewDidLoad() {
         super.viewDidLoad()

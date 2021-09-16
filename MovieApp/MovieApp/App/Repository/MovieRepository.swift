@@ -1,25 +1,14 @@
 import Combine
 import Foundation
+import Resolver
 
 class MovieRepository: MovieRepositoryProtocol {
 
-    private let networkDataSource: MovieNetworkDataSourceProtocol!
-    private let localDataSource: MovieLocalDataSourceProtocol!
-    private let userDefaultsDataSource: UserDefaultsDataSourceProtocol!
+    @Injected private var networkDataSource: MovieNetworkDataSourceProtocol
+    @Injected private var localDataSource: MovieLocalDataSourceProtocol
+    @Injected private var userDefaultsDataSource: UserDefaultsDataSourceProtocol
 
-    var categoryMovies: [LocalCategory: [MovieRepoModel]]!
-
-    init(
-        networkDataSource: MovieNetworkDataSourceProtocol,
-        localDataSource: MovieLocalDataSourceProtocol,
-        userDefaultsDataSource: UserDefaultsDataSourceProtocol
-    ) {
-        self.networkDataSource = networkDataSource
-        self.localDataSource = localDataSource
-        self.userDefaultsDataSource = userDefaultsDataSource
-
-        categoryMovies = [:]
-    }
+    var categoryMovies: [LocalCategory: [MovieRepoModel]] = [:]
 
     private var userDefaultsPublisher: AnyPublisher<[Int], Never> {
         userDefaultsDataSource

@@ -45,14 +45,14 @@ extension AppModule {
 
     private func registerMovieClient(in container: Resolver) {
         container
-            .register { MovieClient(networkClient: container.resolve()) }
+            .register { MovieClient() }
             .implements(MovieClientProtocol.self)
             .scope(.application)
     }
 
     private func registerNetworkDataSource(in container: Resolver) {
         container
-            .register { MovieNetworkDataSource(movieClient: container.resolve()) }
+            .register { MovieNetworkDataSource() }
             .implements(MovieNetworkDataSourceProtocol.self)
             .scope(.application)
     }
@@ -73,76 +73,53 @@ extension AppModule {
 
     private func registerRepository(in container: Resolver) {
         container
-            .register { MovieRepository(
-                networkDataSource: container.resolve(),
-                localDataSource: container.resolve(),
-                userDefaultsDataSource: container.resolve())
-            }
+            .register { MovieRepository() }
             .implements(MovieRepositoryProtocol.self)
             .scope(.application)
     }
 
     private func registerUseCase(in container: Resolver) {
         container
-            .register { MoviesUseCase(moviesDataRepo: container.resolve()) }
+            .register { MoviesUseCase() }
             .implements(MoviesUseCaseProtocol.self)
             .scope(.application)
     }
 
     private func registerHomePage(in container: Resolver) {
         container
-            .register {
-                HomePagePresenter(useCase: container.resolve(), router: container.resolve())
-            }
+            .register { HomePagePresenter() }
             .scope(.unique)
 
         container
-            .register {
-                CategoriesPresenter(useCase: container.resolve(), router: container.resolve())
-            }
+            .register { CategoriesPresenter() }
             .scope(.unique)
 
         container
-            .register {
-                SearchPresenter(useCase: container.resolve(), router: container.resolve())
-            }
+            .register { SearchPresenter() }
             .scope(.unique)
 
         container
-            .register {
-                HomePageViewController(
-                    presenter: container.resolve(),
-                    categoriesPresenter: container.resolve(),
-                    searchPresenter: container.resolve())
-            }
+            .register { HomePageViewController() }
             .scope(.unique)
     }
 
     private func registerFavorites(in container: Resolver) {
         container
-            .register {
-                FavoritesPresenter(router: container.resolve(), useCase: container.resolve())
-            }
+            .register { FavoritesPresenter() }
             .scope(.unique)
 
         container
-            .register {
-                FavoritesViewController(presenter: container.resolve())
-            }
+            .register { FavoritesViewController() }
             .scope(.unique)
     }
 
     private func registerMovieDetails(in container: Resolver) {
         container
-            .register {
-                MovieDetailPresenter(useCase: container.resolve(), router: container.resolve())
-            }
+            .register { MovieDetailPresenter() }
             .scope(.unique)
 
         container
-            .register {
-                MovieDetailViewController(presenter: container.resolve())
-            }
+            .register { MovieDetailViewController() }
             .scope(.unique)
     }
 

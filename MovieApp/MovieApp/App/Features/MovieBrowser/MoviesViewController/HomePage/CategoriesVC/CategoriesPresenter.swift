@@ -1,14 +1,10 @@
 import Combine
+import Resolver
 
 final class CategoriesPresenter {
 
-    private let useCase: MoviesUseCaseProtocol!
-    private let router: AppRouter!
-
-    init (useCase: MoviesUseCaseProtocol, router: AppRouter) {
-        self.useCase = useCase
-        self.router = router
-    }
+    @Injected private var useCase: MoviesUseCaseProtocol
+    @Injected private var router: AppRouter
 
     func getCategories() -> [LocalCategory] {
         [.popular, .trending, .topRated]

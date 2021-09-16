@@ -1,18 +1,14 @@
 import Combine
 import Foundation
 import UIKit
+import Resolver
 
 final class MovieDetailPresenter {
 
-    private let useCase: MoviesUseCaseProtocol!
-    private let router: AppRouter!
+    @Injected private var useCase: MoviesUseCaseProtocol
+    @Injected private var router: AppRouter
 
     var movieId: Int!
-
-    init (useCase: MoviesUseCaseProtocol, router: AppRouter) {
-        self.useCase = useCase
-        self.router = router
-    }
 
     func setMovieId(_ id: Int) {
         movieId = id

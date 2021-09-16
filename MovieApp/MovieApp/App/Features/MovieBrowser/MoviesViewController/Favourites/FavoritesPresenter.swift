@@ -1,15 +1,11 @@
 import Combine
 import Foundation
+import Resolver
 
 final class FavoritesPresenter {
 
-    private let router: AppRouter!
-    private let useCase: MoviesUseCaseProtocol!
-
-    init (router: AppRouter, useCase: MoviesUseCaseProtocol) {
-        self.router = router
-        self.useCase = useCase
-    }
+    @Injected private var router: AppRouter
+    @Injected private var useCase: MoviesUseCaseProtocol
 
     var favoriteMovies: AnyPublisher<[MovieViewModel], Never> {
         useCase

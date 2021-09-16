@@ -1,12 +1,9 @@
 import Combine
+import Resolver
 
 class MovieNetworkDataSource: MovieNetworkDataSourceProtocol {
 
-    private let movieClient: MovieClientProtocol!
-
-    init(movieClient: MovieClientProtocol) {
-        self.movieClient = movieClient
-    }
+    @Injected private var movieClient: MovieClientProtocol
 
     var popularMovies: AnyPublisher<[MovieDataModel], MovieDataError> {
         movieClient

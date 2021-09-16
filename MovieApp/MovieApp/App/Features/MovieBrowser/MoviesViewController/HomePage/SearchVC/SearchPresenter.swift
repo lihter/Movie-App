@@ -1,14 +1,10 @@
 import Combine
+import Resolver
 
 final class SearchPresenter {
 
-    private let useCase: MoviesUseCaseProtocol!
-    private let router: AppRouter!
-
-    init (useCase: MoviesUseCaseProtocol, router: AppRouter) {
-        self.useCase = useCase
-        self.router = router
-    }
+    @Injected private var useCase: MoviesUseCaseProtocol
+    @Injected private var router: AppRouter
 
     func selectedMovie(withId movieId: Int) {
         router.showDetailScreen(for: movieId)

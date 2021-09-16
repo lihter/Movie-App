@@ -1,12 +1,9 @@
 import Combine
+import Resolver
 
 class MoviesUseCase: MoviesUseCaseProtocol {
 
-    private let moviesDataRepo: MovieRepositoryProtocol!
-
-    init(moviesDataRepo: MovieRepositoryProtocol) {
-        self.moviesDataRepo = moviesDataRepo
-    }
+    @Injected private var moviesDataRepo: MovieRepositoryProtocol
 
     func getMovies(for category: LocalCategory, genreId: Int) -> AnyPublisher<[MovieModel], Never> {
         moviesDataRepo

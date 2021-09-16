@@ -3,8 +3,6 @@ import Foundation
 
 class UserDefaultsDataSource: UserDefaultsDataSourceProtocol {
 
-    static let shared: UserDefaultsDataSource = UserDefaultsDataSource()
-
     private let favoritesUDKey = "favorites"
 
     var favorites: AnyPublisher<[Int], Never> {

@@ -1,5 +1,6 @@
 import Combine
 import UIKit
+import Resolver
 
 class FavoritesViewController: UIViewController {
 
@@ -11,20 +12,10 @@ class FavoritesViewController: UIViewController {
     var favouritesLabel: UILabel!
     var flowLayout: UICollectionViewFlowLayout!
     var collectionView: UICollectionView!
-    var presenter: FavoritesPresenter!
     lazy var dataSource = makeDataSource()
 
     private var disposables = Set<AnyCancellable>()
-
-    init(presenter: FavoritesPresenter) {
-        super.init(nibName: nil, bundle: nil)
-
-        self.presenter = presenter
-    }
-
-    required init?(coder: NSCoder) {
-        fatalError("init(coder:) has not been implemented")
-    }
+    @Injected private var presenter: FavoritesPresenter
 
     private func setupCollectionView() {
         collectionView.register(NewMovieCell.self, forCellWithReuseIdentifier: NewMovieCell.reuseIdentifier)

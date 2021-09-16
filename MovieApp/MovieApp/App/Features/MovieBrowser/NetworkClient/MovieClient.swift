@@ -1,14 +1,11 @@
 import Combine
 import Foundation
 import Alamofire
+import Resolver
 
 class MovieClient: MovieClientProtocol {
 
-    let networkClient: NetworkClientProtocol!
-
-    init(networkClient: NetworkClientProtocol) {
-        self.networkClient = networkClient
-    }
+    @Injected var networkClient: NetworkClientProtocol
 
     var popularMovies: AnyPublisher<[MovieResponse], RequestError> {
         fetch(forUrl: "movie/popular")
