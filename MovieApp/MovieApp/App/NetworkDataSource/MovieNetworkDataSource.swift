@@ -2,12 +2,10 @@ import Combine
 
 class MovieNetworkDataSource: MovieNetworkDataSourceProtocol {
 
-    static let shared: MovieNetworkDataSourceProtocol = MovieNetworkDataSource()
-
     private let movieClient: MovieClientProtocol!
 
-    init() {
-        self.movieClient = MovieClient.shared
+    init(movieClient: MovieClientProtocol) {
+        self.movieClient = movieClient
     }
 
     var popularMovies: AnyPublisher<[MovieDataModel], MovieDataError> {

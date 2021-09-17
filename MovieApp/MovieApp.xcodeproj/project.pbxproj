@@ -119,6 +119,9 @@
 		6397422126CD3F4000A2D0B1 /* UIBarButtonItem+Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6397422026CD3F4000A2D0B1 /* UIBarButtonItem+Extensions.swift */; };
 		6397422326CE569100A2D0B1 /* UserDefaults+key.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6397422226CE569100A2D0B1 /* UserDefaults+key.swift */; };
 		6397422526CE8FE900A2D0B1 /* FavoritesSection.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6397422426CE8FE900A2D0B1 /* FavoritesSection.swift */; };
+		639AA7BB26F1D5F80026F255 /* AppModule.swift in Sources */ = {isa = PBXBuildFile; fileRef = 639AA7BA26F1D5F80026F255 /* AppModule.swift */; };
+		639AA7C126F1DC660026F255 /* Resolver in Frameworks */ = {isa = PBXBuildFile; productRef = 639AA7C026F1DC660026F255 /* Resolver */; };
+		639AA7C326F1DC660026F255 /* Resolver-Static in Frameworks */ = {isa = PBXBuildFile; productRef = 639AA7C226F1DC660026F255 /* Resolver-Static */; };
 		63A230B226CFC29400A22195 /* DetailViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 63A230B126CFC29400A22195 /* DetailViewModel.swift */; };
 		63A230B426CFD80C00A22195 /* RecommendationsSection.swift in Sources */ = {isa = PBXBuildFile; fileRef = 63A230B326CFD80C00A22195 /* RecommendationsSection.swift */; };
 		63A230B626CFD97E00A22195 /* CastSection.swift in Sources */ = {isa = PBXBuildFile; fileRef = 63A230B526CFD97E00A22195 /* CastSection.swift */; };
@@ -150,6 +153,19 @@
 		63DD737426A9A38E004A6D8C /* CategoryCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 63DD737326A9A38E004A6D8C /* CategoryCell.swift */; };
 		63DD737626A9A39E004A6D8C /* CategoryCell+Design.swift in Sources */ = {isa = PBXBuildFile; fileRef = 63DD737526A9A39E004A6D8C /* CategoryCell+Design.swift */; };
 /* End PBXBuildFile section */
+
+/* Begin PBXCopyFilesBuildPhase section */
+		639AA7C426F1DC660026F255 /* Embed Frameworks */ = {
+			isa = PBXCopyFilesBuildPhase;
+			buildActionMask = 2147483647;
+			dstPath = "";
+			dstSubfolderSpec = 10;
+			files = (
+			);
+			name = "Embed Frameworks";
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXCopyFilesBuildPhase section */
 
 /* Begin PBXFileReference section */
 		63019A2326B1245A00584356 /* LocalCategory.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LocalCategory.swift; sourceTree = "<group>"; };
@@ -260,6 +276,7 @@
 		6397422026CD3F4000A2D0B1 /* UIBarButtonItem+Extensions.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "UIBarButtonItem+Extensions.swift"; sourceTree = "<group>"; };
 		6397422226CE569100A2D0B1 /* UserDefaults+key.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UserDefaults+key.swift"; sourceTree = "<group>"; };
 		6397422426CE8FE900A2D0B1 /* FavoritesSection.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FavoritesSection.swift; sourceTree = "<group>"; };
+		639AA7BA26F1D5F80026F255 /* AppModule.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppModule.swift; sourceTree = "<group>"; };
 		63A230B126CFC29400A22195 /* DetailViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DetailViewModel.swift; sourceTree = "<group>"; };
 		63A230B326CFD80C00A22195 /* RecommendationsSection.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RecommendationsSection.swift; sourceTree = "<group>"; };
 		63A230B526CFD97E00A22195 /* CastSection.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CastSection.swift; sourceTree = "<group>"; };
@@ -299,9 +316,11 @@
 			files = (
 				63BD081526A4A52B00AF366A /* Kingfisher in Frameworks */,
 				6307A44F26EF488900C803E8 /* Reachability in Frameworks */,
+				639AA7C126F1DC660026F255 /* Resolver in Frameworks */,
 				63CC486F269DAB3400AE3DDB /* SnapKit in Frameworks */,
 				636D52C526E7A1AA007CBC70 /* Realm in Frameworks */,
 				636D52C726E7A1AA007CBC70 /* RealmSwift in Frameworks */,
+				639AA7C326F1DC660026F255 /* Resolver-Static in Frameworks */,
 				63312C3326A05CDB004DB7B4 /* Alamofire in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -399,6 +418,7 @@
 				633E7E6B26A6B4750091322D /* Networking */,
 				633E7E7726A6B9470091322D /* Repository */,
 				633E7E7626A6B9350091322D /* UseCase */,
+				639AA7BA26F1D5F80026F255 /* AppModule.swift */,
 			);
 			path = App;
 			sourceTree = "<group>";
@@ -832,6 +852,7 @@
 				63DAA5CE269C7E210004F235 /* Sources */,
 				63DAA5CF269C7E210004F235 /* Frameworks */,
 				63DAA5D0269C7E210004F235 /* Resources */,
+				639AA7C426F1DC660026F255 /* Embed Frameworks */,
 			);
 			buildRules = (
 			);
@@ -845,6 +866,8 @@
 				636D52C426E7A1AA007CBC70 /* Realm */,
 				636D52C626E7A1AA007CBC70 /* RealmSwift */,
 				6307A44E26EF488900C803E8 /* Reachability */,
+				639AA7C026F1DC660026F255 /* Resolver */,
+				639AA7C226F1DC660026F255 /* Resolver-Static */,
 			);
 			productName = MovieApp;
 			productReference = 63DAA5D2269C7E210004F235 /* MovieApp.app */;
@@ -879,6 +902,7 @@
 				63BD081326A4A52B00AF366A /* XCRemoteSwiftPackageReference "Kingfisher" */,
 				636D52C326E7A1AA007CBC70 /* XCRemoteSwiftPackageReference "realm-cocoa" */,
 				6307A44D26EF488900C803E8 /* XCRemoteSwiftPackageReference "Reachability" */,
+				639AA7BC26F1DC660026F255 /* XCRemoteSwiftPackageReference "Resolver" */,
 			);
 			productRefGroup = 63DAA5D3269C7E210004F235 /* Products */;
 			projectDirPath = "";
@@ -1015,6 +1039,7 @@
 				6357C0D326CBAACA009F02F6 /* CrewDataModel.swift in Sources */,
 				63019A2A26B17AC200584356 /* UIStackView.swift in Sources */,
 				63DD737426A9A38E004A6D8C /* CategoryCell.swift in Sources */,
+				639AA7BB26F1D5F80026F255 /* AppModule.swift in Sources */,
 				630CDDA626BA8C480052D290 /* AuthorRepoModel.swift in Sources */,
 				6389257626CA74CB0053A3CF /* CategoriesViewController.swift in Sources */,
 				63CEFAB426CAB0C0001657E1 /* CrewCell.swift in Sources */,
@@ -1269,6 +1294,14 @@
 				minimumVersion = 10.14.0;
 			};
 		};
+		639AA7BC26F1DC660026F255 /* XCRemoteSwiftPackageReference "Resolver" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/hmlongco/Resolver.git";
+			requirement = {
+				kind = upToNextMinorVersion;
+				minimumVersion = 1.4.4;
+			};
+		};
 		63BD081326A4A52B00AF366A /* XCRemoteSwiftPackageReference "Kingfisher" */ = {
 			isa = XCRemoteSwiftPackageReference;
 			repositoryURL = "https://github.com/onevcat/Kingfisher.git";
@@ -1307,6 +1340,16 @@
 			isa = XCSwiftPackageProductDependency;
 			package = 636D52C326E7A1AA007CBC70 /* XCRemoteSwiftPackageReference "realm-cocoa" */;
 			productName = RealmSwift;
+		};
+		639AA7C026F1DC660026F255 /* Resolver */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 639AA7BC26F1DC660026F255 /* XCRemoteSwiftPackageReference "Resolver" */;
+			productName = Resolver;
+		};
+		639AA7C226F1DC660026F255 /* Resolver-Static */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 639AA7BC26F1DC660026F255 /* XCRemoteSwiftPackageReference "Resolver" */;
+			productName = "Resolver-Static";
 		};
 		63BD081426A4A52B00AF366A /* Kingfisher */ = {
 			isa = XCSwiftPackageProductDependency;

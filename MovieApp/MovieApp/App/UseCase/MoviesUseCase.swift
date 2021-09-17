@@ -2,12 +2,10 @@ import Combine
 
 class MoviesUseCase: MoviesUseCaseProtocol {
 
-    static let shared: MoviesUseCaseProtocol = MoviesUseCase()
-
     private let moviesDataRepo: MovieRepositoryProtocol!
 
-    init() {
-        self.moviesDataRepo = MovieRepository.shared
+    init(moviesDataRepo: MovieRepositoryProtocol) {
+        self.moviesDataRepo = moviesDataRepo
     }
 
     func getMovies(for category: LocalCategory, genreId: Int) -> AnyPublisher<[MovieModel], Never> {

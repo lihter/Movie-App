@@ -3,18 +3,20 @@ import Foundation
 
 class MovieRepository: MovieRepositoryProtocol {
 
-    static let shared: MovieRepositoryProtocol = MovieRepository()
-
     private let networkDataSource: MovieNetworkDataSourceProtocol!
     private let localDataSource: MovieLocalDataSourceProtocol!
     private let userDefaultsDataSource: UserDefaultsDataSourceProtocol!
 
     var categoryMovies: [LocalCategory: [MovieRepoModel]]!
 
-    init() {
-        self.networkDataSource = MovieNetworkDataSource.shared
-        self.localDataSource = MovieLocalDataSource.shared
-        self.userDefaultsDataSource = UserDefaultsDataSource.shared
+    init(
+        networkDataSource: MovieNetworkDataSourceProtocol,
+        localDataSource: MovieLocalDataSourceProtocol,
+        userDefaultsDataSource: UserDefaultsDataSourceProtocol
+    ) {
+        self.networkDataSource = networkDataSource
+        self.localDataSource = localDataSource
+        self.userDefaultsDataSource = userDefaultsDataSource
 
         categoryMovies = [:]
     }
