@@ -73,10 +73,11 @@ extension AppModule {
 
     private func registerRepository(in container: Resolver) {
         container
-            .register { MovieRepository(
-                networkDataSource: container.resolve(),
-                localDataSource: container.resolve(),
-                userDefaultsDataSource: container.resolve())
+            .register {
+                MovieRepository(
+                    networkDataSource: container.resolve(),
+                    localDataSource: container.resolve(),
+                    userDefaultsDataSource: container.resolve())
             }
             .implements(MovieRepositoryProtocol.self)
             .scope(.application)

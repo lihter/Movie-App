@@ -7,7 +7,7 @@ final class MovieDetailPresenter {
     private let useCase: MoviesUseCaseProtocol!
     private let router: AppRouter!
 
-    var movieId: Int!
+    private(set) var movieId: Int!
 
     init (useCase: MoviesUseCaseProtocol, router: AppRouter) {
         self.useCase = useCase
