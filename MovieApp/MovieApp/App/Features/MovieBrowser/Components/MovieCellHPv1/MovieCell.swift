@@ -25,7 +25,7 @@ class MovieCell: UITableViewCell {
     func populate(with movie: MovieViewModel) {
         movieTitle.text = movie.title
         movieDescription.text = movie.overview
-        movieImageView.kf.setImage(with: movie.posterPath)
+        movieImageView.kf.setImage(with: movie.posterPath, placeholder: UIImage(with: .moviePlaceholder))
     }
 
 }

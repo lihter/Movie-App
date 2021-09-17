@@ -37,7 +37,7 @@ class ReviewView: UIView {
         reviewLabel.text = review.content
         reviewLabel.setLineSpacing(lineSpacing: 0, lineHeightMultiple: 1.4)
 
-        profileImageView.kf.setImage(with: review.profileImagePath)
+        profileImageView.kf.setImage(with: review.profileImagePath, placeholder: UIImage(with: .personPlaceholder))
     }
 
 }

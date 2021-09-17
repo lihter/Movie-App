@@ -39,7 +39,7 @@ class NewMovieCell: UICollectionViewCell {
     }
 
     func populate(withMovie movie: MovieViewModel) {
-        movieImageView.kf.setImage(with: movie.posterPath)
+        movieImageView.kf.setImage(with: movie.posterPath, placeholder: UIImage(with: .moviePlaceholder))
         isFavorite = movie.isFavorite
     }
 

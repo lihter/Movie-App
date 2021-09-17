@@ -24,7 +24,7 @@ class CastCell: UICollectionViewCell {
     func populate(withPerson person: CastViewModel) {
         nameLabel.text = person.name
         characterNameLabel.text = person.characterName
-        portraitImageView.kf.setImage(with: person.posterPath)
+        portraitImageView.kf.setImage(with: person.posterPath, placeholder: UIImage(with: .personPlaceholder))
     }
 
 }

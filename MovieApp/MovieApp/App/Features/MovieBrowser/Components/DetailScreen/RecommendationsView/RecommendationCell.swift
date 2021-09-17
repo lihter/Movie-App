@@ -22,7 +22,7 @@ class RecommendationCell: UICollectionViewCell {
 
     func populate(withMovie movie: MovieViewModel) {
         nameLabel.text = movie.title
-        posterImageView.kf.setImage(with: movie.posterPath)
+        posterImageView.kf.setImage(with: movie.posterPath, placeholder: UIImage(with: .moviePlaceholder))
     }
 
 }

@@ -18,4 +18,7 @@ enum BundleImage: String {
 
     case noConnection = "NoConnection"
 
+    case personPlaceholder = "PlaceholderUser"
+    case moviePlaceholder = "PlaceholderMovie"
+
 }

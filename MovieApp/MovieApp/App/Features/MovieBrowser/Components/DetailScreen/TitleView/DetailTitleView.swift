@@ -38,7 +38,7 @@ class DetailTitleView: UIView {
     }
 
     func populate(with movieDetails: DetailTitleViewModel) {
-        backgroundImageView.kf.setImage(with: movieDetails.posterPath)
+        backgroundImageView.kf.setImage(with: movieDetails.posterPath, placeholder: UIImage(with: .moviePlaceholder))
 
         let text = NSMutableAttributedString(string: "\(movieDetails.title) (\(movieDetails.year))")
         text.addAttributes(
