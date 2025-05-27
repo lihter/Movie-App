@@ -46,6 +46,7 @@ MovieApp is a sample iOS application built in 2021 to demonstrate modern app arc
 * **Custom Styling**
 
   * Custom `.ttf` fonts applied app-wide
+  * Compositional layout in collection view.
 
 ---
 
@@ -126,6 +127,8 @@ The app follows **Clean Architecture** layered structure with the **Coordinator 
 * **Layout:** SnapKit
 * **Dependency Management:** Swift Package Manager (SPM)
 * **Styling:** Custom `.ttf` fonts
+* **UICollectionViewDiffableDataSource**
+* **UI​Collection​View​Compositional​Layout**
 
 ---
 
