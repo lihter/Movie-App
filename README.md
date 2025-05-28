@@ -137,6 +137,7 @@ The app follows **Clean Architecture** layered structure with the **Coordinator 
 ---
 
 ## Screenshots
-<img width="360" alt="screenshot-movieapp-2" src="https://github.com/user-attachments/assets/7216196e-1b8f-4cb8-bdaf-7f55e1aa23cb" />
+
+<img width="360" alt="screenshot-movieapp-1" src="https://github.com/user-attachments/assets/7216196e-1b8f-4cb8-bdaf-7f55e1aa23cb" />
 <img width="360" alt="screenshot-movieapp-2" src="https://github.com/user-attachments/assets/22a23df8-587b-4c87-af94-ff120314d16e" />
 
